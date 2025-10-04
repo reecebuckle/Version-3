@@ -1,0 +1,519 @@
+{
+  "total_periods": 84,
+  "year_range": [
+    2003,
+    2023
+  ],
+  "seasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "time_series": [
+    {
+      "year": 2003,
+      "season": "spring",
+      "filename": "chlorophyll_2003_spring.json",
+      "display_name": "Spring 2003"
+    },
+    {
+      "year": 2003,
+      "season": "summer",
+      "filename": "chlorophyll_2003_summer.json",
+      "display_name": "Summer 2003"
+    },
+    {
+      "year": 2003,
+      "season": "autumn",
+      "filename": "chlorophyll_2003_autumn.json",
+      "display_name": "Autumn 2003"
+    },
+    {
+      "year": 2003,
+      "season": "winter",
+      "filename": "chlorophyll_2003_winter.json",
+      "display_name": "Winter 2003"
+    },
+    {
+      "year": 2004,
+      "season": "spring",
+      "filename": "chlorophyll_2004_spring.json",
+      "display_name": "Spring 2004"
+    },
+    {
+      "year": 2004,
+      "season": "summer",
+      "filename": "chlorophyll_2004_summer.json",
+      "display_name": "Summer 2004"
+    },
+    {
+      "year": 2004,
+      "season": "autumn",
+      "filename": "chlorophyll_2004_autumn.json",
+      "display_name": "Autumn 2004"
+    },
+    {
+      "year": 2004,
+      "season": "winter",
+      "filename": "chlorophyll_2004_winter.json",
+      "display_name": "Winter 2004"
+    },
+    {
+      "year": 2005,
+      "season": "spring",
+      "filename": "chlorophyll_2005_spring.json",
+      "display_name": "Spring 2005"
+    },
+    {
+      "year": 2005,
+      "season": "summer",
+      "filename": "chlorophyll_2005_summer.json",
+      "display_name": "Summer 2005"
+    },
+    {
+      "year": 2005,
+      "season": "autumn",
+      "filename": "chlorophyll_2005_autumn.json",
+      "display_name": "Autumn 2005"
+    },
+    {
+      "year": 2005,
+      "season": "winter",
+      "filename": "chlorophyll_2005_winter.json",
+      "display_name": "Winter 2005"
+    },
+    {
+      "year": 2006,
+      "season": "spring",
+      "filename": "chlorophyll_2006_spring.json",
+      "display_name": "Spring 2006"
+    },
+    {
+      "year": 2006,
+      "season": "summer",
+      "filename": "chlorophyll_2006_summer.json",
+      "display_name": "Summer 2006"
+    },
+    {
+      "year": 2006,
+      "season": "autumn",
+      "filename": "chlorophyll_2006_autumn.json",
+      "display_name": "Autumn 2006"
+    },
+    {
+      "year": 2006,
+      "season": "winter",
+      "filename": "chlorophyll_2006_winter.json",
+      "display_name": "Winter 2006"
+    },
+    {
+      "year": 2007,
+      "season": "spring",
+      "filename": "chlorophyll_2007_spring.json",
+      "display_name": "Spring 2007"
+    },
+    {
+      "year": 2007,
+      "season": "summer",
+      "filename": "chlorophyll_2007_summer.json",
+      "display_name": "Summer 2007"
+    },
+    {
+      "year": 2007,
+      "season": "autumn",
+      "filename": "chlorophyll_2007_autumn.json",
+      "display_name": "Autumn 2007"
+    },
+    {
+      "year": 2007,
+      "season": "winter",
+      "filename": "chlorophyll_2007_winter.json",
+      "display_name": "Winter 2007"
+    },
+    {
+      "year": 2008,
+      "season": "spring",
+      "filename": "chlorophyll_2008_spring.json",
+      "display_name": "Spring 2008"
+    },
+    {
+      "year": 2008,
+      "season": "summer",
+      "filename": "chlorophyll_2008_summer.json",
+      "display_name": "Summer 2008"
+    },
+    {
+      "year": 2008,
+      "season": "autumn",
+      "filename": "chlorophyll_2008_autumn.json",
+      "display_name": "Autumn 2008"
+    },
+    {
+      "year": 2008,
+      "season": "winter",
+      "filename": "chlorophyll_2008_winter.json",
+      "display_name": "Winter 2008"
+    },
+    {
+      "year": 2009,
+      "season": "spring",
+      "filename": "chlorophyll_2009_spring.json",
+      "display_name": "Spring 2009"
+    },
+    {
+      "year": 2009,
+      "season": "summer",
+      "filename": "chlorophyll_2009_summer.json",
+      "display_name": "Summer 2009"
+    },
+    {
+      "year": 2009,
+      "season": "autumn",
+      "filename": "chlorophyll_2009_autumn.json",
+      "display_name": "Autumn 2009"
+    },
+    {
+      "year": 2009,
+      "season": "winter",
+      "filename": "chlorophyll_2009_winter.json",
+      "display_name": "Winter 2009"
+    },
+    {
+      "year": 2010,
+      "season": "spring",
+      "filename": "chlorophyll_2010_spring.json",
+      "display_name": "Spring 2010"
+    },
+    {
+      "year": 2010,
+      "season": "summer",
+      "filename": "chlorophyll_2010_summer.json",
+      "display_name": "Summer 2010"
+    },
+    {
+      "year": 2010,
+      "season": "autumn",
+      "filename": "chlorophyll_2010_autumn.json",
+      "display_name": "Autumn 2010"
+    },
+    {
+      "year": 2010,
+      "season": "winter",
+      "filename": "chlorophyll_2010_winter.json",
+      "display_name": "Winter 2010"
+    },
+    {
+      "year": 2011,
+      "season": "spring",
+      "filename": "chlorophyll_2011_spring.json",
+      "display_name": "Spring 2011"
+    },
+    {
+      "year": 2011,
+      "season": "summer",
+      "filename": "chlorophyll_2011_summer.json",
+      "display_name": "Summer 2011"
+    },
+    {
+      "year": 2011,
+      "season": "autumn",
+      "filename": "chlorophyll_2011_autumn.json",
+      "display_name": "Autumn 2011"
+    },
+    {
+      "year": 2011,
+      "season": "winter",
+      "filename": "chlorophyll_2011_winter.json",
+      "display_name": "Winter 2011"
+    },
+    {
+      "year": 2012,
+      "season": "spring",
+      "filename": "chlorophyll_2012_spring.json",
+      "display_name": "Spring 2012"
+    },
+    {
+      "year": 2012,
+      "season": "summer",
+      "filename": "chlorophyll_2012_summer.json",
+      "display_name": "Summer 2012"
+    },
+    {
+      "year": 2012,
+      "season": "autumn",
+      "filename": "chlorophyll_2012_autumn.json",
+      "display_name": "Autumn 2012"
+    },
+    {
+      "year": 2012,
+      "season": "winter",
+      "filename": "chlorophyll_2012_winter.json",
+      "display_name": "Winter 2012"
+    },
+    {
+      "year": 2013,
+      "season": "spring",
+      "filename": "chlorophyll_2013_spring.json",
+      "display_name": "Spring 2013"
+    },
+    {
+      "year": 2013,
+      "season": "summer",
+      "filename": "chlorophyll_2013_summer.json",
+      "display_name": "Summer 2013"
+    },
+    {
+      "year": 2013,
+      "season": "autumn",
+      "filename": "chlorophyll_2013_autumn.json",
+      "display_name": "Autumn 2013"
+    },
+    {
+      "year": 2013,
+      "season": "winter",
+      "filename": "chlorophyll_2013_winter.json",
+      "display_name": "Winter 2013"
+    },
+    {
+      "year": 2014,
+      "season": "spring",
+      "filename": "chlorophyll_2014_spring.json",
+      "display_name": "Spring 2014"
+    },
+    {
+      "year": 2014,
+      "season": "summer",
+      "filename": "chlorophyll_2014_summer.json",
+      "display_name": "Summer 2014"
+    },
+    {
+      "year": 2014,
+      "season": "autumn",
+      "filename": "chlorophyll_2014_autumn.json",
+      "display_name": "Autumn 2014"
+    },
+    {
+      "year": 2014,
+      "season": "winter",
+      "filename": "chlorophyll_2014_winter.json",
+      "display_name": "Winter 2014"
+    },
+    {
+      "year": 2015,
+      "season": "spring",
+      "filename": "chlorophyll_2015_spring.json",
+      "display_name": "Spring 2015"
+    },
+    {
+      "year": 2015,
+      "season": "summer",
+      "filename": "chlorophyll_2015_summer.json",
+      "display_name": "Summer 2015"
+    },
+    {
+      "year": 2015,
+      "season": "autumn",
+      "filename": "chlorophyll_2015_autumn.json",
+      "display_name": "Autumn 2015"
+    },
+    {
+      "year": 2015,
+      "season": "winter",
+      "filename": "chlorophyll_2015_winter.json",
+      "display_name": "Winter 2015"
+    },
+    {
+      "year": 2016,
+      "season": "spring",
+      "filename": "chlorophyll_2016_spring.json",
+      "display_name": "Spring 2016"
+    },
+    {
+      "year": 2016,
+      "season": "summer",
+      "filename": "chlorophyll_2016_summer.json",
+      "display_name": "Summer 2016"
+    },
+    {
+      "year": 2016,
+      "season": "autumn",
+      "filename": "chlorophyll_2016_autumn.json",
+      "display_name": "Autumn 2016"
+    },
+    {
+      "year": 2016,
+      "season": "winter",
+      "filename": "chlorophyll_2016_winter.json",
+      "display_name": "Winter 2016"
+    },
+    {
+      "year": 2017,
+      "season": "spring",
+      "filename": "chlorophyll_2017_spring.json",
+      "display_name": "Spring 2017"
+    },
+    {
+      "year": 2017,
+      "season": "summer",
+      "filename": "chlorophyll_2017_summer.json",
+      "display_name": "Summer 2017"
+    },
+    {
+      "year": 2017,
+      "season": "autumn",
+      "filename": "chlorophyll_2017_autumn.json",
+      "display_name": "Autumn 2017"
+    },
+    {
+      "year": 2017,
+      "season": "winter",
+      "filename": "chlorophyll_2017_winter.json",
+      "display_name": "Winter 2017"
+    },
+    {
+      "year": 2018,
+      "season": "spring",
+      "filename": "chlorophyll_2018_spring.json",
+      "display_name": "Spring 2018"
+    },
+    {
+      "year": 2018,
+      "season": "summer",
+      "filename": "chlorophyll_2018_summer.json",
+      "display_name": "Summer 2018"
+    },
+    {
+      "year": 2018,
+      "season": "autumn",
+      "filename": "chlorophyll_2018_autumn.json",
+      "display_name": "Autumn 2018"
+    },
+    {
+      "year": 2018,
+      "season": "winter",
+      "filename": "chlorophyll_2018_winter.json",
+      "display_name": "Winter 2018"
+    },
+    {
+      "year": 2019,
+      "season": "spring",
+      "filename": "chlorophyll_2019_spring.json",
+      "display_name": "Spring 2019"
+    },
+    {
+      "year": 2019,
+      "season": "summer",
+      "filename": "chlorophyll_2019_summer.json",
+      "display_name": "Summer 2019"
+    },
+    {
+      "year": 2019,
+      "season": "autumn",
+      "filename": "chlorophyll_2019_autumn.json",
+      "display_name": "Autumn 2019"
+    },
+    {
+      "year": 2019,
+      "season": "winter",
+      "filename": "chlorophyll_2019_winter.json",
+      "display_name": "Winter 2019"
+    },
+    {
+      "year": 2020,
+      "season": "spring",
+      "filename": "chlorophyll_2020_spring.json",
+      "display_name": "Spring 2020"
+    },
+    {
+      "year": 2020,
+      "season": "summer",
+      "filename": "chlorophyll_2020_summer.json",
+      "display_name": "Summer 2020"
+    },
+    {
+      "year": 2020,
+      "season": "autumn",
+      "filename": "chlorophyll_2020_autumn.json",
+      "display_name": "Autumn 2020"
+    },
+    {
+      "year": 2020,
+      "season": "winter",
+      "filename": "chlorophyll_2020_winter.json",
+      "display_name": "Winter 2020"
+    },
+    {
+      "year": 2021,
+      "season": "spring",
+      "filename": "chlorophyll_2021_spring.json",
+      "display_name": "Spring 2021"
+    },
+    {
+      "year": 2021,
+      "season": "summer",
+      "filename": "chlorophyll_2021_summer.json",
+      "display_name": "Summer 2021"
+    },
+    {
+      "year": 2021,
+      "season": "autumn",
+      "filename": "chlorophyll_2021_autumn.json",
+      "display_name": "Autumn 2021"
+    },
+    {
+      "year": 2021,
+      "season": "winter",
+      "filename": "chlorophyll_2021_winter.json",
+      "display_name": "Winter 2021"
+    },
+    {
+      "year": 2022,
+      "season": "spring",
+      "filename": "chlorophyll_2022_spring.json",
+      "display_name": "Spring 2022"
+    },
+    {
+      "year": 2022,
+      "season": "summer",
+      "filename": "chlorophyll_2022_summer.json",
+      "display_name": "Summer 2022"
+    },
+    {
+      "year": 2022,
+      "season": "autumn",
+      "filename": "chlorophyll_2022_autumn.json",
+      "display_name": "Autumn 2022"
+    },
+    {
+      "year": 2022,
+      "season": "winter",
+      "filename": "chlorophyll_2022_winter.json",
+      "display_name": "Winter 2022"
+    },
+    {
+      "year": 2023,
+      "season": "spring",
+      "filename": "chlorophyll_2023_spring.json",
+      "display_name": "Spring 2023"
+    },
+    {
+      "year": 2023,
+      "season": "summer",
+      "filename": "chlorophyll_2023_summer.json",
+      "display_name": "Summer 2023"
+    },
+    {
+      "year": 2023,
+      "season": "autumn",
+      "filename": "chlorophyll_2023_autumn.json",
+      "display_name": "Autumn 2023"
+    },
+    {
+      "year": 2023,
+      "season": "winter",
+      "filename": "chlorophyll_2023_winter.json",
+      "display_name": "Winter 2023"
+    }
+  ]
+}

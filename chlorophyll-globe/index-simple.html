@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Ocean Chlorophyll Globe - NASA Space Apps 2025</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 100%);
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      #info {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        max-width: 300px;
+        backdrop-filter: blur(10px);
+        font-size: 12px;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 1000;
+      }
+
+      .spinner {
+        border: 3px solid rgba(0, 204, 255, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid #00ccff;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      a {
+        color: #00ccff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        color: #66ddff;
+      }
+    </style>
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div>Loading Ocean Data...</div>
+  </div>
+
+  <div id="title">
+    <h2 style="margin: 0; color: #00ccff;">🌊 Ocean Chlorophyll Globe</h2>
+    <div style="font-size: 12px; color: #cccccc; margin-top: 5px;">
+      NASA MODIS Aqua Satellite Data<br>
+      <span style="color: #00ccff; font-weight: bold;">Shark Habitat Prediction Model</span>
+    </div>
+  </div>
+
+  <div id="info">
+    <strong>🛰️ NASA Space Apps Challenge 2025</strong><br>
+    <strong>Project:</strong> Shark Habitat Prediction<br>
+    <strong>Data:</strong> MODIS Aqua Chlorophyll-a<br>
+    <strong>Period:</strong> August 2002<br><br>
+    
+    <strong>🎮 Controls:</strong><br>
+    • <strong>Mouse:</strong> Rotate globe<br>
+    • <strong>Wheel:</strong> Zoom in/out<br><br>
+    
+    <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+    <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a>
+  </div>
+
+  <script type="text/javascript" src="../globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="../globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="../globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="chlorophyll-globe.js"></script>
+  <script type="text/javascript">
+
+    // Global variables
+    let globe;
+    let originalData = null;
+
+    // Initialize the application
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+      initializeGlobe();
+    }
+
+    function initializeGlobe() {
+      const container = document.getElementById('container');
+      
+      console.log('🌊 Initializing Chlorophyll Globe...');
+      
+      try {
+        // Create globe with simple options
+        globe = new DAT.Globe(container, {
+          imgDir: './'
+        });
+
+        console.log('✅ Chlorophyll Globe initialized successfully');
+        
+        // Load chlorophyll data
+        loadChlorophyllData();
+        
+        // Start animation loop
+        TWEEN.start();
+        globe.animate();
+        
+      } catch (error) {
+        console.error('❌ Error initializing globe:', error);
+        showError('Failed to initialize 3D globe');
+      }
+    }
+
+    function loadChlorophyllData() {
+      console.log('📡 Loading chlorophyll data...');
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'chlorophyll_data.json?v=' + Date.now(), true);
+      
+      xhr.onreadystatechange = function(e) {
+        console.log(`📡 XHR State: ${xhr.readyState}, Status: ${xhr.status}`);
+        
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              const data = JSON.parse(xhr.responseText);
+              originalData = data;
+              
+              console.log('✅ Chlorophyll data loaded successfully');
+              processAndDisplayData(data);
+              
+              // Hide loading screen
+              document.getElementById('loading').style.display = 'none';
+              
+            } catch (error) {
+              console.error('❌ Error parsing chlorophyll data:', error);
+              showError('Failed to parse data file');
+            }
+          } else {
+            console.error('❌ Failed to load chlorophyll data');
+            showError('Failed to load data file');
+          }
+        }
+      };
+      xhr.send(null);
+    }
+
+    function processAndDisplayData(data) {
+      console.log('🔄 Processing data...', data);
+      
+      if (!data || !data[0] || !data[0][1]) {
+        console.error('❌ Invalid data format');
+        showError('Invalid data format');
+        return;
+      }
+
+      const rawData = data[0][1];
+      const pointCount = rawData.length / 3;
+      
+      console.log(`📊 Processing ${pointCount} data points`);
+      
+      try {
+        // Add data to globe
+        console.log('🌍 Adding data to globe...');
+        globe.addData(rawData, {
+          format: 'magnitude', 
+          name: 'Chlorophyll-a',
+          animated: false
+        });
+        
+        console.log('🎨 Creating points...');
+        globe.createPoints();
+        
+        console.log(`✅ Successfully displaying ${pointCount} data points`);
+        
+      } catch (error) {
+        console.error('❌ Error processing data:', error);
+        showError('Failed to process data');
+      }
+    }
+
+    function showError(message) {
+      const loading = document.getElementById('loading');
+      loading.innerHTML = `
+        <div style="color: #ff6666;">
+          <div>❌ Error</div>
+          <div style="font-size: 12px; margin-top: 10px;">${message}</div>
+        </div>
+      `;
+    }
+
+  </script>
+
+  </body>
+</html>
