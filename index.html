@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Space Apps 2025 - Globe Visualizations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #001122 0%, #003366 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ccff, #66ddff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #cccccc;
+        }
+        
+        .globe-options {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .globe-card {
+            background: rgba(0, 20, 40, 0.8);
+            border: 2px solid rgba(0, 150, 200, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            width: 280px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+        
+        .globe-card:hover {
+            border-color: #00ccff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 204, 255, 0.3);
+        }
+        
+        .globe-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .globe-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00ccff;
+        }
+        
+        .globe-description {
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        
+        .globe-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8em;
+        }
+        
+        .globe-features li {
+            margin: 5px 0;
+            color: #aaaaaa;
+        }
+        
+        .globe-features li:before {
+            content: "✓ ";
+            color: #00ccff;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #888888;
+        }
+        
+        .footer a {
+            color: #00ccff;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Globe Visualizations</h1>
+        <div class="subtitle">
+            NASA Space Apps Challenge 2025 - Shark Habitat Prediction & Ocean Time Series
+        </div>
+        
+        <div class="globe-options">
+            <a href="globe/" class="globe-card">
+                <div class="globe-icon">👥</div>
+                <div class="globe-title">Population Globe</div>
+                <div class="globe-description">
+                    Visualize global population data from 1990-2000 using the original WebGL Globe implementation.
+                </div>
+                <ul class="globe-features">
+                    <li>Historical population data</li>
+                    <li>Time-based animation</li>
+                    <li>Interactive 3D globe</li>
+                    <li>Original Google Data Arts project</li>
+                </ul>
+            </a>
+            
+            <a href="chlorophyll-globe/" class="globe-card">
+                <div class="globe-icon">🌊</div>
+                <div class="globe-title">Chlorophyll Globe</div>
+                <div class="globe-description">
+                    Single-period ocean productivity visualization using NASA MODIS satellite data (August 2002).
+                </div>
+                <ul class="globe-features">
+                    <li>NASA MODIS Aqua satellite data</li>
+                    <li>Ocean chlorophyll concentration</li>
+                    <li>Variable height visualization</li>
+                    <li>Shark habitat analysis</li>
+                    <li>50,000 data points</li>
+                </ul>
+            </a>
+
+            <a href="chlorophyll-globe/index-timeseries.html" class="globe-card">
+                <div class="globe-icon">📅</div>
+                <div class="globe-title">Seasonal Time Series</div>
+                <div class="globe-description">
+                    21-year seasonal evolution of ocean productivity (2003-2023) with animated playback controls.
+                </div>
+                <ul class="globe-features">
+                    <li>84 seasonal time periods</li>
+                    <li>Animated playback controls</li>
+                    <li>Spring blooms & seasonal cycles</li>
+                    <li>Long-term climate trends</li>
+                    <li>Shark migration patterns</li>
+                </ul>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>
+                Built with <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+                Data from <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a> | 
+                <a href="https://github.com/your-repo" target="_blank">View Source</a>
+            </p>
+            <p>NASA Space Apps Challenge 2025 - Shark Habitat Prediction Project</p>
+        </div>
+    </div>
+</body>
+</html>
