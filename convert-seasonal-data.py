@@ -203,8 +203,8 @@ def main():
     print("=" * 50)
     
     # Input and output directories
-    input_dir = Path("chlorophyll-globe/Seasonal")
-    output_dir = Path("chlorophyll-globe/seasonal_json")
+    input_dir = Path("chlorophyll-datasets/chloropyhll-seasonal-binned")
+    output_dir = Path("chlorophyll-datasets/chlorophyll-seasonal-json")
     output_dir.mkdir(exist_ok=True)
     
     if not input_dir.exists():

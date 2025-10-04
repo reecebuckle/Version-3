@@ -1,0 +1,601 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Ocean Chlorophyll Heatmap - NASA Space Apps 2025</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 100%);
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      #info {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        max-width: 300px;
+        backdrop-filter: blur(10px);
+        font-size: 12px;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      #time-controls {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 20px;
+        min-width: 350px;
+        backdrop-filter: blur(10px);
+      }
+
+      .control-group {
+        margin-bottom: 15px;
+      }
+
+      .control-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #00ccff;
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      .time-slider {
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        background: #003366;
+        outline: none;
+        -webkit-appearance: none;
+        margin: 10px 0;
+      }
+
+      .time-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #00ccff;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+      }
+
+      .time-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #00ccff;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+      }
+
+      .button {
+        background: linear-gradient(135deg, #0066cc, #00ccff);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .button:hover {
+        background: linear-gradient(135deg, #0088ff, #00ffff);
+        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+      }
+
+      .button:disabled {
+        background: #333;
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      .button.playing {
+        background: linear-gradient(135deg, #ff6600, #ffaa00);
+      }
+
+      .time-display {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #00ccff;
+        margin: 10px 0;
+        padding: 10px;
+        background: rgba(0, 100, 150, 0.2);
+        border-radius: 5px;
+      }
+
+      .season-indicator {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        margin-left: 10px;
+      }
+
+      .season-spring { background: #66cc66; color: #003300; }
+      .season-summer { background: #ffcc00; color: #663300; }
+      .season-autumn { background: #ff9966; color: #330000; }
+      .season-winter { background: #66ccff; color: #003366; }
+
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 1000;
+      }
+
+      .spinner {
+        border: 3px solid rgba(0, 204, 255, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid #00ccff;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .stats {
+        font-size: 11px;
+        color: #cccccc;
+        margin-top: 10px;
+      }
+
+      .highlight {
+        color: #00ccff;
+        font-weight: bold;
+      }
+
+      a {
+        color: #00ccff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        color: #66ddff;
+      }
+
+      .playback-controls {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        margin: 10px 0;
+      }
+
+      .speed-control {
+        font-size: 11px;
+        color: #cccccc;
+        margin-left: 10px;
+      }
+
+      #legend {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        backdrop-filter: blur(10px);
+      }
+
+      .legend-gradient {
+        width: 200px;
+        height: 20px;
+        background: linear-gradient(to right, 
+          #003296 0%,    /* Deep ocean blue - very low */
+          #0082ff 25%,   /* Light blue - low */
+          #00ff9b 50%,   /* Cyan-green - medium */
+          #32cd32 75%,   /* Green - high */
+          #ffff00 100%   /* Yellow - very high blooms */
+        );
+        border-radius: 3px;
+        margin: 8px 0;
+        border: 1px solid rgba(0, 150, 200, 0.3);
+      }
+
+      .legend-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: #cccccc;
+      }
+    </style>
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div>Loading Heatmap Data...</div>
+  </div>
+
+  <div id="title">
+    <h2 style="margin: 0; color: #00ccff;">🌊 Ocean Chlorophyll Heatmap</h2>
+    <div style="font-size: 12px; color: #cccccc; margin-top: 5px;">
+      NASA MODIS Aqua Satellite Data (2003-2023)<br>
+      <span style="color: #00ccff; font-weight: bold;">Smooth Seasonal Evolution</span>
+    </div>
+  </div>
+
+  <div id="time-controls">
+    <div class="control-group">
+      <label class="control-label">📅 Time Period</label>
+      <div class="time-display" id="current-time">
+        Loading...
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">🎬 Playback Controls</label>
+      <div class="playback-controls">
+        <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play</button>
+        <button id="prev-season" class="button" onclick="previousPeriod()">⏮️ Prev</button>
+        <button id="next-season" class="button" onclick="nextPeriod()">⏭️ Next</button>
+        <button id="reset-time" class="button" onclick="resetToStart()">⏪ Reset</button>
+      </div>
+      <div class="speed-control">
+        Speed: 
+        <select id="playback-speed" onchange="updatePlaybackSpeed()">
+          <option value="2000">Slow (2s)</option>
+          <option value="1000" selected>Normal (1s)</option>
+          <option value="500">Fast (0.5s)</option>
+          <option value="200">Very Fast (0.2s)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">🎯 Time Navigation</label>
+      <input type="range" id="time-slider" class="time-slider" 
+             min="0" max="83" value="0" 
+             oninput="scrubToTime(this.value)">
+      <div style="display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 5px;">
+        <span>Spring 2003</span>
+        <span>Winter 2023</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">🎨 Heatmap Transparency</label>
+      <input type="range" id="transparency-slider" class="time-slider" 
+             min="0" max="100" value="80" 
+             oninput="updateTransparency(this.value)">
+      <div style="display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 5px;">
+        <span>Transparent</span>
+        <span>Current: <span id="transparency-value">80</span>%</span>
+        <span>Opaque</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div>Visualization: <span class="highlight">Ocean-Only Heatmap</span></div>
+      <div>Resolution: <span class="highlight">512x256 texture</span></div>
+      <div>Filtering: <span class="highlight">Deep ocean areas</span></div>
+      <div>Time Range: <span class="highlight">21 years</span></div>
+    </div>
+  </div>
+
+  <div id="legend">
+    <div style="font-weight: bold; margin-bottom: 8px; color: #00ccff;">
+      🧬 Chlorophyll-a Concentration
+    </div>
+    <div class="legend-gradient"></div>
+    <div class="legend-labels">
+      <span>Very Low<br>0.001</span>
+      <span>Low<br>0.01</span>
+      <span>Medium<br>0.1</span>
+      <span>High<br>1.0</span>
+      <span>Very High<br>10+ mg/m³</span>
+    </div>
+    <div style="font-size: 10px; color: #cccccc; margin-top: 8px;">
+      🌊 <strong>Ocean-Only Heatmap:</strong><br>
+      • Deep ocean areas only<br>
+      • Enhanced edge detection<br>
+      • No continental spillover<br>
+      • Adjustable transparency
+    </div>
+  </div>
+
+  <div id="info">
+    <strong>🛰️ NASA Space Apps Challenge 2025</strong><br>
+    <strong>Project:</strong> Smooth Heatmap Time Series<br>
+    <strong>Data:</strong> MODIS Aqua Chlorophyll-a<br>
+    <strong>Coverage:</strong> 2003-2023 Seasonal<br><br>
+    
+    <strong>🎮 Controls:</strong><br>
+    • <strong>Mouse:</strong> Rotate globe<br>
+    • <strong>Wheel:</strong> Zoom in/out<br>
+    • <strong>Play:</strong> Auto-animate through time<br>
+    • <strong>Slider:</strong> Scrub to any time period<br><br>
+    
+    <strong>🌊 Heatmap Features:</strong><br>
+    • <span class="season-indicator season-spring">Spring</span> Smooth blooms<br>
+    • <span class="season-indicator season-summer">Summer</span> Continuous patterns<br>
+    • <span class="season-indicator season-autumn">Autumn</span> Fluid transitions<br>
+    • <span class="season-indicator season-winter">Winter</span> Seamless evolution<br><br>
+    
+    <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+    <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a>
+  </div>
+
+  <script type="text/javascript" src="../globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="../globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="../globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="heatmap-globe.js"></script>
+  <script type="text/javascript">
+
+    // Global variables
+    let globe;
+    let timeSeriesData = [];
+    let currentTimeIndex = 0;
+    let isPlaying = false;
+    let playbackInterval = null;
+    let playbackSpeed = 1000; // milliseconds
+
+    // Initialize the application
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+      initializeHeatmapGlobe();
+    }
+
+    function initializeHeatmapGlobe() {
+      const container = document.getElementById('container');
+      
+      console.log('🌊 Initializing Heatmap Globe...');
+      
+      try {
+        // Create globe with heatmap capabilities
+        globe = new DAT.HeatmapGlobe(container, {
+          imgDir: './'
+        });
+
+        console.log('✅ Heatmap Globe initialized successfully');
+        
+        // Load time series index
+        loadTimeSeriesIndex();
+        
+        // Start animation loop
+        TWEEN.start();
+        globe.animate();
+        
+      } catch (error) {
+        console.error('❌ Error initializing globe:', error);
+        showError('Failed to initialize 3D globe');
+      }
+    }
+
+    function loadTimeSeriesIndex() {
+      console.log('📋 Loading time series index...');
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '../chlorophyll-datasets/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
+      
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              const index = JSON.parse(xhr.responseText);
+              timeSeriesData = index.time_series;
+              
+              console.log(`✅ Loaded ${timeSeriesData.length} time periods`);
+              
+              // Load first time period
+              loadTimePeriod(0);
+              
+            } catch (error) {
+              console.error('❌ Error parsing time series index:', error);
+              showError('Failed to parse time series index');
+            }
+          } else {
+            console.error('❌ Failed to load time series index');
+            showError('Failed to load time series index');
+          }
+        }
+      };
+      xhr.send(null);
+    }
+
+    function loadTimePeriod(index) {
+      if (index < 0 || index >= timeSeriesData.length) return;
+      
+      currentTimeIndex = index;
+      const period = timeSeriesData[index];
+      
+      console.log(`📡 Loading ${period.display_name}...`);
+      updateTimeDisplay(period);
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `../chlorophyll-datasets/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
+      
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              const data = JSON.parse(xhr.responseText);
+              displayHeatmapData(data, period);
+              
+              // Hide loading screen on first load
+              if (index === 0) {
+                document.getElementById('loading').style.display = 'none';
+              }
+              
+            } catch (error) {
+              console.error('❌ Error parsing time period data:', error);
+            }
+          } else {
+            console.error(`❌ Failed to load ${period.filename}`);
+          }
+        }
+      };
+      xhr.send(null);
+    }
+
+    function displayHeatmapData(data, period) {
+      if (!data || !data[0] || !data[0][1]) {
+        console.error('❌ Invalid time period data format');
+        return;
+      }
+
+      const rawData = data[0][1];
+      console.log(`🎯 Displaying ${period.display_name} heatmap`);
+      
+      try {
+        // Update heatmap texture
+        globe.updateHeatmap(rawData, period);
+        
+      } catch (error) {
+        console.error('❌ Error displaying heatmap data:', error);
+      }
+    }
+
+    function updateTimeDisplay(period) {
+      const seasonClass = `season-${period.season}`;
+      document.getElementById('current-time').innerHTML = `
+        ${period.year} <span class="season-indicator ${seasonClass}">${period.season.toUpperCase()}</span>
+      `;
+      
+      // Update slider position
+      document.getElementById('time-slider').value = currentTimeIndex;
+    }
+
+    // Playback controls (same as time series)
+    function togglePlayback() {
+      isPlaying = !isPlaying;
+      const button = document.getElementById('play-pause');
+      
+      if (isPlaying) {
+        button.textContent = '⏸️ Pause';
+        button.classList.add('playing');
+        startPlayback();
+      } else {
+        button.textContent = '▶️ Play';
+        button.classList.remove('playing');
+        stopPlayback();
+      }
+    }
+
+    function startPlayback() {
+      playbackInterval = setInterval(() => {
+        if (currentTimeIndex < timeSeriesData.length - 1) {
+          loadTimePeriod(currentTimeIndex + 1);
+        } else {
+          loadTimePeriod(0);
+        }
+      }, playbackSpeed);
+    }
+
+    function stopPlayback() {
+      if (playbackInterval) {
+        clearInterval(playbackInterval);
+        playbackInterval = null;
+      }
+    }
+
+    function previousPeriod() {
+      if (currentTimeIndex > 0) {
+        loadTimePeriod(currentTimeIndex - 1);
+      }
+    }
+
+    function nextPeriod() {
+      if (currentTimeIndex < timeSeriesData.length - 1) {
+        loadTimePeriod(currentTimeIndex + 1);
+      }
+    }
+
+    function resetToStart() {
+      stopPlayback();
+      isPlaying = false;
+      document.getElementById('play-pause').textContent = '▶️ Play';
+      document.getElementById('play-pause').classList.remove('playing');
+      loadTimePeriod(0);
+    }
+
+    function scrubToTime(value) {
+      const index = parseInt(value);
+      loadTimePeriod(index);
+    }
+
+    function updatePlaybackSpeed() {
+      const select = document.getElementById('playback-speed');
+      playbackSpeed = parseInt(select.value);
+      
+      if (isPlaying) {
+        stopPlayback();
+        startPlayback();
+      }
+    }
+
+    function updateTransparency(value) {
+      const opacity = value / 100;
+      document.getElementById('transparency-value').textContent = value;
+      
+      if (globe && globe.setHeatmapOpacity) {
+        globe.setHeatmapOpacity(opacity);
+      }
+    }
+
+    function showError(message) {
+      const loading = document.getElementById('loading');
+      loading.innerHTML = `
+        <div style="color: #ff6666;">
+          <div>❌ Error</div>
+          <div style="font-size: 12px; margin-top: 10px;">${message}</div>
+        </div>
+      `;
+    }
+
+  </script>
+
+  </body>
+</html>

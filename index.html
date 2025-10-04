@@ -1,187 +1,340 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <title>NASA Space Apps 2025 - Ocean Chlorophyll Visualization Suite</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA Space Apps 2025 - Globe Visualizations</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #001122 0%, #003366 100%);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .container {
-            text-align: center;
-            max-width: 800px;
-            padding: 40px;
-        }
-        
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #00ccff, #66ddff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 40px;
-            color: #cccccc;
-        }
-        
-        .globe-options {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .globe-card {
-            background: rgba(0, 20, 40, 0.8);
-            border: 2px solid rgba(0, 150, 200, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            width: 280px;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            flex: 1;
-            min-width: 280px;
-            max-width: 350px;
-        }
-        
-        .globe-card:hover {
-            border-color: #00ccff;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 204, 255, 0.3);
-        }
-        
-        .globe-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        
-        .globe-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #00ccff;
-        }
-        
-        .globe-description {
-            font-size: 0.9em;
-            line-height: 1.5;
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-        
-        .globe-features {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.8em;
-        }
-        
-        .globe-features li {
-            margin: 5px 0;
-            color: #aaaaaa;
-        }
-        
-        .globe-features li:before {
-            content: "✓ ";
-            color: #00ccff;
-            font-weight: bold;
-        }
-        
-        .footer {
-            margin-top: 60px;
-            font-size: 0.9em;
-            color: #888888;
-        }
-        
-        .footer a {
-            color: #00ccff;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🌍 Globe Visualizations</h1>
-        <div class="subtitle">
-            NASA Space Apps Challenge 2025 - Shark Habitat Prediction & Ocean Time Series
-        </div>
-        
-        <div class="globe-options">
-            <a href="globe/" class="globe-card">
-                <div class="globe-icon">👥</div>
-                <div class="globe-title">Population Globe</div>
-                <div class="globe-description">
-                    Visualize global population data from 1990-2000 using the original WebGL Globe implementation.
-                </div>
-                <ul class="globe-features">
-                    <li>Historical population data</li>
-                    <li>Time-based animation</li>
-                    <li>Interactive 3D globe</li>
-                    <li>Original Google Data Arts project</li>
-                </ul>
-            </a>
-            
-            <a href="chlorophyll-globe/" class="globe-card">
-                <div class="globe-icon">🌊</div>
-                <div class="globe-title">Chlorophyll Globe</div>
-                <div class="globe-description">
-                    Single-period ocean productivity visualization using NASA MODIS satellite data (August 2002).
-                </div>
-                <ul class="globe-features">
-                    <li>NASA MODIS Aqua satellite data</li>
-                    <li>Ocean chlorophyll concentration</li>
-                    <li>Variable height visualization</li>
-                    <li>Shark habitat analysis</li>
-                    <li>50,000 data points</li>
-                </ul>
-            </a>
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 50%, #004488 100%);
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-            <a href="chlorophyll-globe/index-timeseries.html" class="globe-card">
-                <div class="globe-icon">📅</div>
-                <div class="globe-title">Seasonal Time Series</div>
-                <div class="globe-description">
-                    21-year seasonal evolution of ocean productivity (2003-2023) with animated playback controls.
-                </div>
-                <ul class="globe-features">
-                    <li>84 seasonal time periods</li>
-                    <li>Animated playback controls</li>
-                    <li>Spring blooms & seasonal cycles</li>
-                    <li>Long-term climate trends</li>
-                    <li>Shark migration patterns</li>
-                </ul>
-            </a>
-        </div>
+      .container {
+        max-width: 1200px;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .header {
+        margin-bottom: 50px;
+      }
+
+      .header h1 {
+        font-size: 3em;
+        margin: 0 0 20px 0;
+        background: linear-gradient(135deg, #00ccff, #66ddff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 30px rgba(0, 204, 255, 0.3);
+      }
+
+      .header .subtitle {
+        font-size: 1.2em;
+        color: #cccccc;
+        margin-bottom: 10px;
+      }
+
+      .header .description {
+        font-size: 1em;
+        color: #aaaaaa;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .visualizations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin: 50px 0;
+      }
+
+      .viz-card {
+        background: rgba(0, 20, 40, 0.8);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 12px;
+        padding: 30px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        text-align: left;
+      }
+
+      .viz-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0, 204, 255, 0.6);
+        box-shadow: 0 10px 30px rgba(0, 204, 255, 0.2);
+      }
+
+      .viz-card h3 {
+        color: #00ccff;
+        font-size: 1.4em;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .viz-card .description {
+        color: #cccccc;
+        margin-bottom: 20px;
+        font-size: 0.95em;
+      }
+
+      .viz-card .features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 25px 0;
+      }
+
+      .viz-card .features li {
+        color: #aaaaaa;
+        font-size: 0.9em;
+        margin: 8px 0;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .viz-card .features li:before {
+        content: "•";
+        color: #00ccff;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+
+      .viz-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #0066cc, #00ccff);
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95em;
+      }
+
+      .viz-button:hover {
+        background: linear-gradient(135deg, #0088ff, #00ffff);
+        box-shadow: 0 0 20px rgba(0, 204, 255, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .viz-button.primary {
+        background: linear-gradient(135deg, #ff6600, #ffaa00);
+      }
+
+      .viz-button.primary:hover {
+        background: linear-gradient(135deg, #ff8800, #ffcc00);
+        box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+      }
+
+      .footer {
+        margin-top: 50px;
+        padding: 30px;
+        background: rgba(0, 20, 40, 0.6);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 150, 200, 0.2);
+      }
+
+      .footer h4 {
+        color: #00ccff;
+        margin: 0 0 15px 0;
+      }
+
+      .footer p {
+        color: #cccccc;
+        margin: 10px 0;
+        font-size: 0.9em;
+      }
+
+      .footer a {
+        color: #00ccff;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+        color: #66ddff;
+      }
+
+      .tech-stack {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+      }
+
+      .tech-item {
+        background: rgba(0, 50, 100, 0.3);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        color: #cccccc;
+        border: 1px solid rgba(0, 150, 200, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2em;
+        }
         
-        <div class="footer">
-            <p>
-                Built with <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
-                Data from <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a> | 
-                <a href="https://github.com/your-repo" target="_blank">View Source</a>
-            </p>
-            <p>NASA Space Apps Challenge 2025 - Shark Habitat Prediction Project</p>
+        .visualizations {
+          grid-template-columns: 1fr;
+        }
+        
+        .viz-card {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <h1>🌊 Ocean Chlorophyll Visualization Suite</h1>
+        <div class="subtitle">NASA Space Apps Challenge 2025</div>
+        <div class="description">
+          Interactive 3D visualizations of ocean chlorophyll-a concentrations using NASA MODIS Aqua satellite data.
+          Explore 23 years of monthly ocean productivity patterns through multiple visualization techniques.
         </div>
+      </div>
+
+      <div class="tech-stack">
+        <div class="tech-item">🛰️ NASA MODIS Aqua</div>
+        <div class="tech-item">🌐 WebGL Globe</div>
+        <div class="tech-item">📊 Three.js</div>
+        <div class="tech-item">🎨 Custom Shaders</div>
+        <div class="tech-item">📈 Time Series</div>
+      </div>
+
+      <div class="visualizations">
+        
+        <div class="viz-card">
+          <h3>📅 Monthly Image Globe</h3>
+          <div class="description">
+            High-resolution PNG images displayed directly on a 3D globe. Each image represents a monthly average 
+            of chlorophyll-a concentrations with crisp, detailed visualization.
+          </div>
+          <ul class="features">
+            <li>Direct PNG texture mapping</li>
+            <li>4km resolution satellite imagery</li>
+            <li>Monthly progression (2002-2025)</li>
+            <li>Interactive 3D rotation and zoom</li>
+            <li>Adjustable image opacity</li>
+          </ul>
+          <a href="chlorophyll-globe/index-images.html" class="viz-button primary">🚀 Launch Monthly Globe</a>
+        </div>
+
+        <div class="viz-card">
+          <h3>🌿 Seasonal Image Globe</h3>
+          <div class="description">
+            Seasonal PNG images showing quarterly patterns of ocean productivity. Perfect for understanding 
+            annual cycles and long-term seasonal trends in chlorophyll concentrations.
+          </div>
+          <ul class="features">
+            <li>Seasonal PNG texture display</li>
+            <li>4 seasons per year (Spring/Summer/Autumn/Winter)</li>
+            <li>Long-term seasonal trend analysis</li>
+            <li>Simplified temporal navigation</li>
+            <li>Educational seasonal focus</li>
+          </ul>
+          <a href="chlorophyll-globe/index-seasonal-images.html" class="viz-button">🌿 View Seasonal Globe</a>
+        </div>
+
+        <div class="viz-card">
+          <h3>🌊 Ocean-Only Heatmap</h3>
+          <div class="description">
+            Smooth heatmap overlay with advanced ocean filtering to prevent continental spillover. 
+            Features enhanced edge detection and deep ocean area focus.
+          </div>
+          <ul class="features">
+            <li>Ocean-only data filtering</li>
+            <li>Smooth gradient rendering</li>
+            <li>Continental shelf exclusion</li>
+            <li>Adjustable transparency</li>
+            <li>Enhanced color schemes</li>
+          </ul>
+          <a href="chlorophyll-globe/index-heatmap.html" class="viz-button">🌊 View Heatmap</a>
+        </div>
+
+        <div class="viz-card">
+          <h3>📊 Time Series Points</h3>
+          <div class="description">
+            Classic point-based visualization showing individual data points as 3D spikes. 
+            Perfect for understanding data density and spatial distribution patterns.
+          </div>
+          <ul class="features">
+            <li>3D data point spikes</li>
+            <li>Height-based magnitude encoding</li>
+            <li>Seasonal animation controls</li>
+            <li>Interactive time scrubbing</li>
+            <li>Classic WebGL Globe style</li>
+          </ul>
+          <a href="chlorophyll-globe/index-timeseries.html" class="viz-button">📈 Explore Time Series</a>
+        </div>
+
+        <div class="viz-card">
+          <h3>🎯 Simple Globe View</h3>
+          <div class="description">
+            Streamlined visualization focusing on core functionality. Great for presentations 
+            and educational purposes with clean, minimal interface.
+          </div>
+          <ul class="features">
+            <li>Simplified user interface</li>
+            <li>Essential controls only</li>
+            <li>Fast loading and rendering</li>
+            <li>Educational focus</li>
+            <li>Mobile-friendly design</li>
+          </ul>
+          <a href="chlorophyll-globe/index-simple.html" class="viz-button">🎯 Simple View</a>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <h4>🛰️ About This Project</h4>
+        <p>
+          This visualization suite was developed for the <strong>NASA Space Apps Challenge 2025</strong>, 
+          specifically targeting the <strong>Terra's 25th Anniversary Animation Challenge</strong>. 
+          The project showcases 23 years of ocean chlorophyll-a data from NASA's MODIS Aqua satellite, 
+          demonstrating seasonal patterns, climate trends, and ocean productivity cycles.
+        </p>
+        
+        <p>
+          <strong>Data Source:</strong> NASA Ocean Color Web - MODIS Aqua Level-3 Chlorophyll-a (4km resolution)<br>
+          <strong>Time Range:</strong> 2002-2025 (Monthly averages)<br>
+          <strong>Technology:</strong> WebGL Globe, Three.js, Custom GLSL Shaders<br>
+          <strong>Purpose:</strong> Educational visualization and scientific communication
+        </p>
+
+        <p>
+          <strong>Links:</strong>
+          <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+          <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a> | 
+          <a href="https://www.spaceappschallenge.org/" target="_blank">NASA Space Apps</a>
+        </p>
+      </div>
     </div>
-</body>
+
+  </body>
 </html>
