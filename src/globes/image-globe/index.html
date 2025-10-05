@@ -326,6 +326,7 @@
           <select id="dataset-type" onchange="switchDataset()">
             <option value="monthly">📅 Monthly Images</option>
             <option value="seasonal">🌿 Seasonal Images</option>
+            <option value="annual">📊 Annual Images</option>
           </select>
         </div>
       </div>
@@ -385,7 +386,6 @@
     <script src="../../assets/globe/third-party/Detector.js"></script>
     <script src="../../assets/globe/third-party/three.min.js"></script>
     <script src="../../assets/globe/third-party/Tween.js"></script>
-    <script src="../../assets/globe/globe.js"></script>
     <script src="image-globe.js"></script>
 
     <script>
@@ -467,9 +467,12 @@
           if (datasetType === 'monthly') {
             descriptionEl.textContent = 'Monthly PNG Image Display';
             periodLabel.textContent = '📅 Current Month';
-          } else {
+          } else if (datasetType === 'seasonal') {
             descriptionEl.textContent = 'Seasonal PNG Image Display';
             periodLabel.textContent = '🌿 Current Season';
+          } else if (datasetType === 'annual') {
+            descriptionEl.textContent = 'Annual PNG Image Display';
+            periodLabel.textContent = '📊 Current Year';
           }
         }
 
@@ -478,8 +481,10 @@
           
           if (currentDataset === 'monthly') {
             generateMonthlyImageList();
-          } else {
+          } else if (currentDataset === 'seasonal') {
             generateSeasonalImageList();
+          } else if (currentDataset === 'annual') {
+            generateAnnualImageList();
           }
           
           console.log(`📋 Generated ${imageList.length} ${currentDataset} images`);
@@ -588,6 +593,27 @@
           }
         }
 
+        function generateAnnualImageList() {
+          console.log('📋 Generating annual image list from PNG files...');
+          
+          // Generate annual data from 2002 to 2025
+          for (let year = 2002; year <= 2025; year++) {
+            const startDate = `${year}0101`;
+            const endDate = `${year}1231`;
+            
+            const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.YR.CHL.chlor_a.4km.nc.webp`;
+            const imagePath = `../../../chlorophyll-datasets/chlorophyll-annual-compressed/${filename}`;
+            
+            imageList.push({
+              path: imagePath,
+              filename: filename,
+              year: year,
+              displayName: `Year ${year}`,
+              period: `${year}`
+            });
+          }
+        }
+
         function getMonthName(month) {
           const months = [
             'January', 'February', 'March', 'April', 'May', 'June',
@@ -608,7 +634,13 @@
           document.getElementById('current-time').textContent = imageData.displayName;
           
           // Load the image as texture
-          globe.loadImage(imageData.path);
+          globe.loadImageTexture(imageData.path, function(error) {
+            if (error) {
+              console.error('❌ Failed to load image:', imageData.path);
+            } else {
+              console.log('✅ Successfully loaded image:', imageData.displayName);
+            }
+          });
         }
 
         function togglePlayback() {
