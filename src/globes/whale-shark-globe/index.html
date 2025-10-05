@@ -63,7 +63,7 @@
         width: 320px;
       }
 
-      #shark-legend {
+      #stats-panel {
         position: absolute;
         top: 20px;
         right: 20px;
@@ -370,7 +370,7 @@
           margin-bottom: 10px;
         }
 
-        #shark-legend {
+        #stats-panel {
           position: relative;
           top: 10px;
           right: 10px;
@@ -443,7 +443,7 @@
       }
 
       @media (max-width: 480px) {
-        #title, #shark-legend, #time-controls, #shark-controls, #info-panel {
+        #title, #stats-panel, #time-controls, #shark-controls {
           margin: 5px;
           padding: 10px;
         }
@@ -495,31 +495,38 @@
       This visualisation shows GPS tracking data for whale sharks in the Gulf of Mexico. 
       Each coloured line represents an individual shark's movement path over time.<br><br>
       
+      <strong>🦈 About Whale Sharks:</strong><br>
+      World's largest fish species, reaching up to 12m in length. These gentle giants migrate vast distances 
+      following plankton blooms and seasonal feeding opportunities.<br><br>
+      
       <strong>💡 How to Use:</strong><br>
       • Click <strong>"🌊 Show All Data"</strong> to see complete tracking paths<br>
-      • Use <strong>"▶️ Play"</strong> to animate through monthly periods<br>
-      • Toggle individual sharks on/off in the right panel
+      • Use <strong>"▶️ Play Years"</strong> to animate through yearly periods<br>
+      • Toggle individual sharks on/off in the right panel<br><br>
+      
+      <div style="font-size: 12px; color: #888; border-top: 1px solid #333; padding-top: 10px; margin-top: 10px;">
+        <strong>🌊 Gulf of Mexico Focus:</strong> 22°N - 30°N, 98°W - 82°W<br>
+        <strong>📊 Data Source:</strong> Movebank GPS Tracking
+      </div>
     </div>
   </div>
 
-  <div id="shark-legend">
-    <div class="legend-header">🎨 Visualization Legend</div>
+  <div id="stats-panel">
+    <div class="legend-header">📊 Movement Statistics</div>
     
-    <div class="track-legend">
-      <div class="track-line"></div>
-      <span>Movement Track</span>
-    </div>
-    
-    <div class="track-legend">
-      <div class="track-marker"></div>
-      <span>Current Position</span>
+    <div class="stats-grid" id="live-stats-grid">
+      <!-- Live statistics will be populated here -->
     </div>
     
     <div style="margin: 15px 0; padding: 10px; background: rgba(0, 100, 150, 0.1); border-radius: 4px;">
-      <div style="font-size: 12px; color: #cccccc;">
-        <strong>🌊 Gulf of Mexico Focus</strong><br>
-        Coordinates: 22°N - 30°N, 98°W - 82°W<br>
-        <strong>📊 Data Source:</strong> Movebank GPS Tracking
+      <div style="font-size: 11px; color: #cccccc; text-align: center;">
+        <strong>🎨 Legend</strong><br>
+        <div style="display: flex; align-items: center; justify-content: center; margin: 5px 0;">
+          <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 5px;"></div>
+          <span style="font-size: 10px;">Track</span>
+          <div style="width: 6px; height: 6px; background: #ff6600; border-radius: 50%; margin: 0 5px 0 10px;"></div>
+          <span style="font-size: 10px;">Position</span>
+        </div>
       </div>
     </div>
   </div>
@@ -538,8 +545,8 @@
              min="0" max="100" value="0" 
              oninput="scrubToTime(this.value)">
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 5px;">
-        <span>June 2009</span>
-        <span>July 2015</span>
+        <span>2009</span>
+        <span>2015</span>
       </div>
     </div>
 
@@ -547,10 +554,9 @@
       <label class="control-label">🎬 Playback Controls</label>
       <div class="playback-controls">
         <button id="show-all-time" class="button" onclick="showAllTimeData()" style="background: linear-gradient(135deg, #ff6600, #ffaa00);">🌊 Show All Data</button>
-        <button id="test-filter" class="button" onclick="testTimeFilter()" style="background: linear-gradient(135deg, #66cc66, #99ff99);">🔍 Test Filter</button>
-        <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play</button>
-        <button id="prev-month" class="button" onclick="previousMonth()">⏮️ Prev</button>
-        <button id="next-month" class="button" onclick="nextMonth()">⏭️ Next</button>
+        <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play Years</button>
+        <button id="prev-year" class="button" onclick="previousYear()">⏮️ Prev</button>
+        <button id="next-year" class="button" onclick="nextYear()">⏭️ Next</button>
       </div>
     </div>
 
@@ -565,25 +571,9 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label">🌊 Seasonal Filter</label>
-      <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-        <button class="button" onclick="filterBySeason('all')" style="font-size: 10px; padding: 4px 8px;">All</button>
-        <button class="button" onclick="filterBySeason('summer')" style="font-size: 10px; padding: 4px 8px;">Summer</button>
-        <button class="button" onclick="filterBySeason('winter')" style="font-size: 10px; padding: 4px 8px;">Winter</button>
-      </div>
-      <div style="font-size: 10px; color: #888; margin-top: 5px;">
-        Filter by seasonal patterns
-      </div>
-    </div>
 
-    <div class="control-group">
-      <label class="control-label">📸 Export & Share</label>
-      <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-        <button class="button" onclick="exportScreenshot()" style="font-size: 10px; padding: 4px 8px;">📷 Screenshot</button>
-        <button class="button" onclick="shareView()" style="font-size: 10px; padding: 4px 8px;">🔗 Share Link</button>
-      </div>
-    </div>
+
+
 
     <div class="stats">
       <div>Total Sharks: <span id="shark-count" class="highlight">41</span></div>
@@ -592,12 +582,7 @@
       <div>Active Period: <span id="active-period" class="highlight">All Time</span></div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label">📊 Movement Analysis</label>
-      <button class="button" onclick="showMovementStats()" style="font-size: 11px; padding: 6px 12px; width: 100%;">
-        View Statistics
-      </button>
-    </div>
+
   </div>
 
   <div id="shark-controls">
@@ -615,23 +600,7 @@
     </div>
   </div>
 
-  <div id="info-panel" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); 
-                               background: rgba(0, 20, 40, 0.9); border: 1px solid rgba(0, 150, 200, 0.3); 
-                               border-radius: 8px; padding: 15px; max-width: 400px; backdrop-filter: blur(10px); 
-                               font-size: 12px; text-align: center;">
-    <strong>🛰️ NASA Space Apps Challenge 2025</strong><br><br>
-    
-    <strong>🎮 Controls:</strong><br>
-    • <strong>Mouse:</strong> Rotate globe • <strong>Wheel:</strong> Zoom in/out<br>
-    • <strong>Timeline:</strong> Explore temporal patterns • <strong>Checkboxes:</strong> Show/hide sharks<br><br>
-    
-    <strong>🦈 About Whale Sharks:</strong><br>
-    World's largest fish species, reaching up to 12m in length. These gentle giants migrate vast distances 
-    following plankton blooms and seasonal feeding opportunities in the Gulf of Mexico.<br><br>
-    
-    <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
-    <a href="https://www.movebank.org/" target="_blank">Movebank Data</a>
-  </div>
+
 
   <!-- Statistics Modal -->
   <div id="stats-modal" class="stats-modal">
@@ -748,44 +717,61 @@
     }
 
     function loadTimeSeriesIndex() {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', '../../../whale-shark-json-files/whale-shark-json/time_series_index.json?v=' + Date.now(), true);
+      // Create simplified yearly time periods instead of complex monthly data
+      createSimpleTimeControls();
       
-      xhr.onreadystatechange = function(e) {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            try {
-              const timeIndex = JSON.parse(xhr.responseText);
-              timeSeriesData = timeIndex.monthly;
-              
-              console.log(`✅ Loaded ${timeSeriesData.length} monthly periods`);
-              
-              // Setup time controls
-              setupTimeControls();
-              
-              // Populate shark controls
-              populateSharkControls();
-              
-              // Update stats
-              updateStats();
-              
-              // Hide loading screen
-              document.getElementById('loading').style.display = 'none';
-              
-              // Load shared view if URL parameters exist
-              loadSharedView();
-              
-            } catch (error) {
-              console.error('❌ Error parsing time series index:', error);
-              showError('Failed to parse time series index');
+      // Populate shark controls
+      populateSharkControls();
+      
+      // Update stats
+      updateStats();
+      
+      // Hide loading screen
+      document.getElementById('loading').style.display = 'none';
+      
+      // Load shared view if URL parameters exist
+      loadSharedView();
+    }
+
+    function createSimpleTimeControls() {
+      // Create simple yearly periods from 2009-2015
+      timeSeriesData = [
+        { period: '2009', display_name: '2009', start_date: '2009-01-01T00:00:00', end_date: '2009-12-31T23:59:59' },
+        { period: '2010', display_name: '2010', start_date: '2010-01-01T00:00:00', end_date: '2010-12-31T23:59:59' },
+        { period: '2011', display_name: '2011', start_date: '2011-01-01T00:00:00', end_date: '2011-12-31T23:59:59' },
+        { period: '2012', display_name: '2012', start_date: '2012-01-01T00:00:00', end_date: '2012-12-31T23:59:59' },
+        { period: '2013', display_name: '2013', start_date: '2013-01-01T00:00:00', end_date: '2013-12-31T23:59:59' },
+        { period: '2014', display_name: '2014', start_date: '2014-01-01T00:00:00', end_date: '2014-12-31T23:59:59' },
+        { period: '2015', display_name: '2015', start_date: '2015-01-01T00:00:00', end_date: '2015-12-31T23:59:59' }
+      ];
+      
+      // Calculate shark counts for each year
+      timeSeriesData.forEach(period => {
+        const startTime = new Date(period.start_date).getTime() / 1000;
+        const endTime = new Date(period.end_date).getTime() / 1000;
+        
+        let sharkCount = 0;
+        let totalPoints = 0;
+        
+        sharkData.sharks.forEach(shark => {
+          let hasDataInPeriod = false;
+          shark.tracks.forEach(track => {
+            if (track[3] >= startTime && track[3] <= endTime) {
+              if (!hasDataInPeriod) {
+                sharkCount++;
+                hasDataInPeriod = true;
+              }
+              totalPoints++;
             }
-          } else {
-            console.error('❌ Failed to load time series index');
-            showError('Failed to load time series index');
-          }
-        }
-      };
-      xhr.send(null);
+          });
+        });
+        
+        period.shark_count = sharkCount;
+        period.total_points = totalPoints;
+      });
+      
+      console.log('✅ Created yearly time controls:', timeSeriesData);
+      setupTimeControls();
     }
 
     function setupTimeControls() {
@@ -849,11 +835,51 @@
       
       document.getElementById('shark-count').textContent = sharkData.sharks.length;
       document.getElementById('point-count').textContent = sharkData.totalPoints.toLocaleString();
+      
+      // Update live statistics panel
+      updateLiveStats();
+    }
+
+    function updateLiveStats() {
+      if (!sharkData) return;
+      
+      const stats = calculateMovementStats();
+      const liveStatsGrid = document.getElementById('live-stats-grid');
+      
+      liveStatsGrid.innerHTML = `
+        <div class="stat-item" style="margin-bottom: 10px;">
+          <span class="stat-value" style="font-size: 18px;">${stats.activeSharks}</span>
+          <div class="stat-label" style="font-size: 10px;">Active Sharks</div>
+        </div>
+        <div class="stat-item" style="margin-bottom: 10px;">
+          <span class="stat-value" style="font-size: 16px;">${stats.totalDistance.toLocaleString()} km</span>
+          <div class="stat-label" style="font-size: 10px;">Total Distance</div>
+        </div>
+        <div class="stat-item" style="margin-bottom: 10px;">
+          <span class="stat-value" style="font-size: 16px;">${stats.avgDistance.toLocaleString()} km</span>
+          <div class="stat-label" style="font-size: 10px;">Average per Shark</div>
+        </div>
+        <div class="stat-item" style="margin-bottom: 10px;">
+          <span class="stat-value" style="font-size: 16px;">${stats.avgSpeed} km/day</span>
+          <div class="stat-label" style="font-size: 10px;">Average Speed</div>
+        </div>
+      `;
+      
+      if (stats.longestTrackShark) {
+        liveStatsGrid.innerHTML += `
+          <div class="stat-item" style="margin-bottom: 10px; text-align: center;">
+            <div style="font-size: 11px; color: #00ccff; font-weight: bold;">🏆 Longest Journey</div>
+            <div style="font-size: 10px; color: #cccccc;">${stats.longestTrackShark}</div>
+            <div style="font-size: 12px; color: #ffffff;">${stats.longestTrack.toLocaleString()} km</div>
+          </div>
+        `;
+      }
     }
 
     // Shark visibility controls
     function toggleSharkVisibility(sharkId, visible) {
       globe.toggleShark(sharkId, visible);
+      updateLiveStats(); // Update statistics when sharks are toggled
     }
 
     function selectAllSharks() {
@@ -863,6 +889,7 @@
         const sharkId = checkbox.id.replace('shark-', '');
         globe.toggleShark(sharkId, true);
       });
+      updateLiveStats();
     }
 
     function deselectAllSharks() {
@@ -872,6 +899,7 @@
         const sharkId = checkbox.id.replace('shark-', '');
         globe.toggleShark(sharkId, false);
       });
+      updateLiveStats();
     }
 
     // Time controls with temporal filtering
@@ -894,20 +922,11 @@
       playbackInterval = setInterval(() => {
         let nextIndex = currentTimeIndex + 1;
         
-        // Skip periods with no shark data during playback
-        while (nextIndex < timeSeriesData.length && timeSeriesData[nextIndex].shark_count === 0) {
-          nextIndex++;
-        }
-        
         if (nextIndex < timeSeriesData.length) {
           loadTimePeriod(nextIndex);
         } else {
-          // Loop back to first period with data
-          let firstDataIndex = 0;
-          while (firstDataIndex < timeSeriesData.length && timeSeriesData[firstDataIndex].shark_count === 0) {
-            firstDataIndex++;
-          }
-          loadTimePeriod(firstDataIndex);
+          // Loop back to start
+          loadTimePeriod(0);
         }
       }, playbackSpeed);
     }
@@ -919,13 +938,13 @@
       }
     }
 
-    function previousMonth() {
+    function previousYear() {
       if (currentTimeIndex > 0) {
         loadTimePeriod(currentTimeIndex - 1);
       }
     }
 
-    function nextMonth() {
+    function nextYear() {
       if (currentTimeIndex < timeSeriesData.length - 1) {
         loadTimePeriod(currentTimeIndex + 1);
       }
@@ -936,13 +955,7 @@
       isPlaying = false;
       document.getElementById('play-pause').textContent = '▶️ Play';
       document.getElementById('play-pause').classList.remove('playing');
-      
-      // Find first period with data
-      let firstDataIndex = 0;
-      while (firstDataIndex < timeSeriesData.length && timeSeriesData[firstDataIndex].shark_count === 0) {
-        firstDataIndex++;
-      }
-      loadTimePeriod(firstDataIndex);
+      loadTimePeriod(0);
     }
 
     function showAllTimeData() {
@@ -968,41 +981,7 @@
       console.log('🌊 Showing all time data');
     }
 
-    function testTimeFilter() {
-      if (!sharkData) return;
-      
-      console.log('🔍 Testing time filter...');
-      
-      // Test with a known period that should have data (2014-07)
-      const testStart = new Date('2014-07-01').getTime() / 1000;
-      const testEnd = new Date('2014-07-31').getTime() / 1000;
-      
-      console.log('🔍 Test period:', new Date(testStart * 1000), 'to', new Date(testEnd * 1000));
-      
-      // Check what data exists in this period
-      sharkData.sharks.forEach(shark => {
-        let pointsInPeriod = 0;
-        shark.tracks.forEach(track => {
-          const trackTime = track[3];
-          if (trackTime >= testStart && trackTime <= testEnd) {
-            pointsInPeriod++;
-          }
-        });
-        if (pointsInPeriod > 0) {
-          console.log(`🦈 ${shark.name}: ${pointsInPeriod} points in July 2014`);
-        }
-      });
-      
-      // Apply the test filter
-      globe.setTimeFilter(testStart, testEnd);
-      
-      document.getElementById('current-time').innerHTML = `
-        <div style="font-size: 20px;">Test: July 2014</div>
-        <div style="font-size: 12px; color: #888; margin-top: 5px;">
-          Testing time filter functionality
-        </div>
-      `;
-    }
+
 
     function scrubToTime(value) {
       const index = parseInt(value);
@@ -1047,88 +1026,7 @@
       }
     }
 
-    // Seasonal filtering
-    function filterBySeason(season) {
-      console.log('🌊 Filtering by season:', season);
-      
-      if (season === 'all') {
-        // Show all time periods
-        timeSeriesData = timeSeriesData; // Reset to full data
-      } else {
-        // Filter time periods by season (simplified logic)
-        // Summer: June-August, Winter: December-February
-        const filteredData = timeSeriesData.filter(period => {
-          const date = new Date(period.start_date);
-          const month = date.getMonth() + 1; // 1-12
-          
-          if (season === 'summer') {
-            return month >= 6 && month <= 8;
-          } else if (season === 'winter') {
-            return month === 12 || month <= 2;
-          }
-          return true;
-        });
-        
-        console.log(`🌊 Filtered to ${filteredData.length} ${season} periods`);
-      }
-      
-      // Reset to first period of filtered data
-      if (timeSeriesData.length > 0) {
-        loadTimePeriod(0);
-      }
-    }
 
-    // Export and sharing functions
-    function exportScreenshot() {
-      try {
-        const canvas = globe.renderer.domElement;
-        const link = document.createElement('a');
-        link.download = `whale-shark-tracking-${new Date().toISOString().slice(0, 10)}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        
-        console.log('📷 Screenshot exported');
-      } catch (error) {
-        console.error('❌ Error exporting screenshot:', error);
-        alert('Failed to export screenshot. Please try again.');
-      }
-    }
-
-    function shareView() {
-      try {
-        // Create shareable URL with current state
-        const params = new URLSearchParams();
-        params.set('time', currentTimeIndex);
-        
-        // Add visible sharks
-        const visibleSharks = [];
-        document.querySelectorAll('.shark-checkbox:checked').forEach(checkbox => {
-          visibleSharks.push(checkbox.id.replace('shark-', ''));
-        });
-        params.set('sharks', visibleSharks.join(','));
-        
-        const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          alert('Share link copied to clipboard!');
-          console.log('🔗 Share link copied:', shareUrl);
-        }).catch(() => {
-          // Fallback for older browsers
-          const textArea = document.createElement('textarea');
-          textArea.value = shareUrl;
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          alert('Share link copied to clipboard!');
-        });
-        
-      } catch (error) {
-        console.error('❌ Error creating share link:', error);
-        alert('Failed to create share link. Please try again.');
-      }
-    }
 
     // Load shared view from URL parameters
     function loadSharedView() {
