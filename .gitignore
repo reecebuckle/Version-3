@@ -1,9 +1,12 @@
 .idea
 .DS_Store
 
-# Large dataset files - exclude from repository
-chlorophyll-datasets/
-chlorophyll_data/
+# Large dataset files - now included for deployment
+# chlorophyll-datasets/
+# chlorophyll_data/
+
+# Exclude only the source NetCDF files (already converted to JSON)
+chlorophyll-datasets/chloropyhll-seasonal-binned/
 
 # Python virtual environment
 .venv/
