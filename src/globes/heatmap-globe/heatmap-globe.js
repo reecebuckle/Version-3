@@ -117,7 +117,7 @@ DAT.HeatmapGlobe = function(container, opts) {
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 
     // Load high-resolution ocean-focused Earth texture
-    uniforms['baseTexture'].value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+    uniforms['baseTexture'].value = THREE.ImageUtils.loadTexture(imgDir + 'globe-sea-8k.jpg');
     uniforms['heatmapTexture'].value = heatmapTexture;
 
     heatmapMaterial = new THREE.ShaderMaterial({
