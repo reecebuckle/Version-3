@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title>Seasonal Chlorophyll Images - NASA Space Apps 2025</title>
+    <title>Monthly Chlorophyll Images - NASA Space Apps 2025</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
@@ -280,24 +280,24 @@
 
   <div id="loading" class="loading">
     <div class="spinner"></div>
-    <div>Loading Seasonal Images...</div>
+    <div>Loading Monthly Images...</div>
   </div>
 
   <div class="home-link">
-    <a href="../index.html">🏠 Back to Home</a>
+    <a href="../../../index.html">🏠 Back to Home</a>
   </div>
 
   <div id="title">
-    <h2 style="margin: 0; color: #00ccff;">🌿 Seasonal Chlorophyll Images</h2>
+    <h2 style="margin: 0; color: #00ccff;">📅 Monthly Chlorophyll Images</h2>
     <div style="font-size: 12px; color: #cccccc; margin-top: 5px;">
       NASA MODIS Aqua Satellite Data (2002-2025)<br>
-      <span style="color: #00ccff; font-weight: bold;">Seasonal PNG Image Display</span>
+      <span style="color: #00ccff; font-weight: bold;">Monthly PNG Image Display</span>
     </div>
   </div>
 
   <div id="time-controls">
     <div class="control-group">
-      <label class="control-label">🌿 Current Season</label>
+      <label class="control-label">📅 Current Period</label>
       <div class="time-display" id="current-time">
         Loading...
       </div>
@@ -328,8 +328,8 @@
              min="0" max="0" value="0" 
              oninput="scrubToTime(this.value)">
       <div style="display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 5px;">
-        <span id="time-range-start">Summer 2002</span>
-        <span id="time-range-end">Spring 2025</span>
+        <span id="time-range-start">Aug 2002</span>
+        <span id="time-range-end">Sep 2025</span>
       </div>
     </div>
 
@@ -346,7 +346,7 @@
     </div>
 
     <div class="stats">
-      <div>Visualization: <span class="highlight">Seasonal PNG Display</span></div>
+      <div>Visualization: <span class="highlight">Monthly PNG Display</span></div>
       <div>Source: <span class="highlight">MODIS Aqua Satellite</span></div>
       <div>Resolution: <span class="highlight">4km Global</span></div>
       <div>Time Range: <span class="highlight" id="total-years">23 years</span></div>
@@ -366,27 +366,27 @@
       <span>Very High<br>10+ mg/m³</span>
     </div>
     <div style="font-size: 10px; color: #cccccc; margin-top: 8px;">
-      🌿 <strong>Seasonal PNG Images:</strong><br>
+      📅 <strong>Monthly PNG Images:</strong><br>
       • High-resolution satellite data<br>
       • Direct image texture mapping<br>
-      • Seasonal progression display<br>
+      • Monthly progression display<br>
       • Interactive 3D globe rotation
     </div>
   </div>
 
   <div id="info">
     <strong>🛰️ NASA Space Apps Challenge 2025</strong><br>
-    <strong>Project:</strong> Seasonal Image Globe<br>
+    <strong>Project:</strong> Monthly Image Globe<br>
     <strong>Data:</strong> MODIS Aqua Chlorophyll-a PNG<br>
-    <strong>Coverage:</strong> 2002-2025 Seasonal<br><br>
+    <strong>Coverage:</strong> 2002-2025 Monthly<br><br>
     
     <strong>🎮 Controls:</strong><br>
     • <strong>Mouse:</strong> Rotate globe<br>
     • <strong>Wheel:</strong> Zoom in/out<br>
-    • <strong>Play:</strong> Auto-animate through seasons<br>
+    • <strong>Play:</strong> Auto-animate through months<br>
     • <strong>Slider:</strong> Scrub to any time period<br><br>
     
-    <strong>🌿 Seasonal Patterns:</strong><br>
+    <strong>📅 Monthly Patterns:</strong><br>
     • <span class="season-indicator season-spring">Spring</span> Bloom initiation<br>
     • <span class="season-indicator season-summer">Summer</span> Peak productivity<br>
     • <span class="season-indicator season-autumn">Autumn</span> Secondary blooms<br>
@@ -396,9 +396,9 @@
     <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a>
   </div>
 
-  <script type="text/javascript" src="../globe/third-party/Detector.js"></script>
-  <script type="text/javascript" src="../globe/third-party/three.min.js"></script>
-  <script type="text/javascript" src="../globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/Tween.js"></script>
   <script type="text/javascript" src="image-globe.js"></script>
   <script type="text/javascript">
 
@@ -420,7 +420,7 @@
     function initializeImageGlobe() {
       const container = document.getElementById('container');
       
-      console.log('🌿 Initializing Seasonal Image Globe...');
+      console.log('🖼️ Initializing Image Globe...');
       
       try {
         // Create globe with image capabilities
@@ -428,10 +428,10 @@
           imgDir: './'
         });
 
-        console.log('✅ Seasonal Image Globe initialized successfully');
+        console.log('✅ Image Globe initialized successfully');
         
-        // Generate seasonal image list
-        generateSeasonalImageList();
+        // Generate image list from known pattern
+        generateImageList();
         
         // Load first image
         if (imageList.length > 0) {
@@ -448,57 +448,74 @@
       }
     }
 
-    function generateSeasonalImageList() {
-      console.log('📋 Generating seasonal image list from PNG files...');
+    function generateImageList() {
+      console.log('📋 Generating monthly image list from PNG files...');
       
-      // Generate list based on seasonal pattern: 2002-2025, 4 seasons per year
-      const seasons = [
-        { code: 'SNSU', name: 'Summer', class: 'summer' },
-        { code: 'SNAU', name: 'Autumn', class: 'autumn' },
-        { code: 'SNWI', name: 'Winter', class: 'winter' },
-        { code: 'SNSP', name: 'Spring', class: 'spring' }
+      // Generate list for monthly data: 2002-2025, 12 months per year
+      const months = [
+        { num: '01', name: 'January', abbr: 'Jan', class: 'winter', days: 31 },
+        { num: '02', name: 'February', abbr: 'Feb', class: 'winter', days: 28 }, // Will handle leap years
+        { num: '03', name: 'March', abbr: 'Mar', class: 'spring', days: 31 },
+        { num: '04', name: 'April', abbr: 'Apr', class: 'spring', days: 30 },
+        { num: '05', name: 'May', abbr: 'May', class: 'spring', days: 31 },
+        { num: '06', name: 'June', abbr: 'Jun', class: 'summer', days: 30 },
+        { num: '07', name: 'July', abbr: 'Jul', class: 'summer', days: 31 },
+        { num: '08', name: 'August', abbr: 'Aug', class: 'summer', days: 31 },
+        { num: '09', name: 'September', abbr: 'Sep', class: 'autumn', days: 30 },
+        { num: '10', name: 'October', abbr: 'Oct', class: 'autumn', days: 31 },
+        { num: '11', name: 'November', abbr: 'Nov', class: 'autumn', days: 30 },
+        { num: '12', name: 'December', abbr: 'Dec', class: 'winter', days: 31 }
       ];
       
       const startYear = 2002;
       const endYear = 2025;
       
       for (let year = startYear; year <= endYear; year++) {
-        for (let seasonIndex = 0; seasonIndex < seasons.length; seasonIndex++) {
-          const season = seasons[seasonIndex];
+        for (let monthIndex = 0; monthIndex < months.length; monthIndex++) {
+          const month = months[monthIndex];
           
-          // Calculate date ranges for each season
-          let startDate, endDate;
-          if (season.code === 'SNSU') {
-            startDate = `${year}0621`;
-            endDate = `${year}0920`;
-          } else if (season.code === 'SNAU') {
-            startDate = `${year}0921`;
-            endDate = `${year}1220`;
-          } else if (season.code === 'SNWI') {
-            startDate = `${year}1221`;
-            endDate = `${year + 1}0320`;
-          } else if (season.code === 'SNSP') {
-            startDate = `${year}0321`;
-            endDate = `${year}0620`;
+          // Calculate correct end date for each month
+          let endDay = month.days;
+          
+          // Handle February leap years
+          if (month.num === '02') {
+            const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            endDay = isLeapYear ? 29 : 28;
           }
           
-          const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.png`;
-          const imagePath = `../chlorophyll-datasets/chlorophyll-seasonal-images/${filename}`;
+          // Generate correct filename pattern matching your actual files
+          const startDate = `${year}${month.num}01`;
+          const endDate = `${year}${month.num}${endDay.toString().padStart(2, '0')}`;
+          
+          let filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.png`;
+          
+          // Handle special case for the last file which has .NRT.nc.png
+          if (year === 2025 && month.num === '09') {
+            filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.NRT.nc.png`;
+          }
+          
+          const imagePath = `../../../chlorophyll-datasets/chlorophyll-monthly-images/${filename}`;
+          
+          // Only add files that should exist based on your data range
+          // Skip months before August 2002 (your data starts from August 2002)
+          if (year === 2002 && monthIndex < 7) continue; // Skip Jan-Jul 2002
           
           imageList.push({
             filename: filename,
             path: imagePath,
             year: year,
-            season: season.name,
-            seasonClass: season.class,
-            displayName: `${season.name} ${year}`,
+            month: month.name,
+            monthAbbr: month.abbr,
+            monthNum: month.num,
+            seasonClass: month.class,
+            displayName: `${month.abbr} ${year}`,
             startDate: startDate,
             endDate: endDate
           });
         }
       }
       
-      console.log(`✅ Generated ${imageList.length} seasonal image entries`);
+      console.log(`✅ Generated ${imageList.length} monthly image entries`);
       
       // Update UI elements
       document.getElementById('time-slider').max = imageList.length - 1;
@@ -531,7 +548,7 @@
     function updateTimeDisplay(period) {
       const seasonClass = `season-${period.seasonClass}`;
       document.getElementById('current-time').innerHTML = `
-        ${period.year} <span class="season-indicator ${seasonClass}">${period.season.toUpperCase()}</span>
+        ${period.year} <span class="season-indicator ${seasonClass}">${period.month.toUpperCase()}</span>
       `;
       
       // Update slider position

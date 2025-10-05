@@ -2,24 +2,72 @@
 
 ## Repository Overview
 
-This repository contains a **WebGL Globe** visualization toolkit (originally from Google Data Arts Team) that we're adapting for NASA Space Apps Challenge 2025. The project enables interactive 3D Earth visualizations for displaying geographic and satellite data.
+This repository contains an **Ocean Chlorophyll Visualization Suite** built for NASA Space Apps Challenge 2025 "Sharks in Space" challenge. The project extends Google's WebGL Globe to visualize marine ecosystem data and support shark habitat modeling.
 
 ### Current Repository Structure
 ```
-├── globe/                    # Basic WebGL globe implementation
-│   ├── index.html           # Main visualization (WORKING - view at localhost:8000)
-│   ├── globe.js             # Core globe functionality
-│   ├── population909500.json # Sample population data (1990-2008)
-│   ├── world.jpg            # Earth texture
-│   ├── loading.gif          # Loading animation
-│   ├── ce.png              # Chrome Experiments logo
-│   └── third-party/        # Dependencies (Three.js, Detector.js, Tween.js)
-├── globe-search/            # Globe with search functionality
-├── globe-vertex-texture/    # Advanced version with custom shaders
-├── polymer-globe/           # Web Components implementation
-├── README.md               # Original WebGL Globe documentation
-└── .gitignore              # Standard gitignore
+├── src/                           # Main application source code
+│   ├── globes/                   # Globe visualization implementations
+│   │   └── chlorophyll-globe/    # Chlorophyll-specific globe variants
+│   │       ├── index-images.html      # Monthly PNG image display
+│   │       ├── index-seasonal-images.html # Seasonal PNG display
+│   │       ├── index-heatmap.html     # Ocean-only heatmap overlay
+│   │       ├── index-timeseries.html  # 3D data point spikes
+│   │       ├── index-simple.html      # Simplified interface
+│   │       ├── image-globe.js         # PNG texture globe engine
+│   │       ├── heatmap-globe.js       # Smooth heatmap engine
+│   │       └── chlorophyll-globe.js   # Time series globe engine
+│   └── assets/                   # Static assets and dependencies
+│       └── globe/               # Original WebGL Globe core files
+│           ├── globe.js         # Core globe functionality
+│           ├── world.jpg        # Earth texture
+│           └── third-party/     # Three.js, Detector.js, Tween.js
+├── helper-functions/             # Python utilities and data processing
+│   └── convert-seasonal-data.py # NetCDF to JSON converter
+├── chlorophyll-datasets/         # Large data files (gitignored)
+│   ├── chlorophyll-monthly-images/    # Monthly PNG files
+│   ├── chlorophyll-seasonal-images/   # Seasonal PNG files
+│   ├── chlorophyll-seasonal-json/     # JSON data for heatmap/timeseries
+│   └── chloropyhll-seasonal-binned/   # Source NetCDF files
+├── graphs/                       # Analysis notebooks and outputs
+│   ├── Chlorophyll_Visualiser.ipynb  # Development notebook
+│   └── *.png                    # Sample visualization outputs
+├── docs/                         # Documentation
+│   └── data-access-guide.md     # NASA data access instructions
+├── index.html                    # Main navigation page
+└── README.md                     # Project documentation
 ```
+
+### File Organization Guidelines for Future Development
+
+**Globe Visualizations** (`src/globes/[visualization-name]/`):
+- Each visualization type gets its own subfolder
+- HTML files: `index-[variant].html` (e.g., `index-heatmap.html`)
+- JavaScript engines: `[type]-globe.js` (e.g., `heatmap-globe.js`)
+- Always include home navigation link: `../../../index.html`
+
+**Data Files** (`chlorophyll-datasets/[data-type]/`):
+- **PNG Images**: `chlorophyll-[temporal]-images/` (monthly, seasonal, etc.)
+- **JSON Data**: `chlorophyll-[temporal]-json/` for WebGL Globe format
+- **Source Data**: `chlorophyll-[type]-binned/` for NetCDF/raw files
+- **Naming Convention**: `AQUA_MODIS.YYYYMMDD_YYYYMMDD.L3m.[PERIOD].CHL.chlor_a.4km.nc.png`
+
+**Helper Scripts** (`helper-functions/`):
+- Data conversion utilities
+- Processing scripts
+- Use relative paths: `../chlorophyll-datasets/`
+- Include clear documentation and error handling
+
+**Assets** (`src/assets/`):
+- Shared libraries (Three.js, WebGL Globe core)
+- Textures and images used by multiple visualizations
+- Static resources that don't change
+
+**Documentation** (`docs/`):
+- Data access guides
+- Technical documentation
+- User manuals
+- API references
 
 ### Technical Stack
 - **Three.js**: 3D graphics library

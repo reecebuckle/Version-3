@@ -367,9 +367,9 @@
     <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a>
   </div>
 
-  <script type="text/javascript" src="../globe/third-party/Detector.js"></script>
-  <script type="text/javascript" src="../globe/third-party/three.min.js"></script>
-  <script type="text/javascript" src="../globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/Tween.js"></script>
   <script type="text/javascript" src="heatmap-globe.js"></script>
   <script type="text/javascript">
 
@@ -418,7 +418,7 @@
       console.log('📋 Loading time series index...');
       
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', '../chlorophyll-datasets/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
+      xhr.open('GET', '../../../chlorophyll-datasets/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
       
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
@@ -455,7 +455,7 @@
       updateTimeDisplay(period);
       
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `../chlorophyll-datasets/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
+      xhr.open('GET', `../../../chlorophyll-datasets/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
       
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
