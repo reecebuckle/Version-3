@@ -15,3 +15,6 @@ __pycache__/
 
 # VS Code settings
 .vscode/
+
+# Kiro IDE settings
+.kiro/
