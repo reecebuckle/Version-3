@@ -31,24 +31,26 @@
         top: 20px;
         left: 20px;
         z-index: 100;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
         border-radius: 8px;
-        border: 1px solid #00ccff;
+        padding: 20px;
         backdrop-filter: blur(10px);
+        max-width: 320px;
+        width: 320px;
       }
 
       #time-controls {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        bottom: 20px;
+        left: 20px;
         z-index: 100;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
         border-radius: 8px;
-        border: 1px solid #00ccff;
+        padding: 20px;
         backdrop-filter: blur(10px);
-        min-width: 280px;
+        min-width: 320px;
       }
 
       .control-group {
@@ -57,7 +59,7 @@
 
       .control-label {
         display: block;
-        font-size: 12px;
+        font-size: 14px;
         color: #00ccff;
         margin-bottom: 8px;
         font-weight: bold;
@@ -127,7 +129,7 @@
       }
 
       .speed-control {
-        font-size: 12px;
+        font-size: 14px;
         color: #cccccc;
       }
 
@@ -160,18 +162,7 @@
         border: 2px solid #ffffff;
       }
 
-      #info {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        z-index: 100;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #00ccff;
-        backdrop-filter: blur(10px);
-        max-width: 300px;
-      }
+
 
       #loading {
         position: absolute;
@@ -225,6 +216,28 @@
       .home-link a:hover {
         color: #ffffff;
       }
+
+      #info {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        max-width: 300px;
+        backdrop-filter: blur(10px);
+        font-size: 13px;
+      }
+
+      a {
+        color: #00ccff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        color: #66ddff;
+      }
     </style>
   </head>
 
@@ -236,10 +249,13 @@
     </div>
 
     <div id="title">
-      <h2 style="margin: 0; color: #00ccff;">🖼️ Chlorophyll Image Globe</h2>
-      <div style="font-size: 12px; color: #cccccc; margin-top: 5px;">
+      <h2 style="margin: 0; color: #00ccff;">🖼️ Chlorophyll Image Analysis</h2>
+      <div style="font-size: 14px; color: #cccccc; margin-top: 5px; line-height: 1.4;">
         NASA MODIS Aqua Satellite Data (2002-2025)<br>
-        <span style="color: #00ccff; font-weight: bold;" id="dataset-description">PNG Image Display</span>
+        <span style="color: #00ccff; font-weight: bold;" id="dataset-description">PNG Image Display</span><br><br>
+        High-resolution satellite imagery displayed as textures on the globe surface. 
+        Switch between monthly detail and seasonal patterns to explore ocean productivity 
+        cycles and marine ecosystem changes over 23+ years of data.
       </div>
     </div>
 
@@ -255,7 +271,7 @@
       </div>
 
       <div class="control-group">
-        <label class="control-label" id="current-period-label">📅 Current Period</label>
+        <label class="control-label" id="current-period-label">📅 Time Period</label>
         <div class="time-display" id="current-time">
           Loading...
         </div>
@@ -269,28 +285,36 @@
           <button id="next-period" class="button" onclick="nextPeriod()">⏭️ Next</button>
           <button id="reset-time" class="button" onclick="resetToStart()">⏪ Reset</button>
         </div>
-        <div class="speed-control">
-          Speed: <span id="speed-value">0.5s</span>
-          <input type="range" id="playback-speed" min="100" max="3000" value="500" step="100" 
-                 oninput="updatePlaybackSpeed()" style="width: 100%; margin-top: 5px;">
-          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 2px;">
-            <span>0.1s</span>
-            <span>3.0s</span>
-          </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">⚡ Playback Speed</label>
+        <div style="margin-bottom: 5px;">Speed: <span id="speed-value">0.5s</span></div>
+        <input type="range" id="playback-speed" min="100" max="3000" value="500" step="100" 
+               oninput="updatePlaybackSpeed()" style="width: 100%;">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 2px;">
+          <span>0.1s</span>
+          <span>3.0s</span>
         </div>
       </div>
     </div>
 
-    <div id="info">
-      <h3 style="margin: 0 0 10px 0; color: #00ccff;">🌊 Ocean Chlorophyll</h3>
-      <p style="margin: 0; font-size: 12px; line-height: 1.4;">
-        Chlorophyll-a concentration indicates marine productivity. Higher values (green/yellow) show nutrient-rich waters supporting marine life, while lower values (blue/purple) indicate oligotrophic regions.
-      </p>
-    </div>
+
 
     <div id="loading">
       <div class="loading-spinner"></div>
       <div>Loading chlorophyll data...</div>
+    </div>
+
+    <div id="info">
+      <strong>🛰️ NASA Space Apps Challenge 2025</strong><br><br>
+      
+      <strong>🎮 Controls:</strong><br>
+      • <strong>Mouse:</strong> Rotate globe<br>
+      • <strong>Wheel:</strong> Zoom in/out<br><br>
+      
+      <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+      <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a>
     </div>
 
     <script src="../../../src/assets/globe/third-party/Detector.js"></script>

@@ -204,7 +204,7 @@ def main():
     
     # Input and output directories
     input_dir = Path("../chlorophyll-datasets/chloropyhll-seasonal-binned")
-    output_dir = Path("../chlorophyll-json-files/chlorophyll-seasonal-json")
+    output_dir = Path("./chlorophyll-seasonal-json")
     output_dir.mkdir(exist_ok=True)
     
     if not input_dir.exists():

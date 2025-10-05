@@ -95,27 +95,7 @@
         font-size: 0.95em;
       }
 
-      .viz-card .features {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 25px 0;
-      }
 
-      .viz-card .features li {
-        color: #aaaaaa;
-        font-size: 0.9em;
-        margin: 8px 0;
-        padding-left: 20px;
-        position: relative;
-      }
-
-      .viz-card .features li:before {
-        content: "•";
-        color: #00ccff;
-        font-weight: bold;
-        position: absolute;
-        left: 0;
-      }
 
       .viz-button {
         display: inline-block;
@@ -230,14 +210,7 @@
             High-resolution PNG images displayed directly on a 3D globe with switchable datasets. 
             Choose between monthly detail or seasonal patterns with a simple dropdown selector.
           </div>
-          <ul class="features">
-            <li>Switchable monthly/seasonal datasets</li>
-            <li>Direct PNG texture mapping</li>
-            <li>4km resolution satellite imagery</li>
-            <li>Interactive 3D rotation and zoom</li>
-            <li>Unified playback controls</li>
-            <li>23+ years of data (2002-2025)</li>
-          </ul>
+
           <a href="src/globes/chlorophyll-globe/index-combined-images.html" class="viz-button primary">🖼️ Launch Image Globe</a>
         </div>
 
@@ -247,13 +220,7 @@
             Smooth heatmap overlay with advanced ocean filtering to prevent continental spillover. 
             Features enhanced edge detection and deep ocean area focus.
           </div>
-          <ul class="features">
-            <li>Ocean-only data filtering</li>
-            <li>Smooth gradient rendering</li>
-            <li>Continental shelf exclusion</li>
-            <li>Adjustable transparency</li>
-            <li>Enhanced colour schemes</li>
-          </ul>
+
           <a href="src/globes/chlorophyll-globe/index-heatmap.html" class="viz-button">🌊 View Heatmap</a>
         </div>
 
@@ -263,31 +230,11 @@
             Classic point-based visualisation showing individual data points as 3D spikes. 
             Perfect for understanding data density and spatial distribution patterns.
           </div>
-          <ul class="features">
-            <li>3D data point spikes</li>
-            <li>Height-based magnitude encoding</li>
-            <li>Seasonal animation controls</li>
-            <li>Interactive time scrubbing</li>
-            <li>Classic WebGL Globe style</li>
-          </ul>
+
           <a href="src/globes/chlorophyll-globe/index-timeseries.html" class="viz-button">📈 Explore Time Series</a>
         </div>
 
-        <div class="viz-card">
-          <h3>🎯 Simple Globe View</h3>
-          <div class="description">
-            Streamlined visualisation focusing on core functionality. Great for presentations 
-            and educational purposes with clean, minimal interface.
-          </div>
-          <ul class="features">
-            <li>Simplified user interface</li>
-            <li>Essential controls only</li>
-            <li>Fast loading and rendering</li>
-            <li>Educational focus</li>
-            <li>Mobile-friendly design</li>
-          </ul>
-          <a href="src/globes/chlorophyll-globe/index-simple.html" class="viz-button">🎯 Simple View</a>
-        </div>
+
 
       </div>
 
