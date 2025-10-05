@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Whale Shark Tracking - Simple View</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 100%);
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .home-link {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 1px solid #00ccff;
+        backdrop-filter: blur(10px);
+      }
+
+      .home-link a {
+        color: #00ccff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .home-link a:hover {
+        color: #ffffff;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        max-width: 350px;
+        width: 350px;
+      }
+
+      #simple-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        text-align: center;
+        min-width: 300px;
+      }
+
+      #info-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 20, 40, 0.9);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 8px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        max-width: 300px;
+        width: 300px;
+      }
+
+      .button {
+        background: linear-gradient(135deg, #0066cc, #00ccff);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 5px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+
+      .button:hover {
+        background: linear-gradient(135deg, #0088ff, #00ffff);
+        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+      }
+
+      .button.active {
+        background: linear-gradient(135deg, #ff6600, #ffaa00);
+      }
+
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 1000;
+      }
+
+      .spinner {
+        border: 3px solid rgba(0, 204, 255, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid #00ccff;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .highlight {
+        color: #00ccff;
+        font-weight: bold;
+      }
+
+      .fact-box {
+        background: rgba(0, 100, 150, 0.2);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #00ccff;
+      }
+
+      .fact-title {
+        color: #00ccff;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        #title, #info-panel {
+          position: relative;
+          top: 10px;
+          left: 10px;
+          right: 10px;
+          width: auto;
+          max-width: none;
+          margin-bottom: 10px;
+        }
+
+        #simple-controls {
+          position: relative;
+          bottom: auto;
+          left: 10px;
+          right: 10px;
+          transform: none;
+          min-width: auto;
+          margin: 10px;
+        }
+
+        body {
+          overflow-y: auto;
+        }
+
+        #container {
+          height: 50vh;
+          min-height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <div class="home-link">
+    <a href="../../../index.html">🏠 Back to Home</a>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div>Loading Whale Shark Data...</div>
+  </div>
+
+  <div id="title">
+    <h2 style="margin: 0; color: #00ccff;">🦈 Whale Shark Migration</h2>
+    <div style="font-size: 14px; color: #cccccc; margin-top: 10px; line-height: 1.5;">
+      <strong>Gulf of Mexico (2009-2015)</strong><br><br>
+      
+      Watch how <span class="highlight">41 whale sharks</span> move through the Gulf of Mexico over 6 years. 
+      Each coloured line shows one shark's journey. These gentle giants can travel thousands of kilometres 
+      following food sources and seasonal patterns.
+      
+      <div class="fact-box">
+        <div class="fact-title">🌟 Did You Know?</div>
+        Whale sharks are the world's largest fish, growing up to 12 metres long! 
+        Despite their size, they eat tiny plankton and small fish.
+      </div>
+    </div>
+  </div>
+
+  <div id="info-panel">
+    <div style="font-weight: bold; margin-bottom: 15px; color: #00ccff; font-size: 16px;">
+      🎓 Educational Facts
+    </div>
+    
+    <div class="fact-box">
+      <div class="fact-title">🦈 About Whale Sharks</div>
+      • World's largest fish species<br>
+      • Filter feeders (eat plankton)<br>
+      • Can live over 100 years<br>
+      • Found in warm ocean waters
+    </div>
+    
+    <div class="fact-box">
+      <div class="fact-title">📡 How We Track Them</div>
+      Scientists attach GPS tags to whale sharks to study their movements. 
+      This helps us understand their behaviour and protect their habitats.
+    </div>
+    
+    <div class="fact-box">
+      <div class="fact-title">🌊 Why It Matters</div>
+      Understanding whale shark migration helps us protect these amazing creatures 
+      and the ocean ecosystems they depend on.
+    </div>
+  </div>
+
+  <div id="simple-controls">
+    <div style="font-size: 18px; font-weight: bold; color: #00ccff; margin-bottom: 15px;">
+      🎮 Simple Controls
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+      <button id="show-all" class="button active" onclick="showAllSharks()">Show All Sharks</button>
+      <button id="show-few" class="button" onclick="showFewSharks()">Show 5 Sharks</button>
+      <button id="show-one" class="button" onclick="showOneSharks()">Show 1 Shark</button>
+    </div>
+    
+    <div style="margin-bottom: 15px; color: #cccccc;">
+      <strong>🖱️ Mouse Controls:</strong> Drag to rotate • Scroll to zoom
+    </div>
+    
+    <div style="font-size: 12px; color: #888;">
+      <strong>Current View:</strong> <span id="current-view">All 41 whale sharks</span>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../../assets/globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="../../assets/globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="whale-shark-globe.js"></script>
+  <script type="text/javascript">
+
+    // Global variables
+    let globe;
+    let sharkData = null;
+    let currentMode = 'all';
+
+    // Initialize the application
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+      initializeSimpleWhaleSharkGlobe();
+    }
+
+    function initializeSimpleWhaleSharkGlobe() {
+      const container = document.getElementById('container');
+      
+      console.log('🦈 Initializing Simple Whale Shark Globe...');
+      
+      try {
+        // Create whale shark globe
+        globe = new DAT.WhaleSharkGlobe(container, {
+          imgDir: '../../assets/globe/'
+        });
+
+        console.log('✅ Globe initialized successfully');
+        
+        // Load whale shark data
+        loadWhaleSharkData();
+        
+        // Start animation loop
+        globe.animate();
+        
+      } catch (error) {
+        console.error('❌ Error initializing globe:', error);
+        showError('Failed to initialize 3D globe');
+      }
+    }
+
+    function loadWhaleSharkData() {
+      console.log('📡 Loading whale shark data...');
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '../../../whale-shark-json-files/whale-shark-json/whale_sharks_complete.json?v=' + Date.now(), true);
+      
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              sharkData = JSON.parse(xhr.responseText);
+              
+              console.log(`✅ Loaded data for ${sharkData.sharks.length} sharks`);
+              
+              // Load shark data into globe
+              globe.loadSharkData(sharkData);
+              
+              // Hide loading screen
+              document.getElementById('loading').style.display = 'none';
+              
+            } catch (error) {
+              console.error('❌ Error parsing whale shark data:', error);
+              showError('Failed to parse whale shark data');
+            }
+          } else {
+            console.error('❌ Failed to load whale shark data');
+            showError('Failed to load whale shark data');
+          }
+        }
+      };
+      xhr.send(null);
+    }
+
+    // Simple control functions
+    function showAllSharks() {
+      if (!sharkData) return;
+      
+      setActiveButton('show-all');
+      currentMode = 'all';
+      
+      // Show all sharks
+      sharkData.sharks.forEach(shark => {
+        globe.toggleShark(shark.id, true);
+      });
+      
+      document.getElementById('current-view').textContent = `All ${sharkData.sharks.length} whale sharks`;
+      console.log('👁️ Showing all sharks');
+    }
+
+    function showFewSharks() {
+      if (!sharkData) return;
+      
+      setActiveButton('show-few');
+      currentMode = 'few';
+      
+      // Show only first 5 sharks
+      sharkData.sharks.forEach((shark, index) => {
+        globe.toggleShark(shark.id, index < 5);
+      });
+      
+      document.getElementById('current-view').textContent = '5 selected whale sharks';
+      console.log('👁️ Showing 5 sharks');
+    }
+
+    function showOneSharks() {
+      if (!sharkData) return;
+      
+      setActiveButton('show-one');
+      currentMode = 'one';
+      
+      // Show only the first shark (usually has most data)
+      sharkData.sharks.forEach((shark, index) => {
+        globe.toggleShark(shark.id, index === 0);
+      });
+      
+      const firstShark = sharkData.sharks[0];
+      document.getElementById('current-view').textContent = `${firstShark.name} (${firstShark.tracks.length} tracking points)`;
+      console.log('👁️ Showing one shark');
+    }
+
+    function setActiveButton(activeId) {
+      // Remove active class from all buttons
+      document.querySelectorAll('.button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Add active class to selected button
+      document.getElementById(activeId).classList.add('active');
+    }
+
+    function showError(message) {
+      const loading = document.getElementById('loading');
+      loading.innerHTML = `
+        <div style="color: #ff6666;">
+          <div>❌ Error</div>
+          <div style="font-size: 12px; margin-top: 10px;">${message}</div>
+          <div style="margin-top: 15px;">
+            <button class="button" onclick="location.reload()" style="background: #ff6666;">
+              🔄 Reload Page
+            </button>
+          </div>
+        </div>
+      `;
+      loading.style.display = 'block';
+    }
+
+  </script>
+
+  </body>
+</html>

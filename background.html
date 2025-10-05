@@ -1,0 +1,477 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Ocean Science Background - NASA Space Apps 2025</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 50%, #004488 100%);
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .nav-bar {
+        background: rgba(0, 20, 40, 0.9);
+        padding: 15px 0;
+        margin-bottom: 30px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        text-align: center;
+      }
+
+      .nav-bar a {
+        color: #00ccff;
+        text-decoration: none;
+        margin: 0 20px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .nav-bar a:hover {
+        background: rgba(0, 204, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin: 0 0 20px 0;
+        background: linear-gradient(135deg, #00ccff, #66ddff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .story-section {
+        background: rgba(0, 20, 40, 0.8);
+        border: 1px solid rgba(0, 150, 200, 0.3);
+        border-radius: 12px;
+        padding: 40px;
+        margin: 30px 0;
+        backdrop-filter: blur(10px);
+      }
+
+      .story-section h2 {
+        color: #00ccff;
+        font-size: 1.8em;
+        margin: 0 0 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .story-section h3 {
+        color: #66ddff;
+        font-size: 1.3em;
+        margin: 25px 0 15px 0;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .story-card {
+        background: rgba(0, 50, 100, 0.3);
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 150, 200, 0.2);
+      }
+
+      .story-card h4 {
+        color: #00ccff;
+        margin: 0 0 15px 0;
+        font-size: 1.1em;
+      }
+
+      .visual-element {
+        background: rgba(0, 100, 150, 0.2);
+        border: 2px dashed rgba(0, 204, 255, 0.4);
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        margin: 20px 0;
+        font-style: italic;
+        color: #cccccc;
+      }
+
+      .emoji-large {
+        font-size: 3em;
+        display: block;
+        margin: 10px 0;
+      }
+
+      .food-chain {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .food-chain-item {
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .food-chain-arrow {
+        font-size: 2em;
+        color: #00ccff;
+      }
+
+      .highlight-box {
+        background: linear-gradient(135deg, rgba(255, 102, 0, 0.2), rgba(255, 170, 0, 0.2));
+        border: 1px solid rgba(255, 170, 0, 0.5);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .highlight-box h4 {
+        color: #ffaa00;
+        margin: 0 0 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .food-chain {
+          flex-direction: column;
+        }
+        
+        .food-chain-arrow {
+          transform: rotate(90deg);
+        }
+        
+        .nav-bar a {
+          margin: 5px 10px;
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="nav-bar">
+        <a href="index.html">🏠 Home</a>
+        <a href="background.html" style="background: rgba(0, 204, 255, 0.3);">📚 Background</a>
+        <a href="src/globes/chlorophyll-globe/index-combined-images.html">🖼️ Image Globe</a>
+        <a href="src/globes/chlorophyll-globe/index-heatmap.html">🌊 Heatmap</a>
+        <a href="src/globes/chlorophyll-globe/index-timeseries.html">📊 Time Series</a>
+      </div>
+
+      <div class="header">
+        <h1>🌊 The Ocean's Hidden World</h1>
+        <p style="font-size: 1.2em; color: #cccccc;">Understanding why tiny plants and giant sharks matter to our planet</p>
+      </div>
+
+      <!-- Chapter 1: The Tiny Giants -->
+      <div class="story-section">
+        <h2><span class="emoji-large">🦠</span> Chapter 1: The Tiny Giants of the Ocean</h2>
+        
+        <p>Imagine the ocean is like a giant soup. But instead of vegetables, this soup is full of tiny, tiny plants called <strong>phytoplankton</strong>. These plants are so small you need a microscope to see them!</p>
+
+        <div class="visual-element">
+          <span class="emoji-large">🔬</span>
+          <p><strong>Imagine This:</strong> If a phytoplankton was the size of a marble, a human would be as tall as Mount Everest!</p>
+        </div>
+
+        <div class="story-grid">
+          <div class="story-card">
+            <h4>🌱 What Are Phytoplankton?</h4>
+            <p>They're like underwater grass! Just like plants on land, they use sunlight to make their own food. This process is called <strong>photosynthesis</strong>.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🌍 Why Are They Important?</h4>
+            <p>These tiny plants make <strong>half of all the oxygen</strong> we breathe! Every second breath you take comes from ocean plants.</p>
+          </div>
+        </div>
+
+        <h3>🎨 The Ocean's Colour Palette</h3>
+        <p>When there are lots of phytoplankton in the water, the ocean looks green from space! When there are fewer, it looks blue. Scientists use satellites to take pictures of these colours to understand where ocean life is thriving.</p>
+
+        <div class="highlight-box">
+          <h4>🛰️ Cool Fact!</h4>
+          <p>NASA satellites can see these tiny plants from 700 kilometres above Earth! The green colour they create is called <strong>chlorophyll</strong> - the same stuff that makes leaves green.</p>
+        </div>
+      </div>   
+   <!-- Chapter 2: The Ocean Food Chain -->
+      <div class="story-section">
+        <h2><span class="emoji-large">🍽️</span> Chapter 2: The Ocean's Restaurant</h2>
+        
+        <p>The ocean works like a giant restaurant with different levels. Everyone has to eat, and everyone gets eaten by someone bigger!</p>
+
+        <div class="food-chain">
+          <div class="food-chain-item">
+            <span class="emoji-large">🦠</span>
+            <h4>Phytoplankton</h4>
+            <p>The tiny plants (like ocean grass)</p>
+          </div>
+          
+          <div class="food-chain-arrow">→</div>
+          
+          <div class="food-chain-item">
+            <span class="emoji-large">🦐</span>
+            <h4>Zooplankton</h4>
+            <p>Tiny animals that eat the plants</p>
+          </div>
+          
+          <div class="food-chain-arrow">→</div>
+          
+          <div class="food-chain-item">
+            <span class="emoji-large">🐟</span>
+            <h4>Small Fish</h4>
+            <p>Eat the tiny animals</p>
+          </div>
+          
+          <div class="food-chain-arrow">→</div>
+          
+          <div class="food-chain-item">
+            <span class="emoji-large">🦈</span>
+            <h4>Sharks</h4>
+            <p>The ocean's top predators</p>
+          </div>
+        </div>
+
+        <div class="visual-element">
+          <span class="emoji-large">⚖️</span>
+          <p><strong>Think About It:</strong> It takes about 1,000 kg of phytoplankton to feed enough fish to support just 1 kg of shark!</p>
+        </div>
+
+        <h3>🌊 Ocean Swirls: Nature's Delivery Service</h3>
+        <p>The ocean has giant spinning whirlpools called <strong>eddies</strong>. These aren't dangerous - they're like slow-motion tornadoes in the water that help move nutrients around the ocean.</p>
+
+        <div class="story-grid">
+          <div class="story-card">
+            <h4>🌀 Cold Eddies (Cyclonic)</h4>
+            <p>Spin like a drain and bring cold, nutrient-rich water up from the deep ocean. This feeds the phytoplankton!</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🔄 Warm Eddies (Anticyclonic)</h4>
+            <p>Spin the opposite way and push warm water down. They create "warm highways" for marine animals.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 3: Sharks - Ocean Guardians -->
+      <div class="story-section">
+        <h2><span class="emoji-large">🦈</span> Chapter 3: Sharks - The Ocean's Guardians</h2>
+        
+        <p>Sharks might seem scary, but they're actually like the ocean's doctors and gardeners! They keep the ocean healthy by doing very important jobs.</p>
+
+        <div class="story-grid">
+          <div class="story-card">
+            <h4>🏥 Ocean Doctors</h4>
+            <p>Sharks eat sick and weak fish, which stops diseases from spreading. This keeps fish populations healthy and strong.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🌱 Ocean Gardeners</h4>
+            <p>By controlling fish numbers, sharks help protect sea grass and coral reefs from being overeaten.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🧭 Amazing Navigators</h4>
+            <p>Sharks can travel thousands of kilometres using Earth's magnetic field like a built-in GPS!</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>❄️ Temperature Challenges</h4>
+            <p>Sharks are cold-blooded, so cold water makes them slow and tired. They need warm water to hunt effectively.</p>
+          </div>
+        </div>
+
+        <h3>🌊 How Sharks Use Ocean Swirls</h3>
+        <p>Remember those spinning eddies? Sharks are incredibly smart and use them like underwater highways!</p>
+
+        <div class="visual-element">
+          <span class="emoji-large">🛣️</span>
+          <p><strong>Shark Highways:</strong> Warm eddies create columns of warm water that go deep into the ocean. Sharks can dive deeper while staying warm, reaching the "twilight zone" where lots of food lives!</p>
+        </div>
+
+        <div class="highlight-box">
+          <h4>🌅 The Ocean's Twilight Zone</h4>
+          <p>Between 200-1000 metres deep, there's a layer packed with fish and squid. It's like an underwater buffet, but it's usually too cold for sharks to reach. Warm eddies change that!</p>
+        </div>
+
+        <h3>⚠️ Why Sharks Need Our Help</h3>
+        <p>Sharks have been around for 400 million years - they survived the dinosaurs! But today, they face new challenges:</p>
+        
+        <ul style="color: #cccccc; margin-left: 20px;">
+          <li><strong>Climate Change:</strong> Ocean temperatures are changing, affecting their food sources</li>
+          <li><strong>Overfishing:</strong> Humans catch too many fish, leaving less food for sharks</li>
+          <li><strong>Pollution:</strong> Plastic and chemicals harm ocean ecosystems</li>
+          <li><strong>Habitat Loss:</strong> Coastal development destroys important shark nurseries</li>
+        </ul>
+      </div>      <!
+-- Chapter 4: Satellites - Our Ocean Eyes -->
+      <div class="story-section">
+        <h2><span class="emoji-large">🛰️</span> Chapter 4: Satellites - Our Eyes in the Sky</h2>
+        
+        <p>How do we study something as big as the ocean? We use satellites - special cameras in space that can see the whole Earth at once!</p>
+
+        <div class="visual-element">
+          <span class="emoji-large">📸</span>
+          <p><strong>Space Photography:</strong> NASA satellites take pictures of Earth every single day, creating a photo album of our planet's health!</p>
+        </div>
+
+        <h3>🎨 Reading Ocean Colours</h3>
+        <p>Satellites can see colours that tell us amazing stories about ocean life:</p>
+
+        <div class="story-grid">
+          <div class="story-card">
+            <h4>💚 Green Water</h4>
+            <p>Lots of phytoplankton! This means the area is full of life and food for marine animals.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>💙 Blue Water</h4>
+            <p>Clear water with fewer nutrients. Often found in the middle of oceans, like underwater deserts.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🌡️ Temperature Maps</h4>
+            <p>Satellites can measure water temperature, showing us where warm and cold currents flow.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🌊 Sea Level Changes</h4>
+            <p>They can detect those spinning eddies by measuring tiny changes in sea level - just a few centimetres!</p>
+          </div>
+        </div>
+
+        <h3>📊 25 Years of Ocean Watching</h3>
+        <p>NASA's satellites have been watching our oceans for over 25 years! This long-term view helps scientists understand:</p>
+        
+        <ul style="color: #cccccc; margin-left: 20px;">
+          <li>How ocean life changes with the seasons</li>
+          <li>Where marine animals like to travel</li>
+          <li>How climate change affects ocean ecosystems</li>
+          <li>Where to focus conservation efforts</li>
+        </ul>
+
+        <div class="highlight-box">
+          <h4>🔬 Citizen Science</h4>
+          <p>You can help too! Many apps let you report marine animal sightings, contributing to scientific research. Every observation helps scientists understand ocean life better.</p>
+        </div>
+      </div>
+
+      <!-- Chapter 5: The Big Picture -->
+      <div class="story-section">
+        <h2><span class="emoji-large">🌍</span> Chapter 5: The Big Picture</h2>
+        
+        <p>Now you understand the amazing connections in our ocean! Let's see how it all fits together:</p>
+
+        <div class="visual-element">
+          <span class="emoji-large">🔄</span>
+          <p><strong>The Ocean Cycle:</strong><br>
+          Sunlight → Phytoplankton → Small Animals → Fish → Sharks<br>
+          ↓<br>
+          Healthy Ocean Ecosystems → Healthy Planet → Healthy Humans</p>
+        </div>
+
+        <h3>🎯 What Our Visualisations Show</h3>
+        <p>When you explore our interactive globes, you're seeing:</p>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h4>🖼️ Image Globe</h4>
+            <p>Real satellite photos showing where ocean life is most abundant. Green areas are like underwater rainforests!</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🌊 Heatmap View</h4>
+            <p>Smooth colour gradients that highlight patterns in ocean productivity over time.</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>📊 Time Series</h4>
+            <p>Data points that show how ocean life changes throughout the year - like watching the ocean breathe!</p>
+          </div>
+          
+          <div class="story-card">
+            <h4>🦈 Shark Connections</h4>
+            <p>Understanding where sharks might find the best feeding conditions based on ocean productivity.</p>
+          </div>
+        </div>
+
+        <h3>🌟 Why This Matters</h3>
+        <p>Understanding our oceans helps us:</p>
+        
+        <ul style="color: #cccccc; margin-left: 20px;">
+          <li><strong>Protect Marine Life:</strong> Know where animals live and what they need</li>
+          <li><strong>Fight Climate Change:</strong> Oceans absorb CO₂ and produce oxygen</li>
+          <li><strong>Ensure Food Security:</strong> Billions of people depend on ocean fish for protein</li>
+          <li><strong>Predict Weather:</strong> Ocean currents drive global weather patterns</li>
+          <li><strong>Inspire Conservation:</strong> Beautiful visualisations help people care about the ocean</li>
+        </ul>
+
+        <div class="highlight-box">
+          <h4>🚀 Your Mission</h4>
+          <p>Now that you understand the ocean's hidden world, you're ready to explore our interactive visualisations! Look for patterns, seasonal changes, and imagine the incredible life thriving beneath the waves.</p>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="story-section" style="text-align: center;">
+        <h2><span class="emoji-large">🚀</span> Ready to Explore?</h2>
+        <p style="font-size: 1.2em; margin-bottom: 30px;">Now that you know the science behind the colours, dive into our interactive ocean visualisations!</p>
+        
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+          <a href="src/globes/chlorophyll-globe/index-combined-images.html" style="background: linear-gradient(135deg, #ff6600, #ffaa00); color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; transition: all 0.3s ease;">
+            🖼️ Start with Image Globe
+          </a>
+          <a href="src/globes/chlorophyll-globe/index-heatmap.html" style="background: linear-gradient(135deg, #0066cc, #00ccff); color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; transition: all 0.3s ease;">
+            🌊 Try the Heatmap
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="text-align: center; margin-top: 50px; padding: 30px; background: rgba(0, 20, 40, 0.6); border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(0, 150, 200, 0.2);">
+        <h4 style="color: #00ccff; margin: 0 0 15px 0;">🌊 Learn More</h4>
+        <p style="color: #cccccc; margin: 10px 0; font-size: 0.9em;">
+          This educational content was created for the NASA Space Apps Challenge 2025.<br>
+          Data courtesy of NASA Ocean Colour Web and MODIS Aqua satellite mission.
+        </p>
+        <p style="color: #aaaaaa; font-size: 0.8em; margin-top: 20px;">
+          <strong>Remember:</strong> Every drop in the ocean counts, and every action you take to protect our planet matters! 🌍
+        </p>
+      </div>
+
+    </div>
+
+  </body>
+</html>
