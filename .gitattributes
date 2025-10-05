@@ -1,2 +1,5 @@
-*.png filter=lfs diff=lfs merge=lfs -text
+# Exclude small icon files from LFS - they need to be served directly by GitHub Pages
+src/assets/whale-shark-icon*.png -filter -diff -merge text
+
+# Large PNG files go to LFS
 chlorophyll-datasets/**/*.png filter=lfs diff=lfs merge=lfs -text

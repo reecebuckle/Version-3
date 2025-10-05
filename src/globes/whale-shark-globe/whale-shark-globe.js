@@ -306,9 +306,10 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     
     // Try multiple paths for better compatibility with different hosting environments
     var iconPaths = [
-      '../../assets/whale-shark-icon-transparent-v3.png',
-      '../../../src/assets/whale-shark-icon-transparent-v3.png',
-      './assets/whale-shark-icon-transparent-v3.png'
+      './src/assets/shark-v3.jpg',  // GitHub Pages friendly
+      '../../assets/shark-v3.jpg',  // Local development
+      '../../../src/assets/shark-v3.jpg',  // Alternative
+      './assets/shark-v3.jpg'  // Fallback
     ];
     
     function tryLoadIcon(pathIndex) {
@@ -322,8 +323,14 @@ DAT.WhaleSharkGlobe = function(container, opts) {
       console.log('🦈 Attempting to load whale shark icon from:', path);
       
       window.whaleSharkTexture = THREE.ImageUtils.loadTexture(path, undefined,
-        function() {
+        function(texture) {
           console.log('✅ Successfully loaded whale shark icon from:', path);
+          window.whaleSharkTextureLoaded = true;
+          // Refresh markers if they were already created with fallback
+          if (sharkMarkers.length > 0) {
+            console.log('🔄 Refreshing shark markers with loaded texture');
+            createSharkMarkers();
+          }
         },
         function(error) {
           console.warn('⚠️ Failed to load whale shark icon from:', path);
@@ -399,14 +406,15 @@ DAT.WhaleSharkGlobe = function(container, opts) {
 
       // Create sprite material with whale shark icon for end position
       if (!materials[colorKey]) {
-        if (window.whaleSharkTexture && window.whaleSharkTexture.image) {
-          // Use whale shark icon if loaded successfully
+        if (window.whaleSharkTexture) {
+          // Use whale shark icon - texture should be loaded by now
           materials[colorKey] = new THREE.SpriteMaterial({
             map: window.whaleSharkTexture,
             color: getSharkColor(shark), // Color the white background, leave shark black
             transparent: true,
             opacity: 0.8 // Slightly more transparent for better visibility
           });
+          console.log('✅ Using whale shark texture for shark', shark.id);
         } else {
           // Fallback to colored square if icon fails to load
           console.warn('⚠️ Using fallback colored square for shark', shark.id);
