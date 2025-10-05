@@ -265,10 +265,10 @@
     <strong>🎮 Controls:</strong><br>
     • <strong>Mouse:</strong> Rotate globe<br>
     • <strong>Wheel:</strong> Zoom in/out<br>
-    • <strong>Panels:</strong> Adjust visualization<br><br>
+    • <strong>Panels:</strong> Adjust visualisation<br><br>
     
     <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
-    <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a>
+    <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a>
   </div>
 
   <script type="text/javascript" src="../globe/third-party/Detector.js"></script>
@@ -294,11 +294,11 @@
       console.log('🌊 Initializing Chlorophyll Globe...');
       
       try {
-        // Create globe with simple ocean color scheme
+        // Create globe with simple ocean colour scheme
         globe = new DAT.Globe(container, {
           colorFn: function(x) {
             const c = new THREE.Color();
-            // Ocean color scheme: deep blue to yellow-green
+            // Ocean colour scheme: deep blue to yellow-green
             if (x < 0.2) {
               c.setHSL(0.67, 1.0, 0.2 + x * 1.5); // Deep blue to blue
             } else if (x < 0.6) {

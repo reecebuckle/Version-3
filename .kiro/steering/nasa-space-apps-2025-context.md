@@ -9,8 +9,7 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 ├── src/                           # Main application source code
 │   ├── globes/                   # Globe visualization implementations
 │   │   └── chlorophyll-globe/    # Chlorophyll-specific globe variants
-│   │       ├── index-images.html      # Monthly PNG image display
-│   │       ├── index-seasonal-images.html # Seasonal PNG display
+│   │       ├── index-combined-images.html # Monthly & seasonal PNG display
 │   │       ├── index-heatmap.html     # Ocean-only heatmap overlay
 │   │       ├── index-timeseries.html  # 3D data point spikes
 │   │       ├── index-simple.html      # Simplified interface
@@ -124,11 +123,17 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 - Global maps of expected shark activity
 - Video presentation of hypotheses and results
 
-## Development Strategy
+## Development Guidelines
+
+### Language and Terminology
+- **Use British English throughout**: visualisation (not visualization), colour (not color), modelling (not modeling)
+- **Consistent terminology**: Use "visualisation" for all display methods, "colour" for all colour references
+- **Documentation**: All README files, comments, and user-facing text should use British English
+- **Code comments**: Use British English in all JavaScript, Python, and HTML comments
 
 ### Phase 1: Terra Challenge Implementation
 1. **Data Integration**: Adapt WebGL Globe to load NASA Terra data
-2. **Animation System**: Implement time-based data visualization
+2. **Animation System**: Implement time-based data visualisation
 3. **Multi-layer Support**: Enable simultaneous display of multiple Terra instruments
 4. **User Interface**: Add controls for time navigation, layer selection
 5. **Storytelling**: Integrate commentary and impact explanations
@@ -141,10 +146,10 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 
 ### Technical Considerations
 - **Data Format**: Convert NASA data to WebGL Globe JSON format
-- **Performance**: Optimize for large temporal datasets
+- **Performance**: Optimise for large temporal datasets
 - **Cross-browser**: Ensure WebGL compatibility
-- **Responsive**: Mobile-friendly visualization
-- **Accessibility**: Screen reader support, color-blind friendly palettes
+- **Responsive**: Mobile-friendly visualisation
+- **Accessibility**: Screen reader support, colour-blind friendly palettes
 
 ## Key Resources
 - **NASA Earthdata Worldview**: Primary data source and animation tool
@@ -153,7 +158,7 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 - **Three.js Documentation**: For 3D graphics implementation
 
 ## Success Metrics
-- Interactive 3D visualization of Terra data
+- Interactive 3D visualisation of Terra data
 - Time-based animation showing Earth science processes
 - Clear educational value for target audience
 - Demonstrable community/environmental impact story

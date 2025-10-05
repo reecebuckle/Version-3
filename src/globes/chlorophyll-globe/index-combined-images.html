@@ -1,0 +1,593 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Chlorophyll Image Globe - NASA Space Apps 2025</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #001122 0%, #003366 100%);
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #00ccff;
+        backdrop-filter: blur(10px);
+      }
+
+      #time-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #00ccff;
+        backdrop-filter: blur(10px);
+        min-width: 280px;
+      }
+
+      .control-group {
+        margin-bottom: 15px;
+      }
+
+      .control-label {
+        display: block;
+        font-size: 12px;
+        color: #00ccff;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      .time-display {
+        background: rgba(0, 204, 255, 0.1);
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #00ccff;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #ffffff;
+        text-align: center;
+      }
+
+      .dataset-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .dataset-selector select {
+        flex: 1;
+        background: rgba(0, 204, 255, 0.1);
+        border: 1px solid #00ccff;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .dataset-selector select option {
+        background: #001122;
+        color: #ffffff;
+      }
+
+      .playback-controls {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+
+      .button {
+        background: linear-gradient(135deg, #00ccff 0%, #0099cc 100%);
+        border: none;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        flex: 1;
+        min-width: 60px;
+      }
+
+      .button:hover {
+        background: linear-gradient(135deg, #00ffff 0%, #00ccff 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 204, 255, 0.3);
+      }
+
+      .button:active {
+        transform: translateY(0);
+      }
+
+      .speed-control {
+        font-size: 12px;
+        color: #cccccc;
+      }
+
+      .speed-control input[type="range"] {
+        background: rgba(0, 204, 255, 0.1);
+        border: 1px solid #00ccff;
+        border-radius: 4px;
+        height: 6px;
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      .speed-control input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #00ccff;
+        cursor: pointer;
+        border: 2px solid #ffffff;
+      }
+
+      .speed-control input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #00ccff;
+        cursor: pointer;
+        border: 2px solid #ffffff;
+      }
+
+      #info {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #00ccff;
+        backdrop-filter: blur(10px);
+        max-width: 300px;
+      }
+
+      #loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 200;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 30px;
+        border-radius: 8px;
+        border: 2px solid #00ccff;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .loading-spinner {
+        border: 3px solid rgba(0, 204, 255, 0.3);
+        border-top: 3px solid #00ccff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .home-link {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 1px solid #00ccff;
+        backdrop-filter: blur(10px);
+      }
+
+      .home-link a {
+        color: #00ccff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .home-link a:hover {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+
+    <div class="home-link">
+      <a href="../../../index.html">🏠 Back to Home</a>
+    </div>
+
+    <div id="title">
+      <h2 style="margin: 0; color: #00ccff;">🖼️ Chlorophyll Image Globe</h2>
+      <div style="font-size: 12px; color: #cccccc; margin-top: 5px;">
+        NASA MODIS Aqua Satellite Data (2002-2025)<br>
+        <span style="color: #00ccff; font-weight: bold;" id="dataset-description">PNG Image Display</span>
+      </div>
+    </div>
+
+    <div id="time-controls">
+      <div class="control-group">
+        <label class="control-label">📊 Dataset Type</label>
+        <div class="dataset-selector">
+          <select id="dataset-type" onchange="switchDataset()">
+            <option value="monthly">📅 Monthly Images</option>
+            <option value="seasonal">🌿 Seasonal Images</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" id="current-period-label">📅 Current Period</label>
+        <div class="time-display" id="current-time">
+          Loading...
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">🎬 Playback Controls</label>
+        <div class="playback-controls">
+          <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play</button>
+          <button id="prev-period" class="button" onclick="previousPeriod()">⏮️ Prev</button>
+          <button id="next-period" class="button" onclick="nextPeriod()">⏭️ Next</button>
+          <button id="reset-time" class="button" onclick="resetToStart()">⏪ Reset</button>
+        </div>
+        <div class="speed-control">
+          Speed: <span id="speed-value">0.5s</span>
+          <input type="range" id="playback-speed" min="100" max="3000" value="500" step="100" 
+                 oninput="updatePlaybackSpeed()" style="width: 100%; margin-top: 5px;">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 2px;">
+            <span>0.1s</span>
+            <span>3.0s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="info">
+      <h3 style="margin: 0 0 10px 0; color: #00ccff;">🌊 Ocean Chlorophyll</h3>
+      <p style="margin: 0; font-size: 12px; line-height: 1.4;">
+        Chlorophyll-a concentration indicates marine productivity. Higher values (green/yellow) show nutrient-rich waters supporting marine life, while lower values (blue/purple) indicate oligotrophic regions.
+      </p>
+    </div>
+
+    <div id="loading">
+      <div class="loading-spinner"></div>
+      <div>Loading chlorophyll data...</div>
+    </div>
+
+    <script src="../../../src/assets/globe/third-party/Detector.js"></script>
+    <script src="../../../src/assets/globe/third-party/three.min.js"></script>
+    <script src="../../../src/assets/globe/third-party/Tween.js"></script>
+    <script src="../../../src/assets/globe/globe.js"></script>
+    <script src="image-globe.js"></script>
+
+    <script>
+      if (!Detector.webgl) {
+        Detector.addGetWebGLMessage();
+      } else {
+        // Global variables
+        let globe;
+        let imageList = [];
+        let currentImageIndex = 0;
+        let isPlaying = false;
+        let playbackInterval;
+        let playbackSpeed = 500;
+        let currentDataset = 'monthly';
+
+        // Initialize the application
+        function init() {
+          console.log('🌍 Initializing Chlorophyll Image Globe...');
+          
+          // Create the globe
+          globe = new DAT.ImageGlobe(document.getElementById('container'), {
+            imgDir: '../../../src/assets/globe/'
+          });
+
+          // Start the animation loop
+          globe.animate();
+
+          // Generate initial image list (monthly by default)
+          generateImageList();
+          
+          // Load first image
+          if (imageList.length > 0) {
+            loadImage(0);
+          }
+
+          // Hide loading screen
+          document.getElementById('loading').style.display = 'none';
+          
+          console.log('✅ Globe initialized successfully');
+        }
+
+        function switchDataset() {
+          const datasetType = document.getElementById('dataset-type').value;
+          const wasPlaying = isPlaying;
+          
+          // Stop playback if running
+          if (isPlaying) {
+            togglePlayback();
+          }
+          
+          // Update current dataset
+          currentDataset = datasetType;
+          
+          // Update UI labels
+          updateUIForDataset();
+          
+          // Regenerate image list
+          generateImageList();
+          
+          // Reset to first image
+          currentImageIndex = 0;
+          if (imageList.length > 0) {
+            loadImage(0);
+          }
+          
+          // Resume playback if it was playing
+          if (wasPlaying && imageList.length > 0) {
+            togglePlayback();
+          }
+          
+          console.log(`📊 Switched to ${datasetType} dataset`);
+        }
+
+        function updateUIForDataset() {
+          const datasetType = document.getElementById('dataset-type').value;
+          const descriptionEl = document.getElementById('dataset-description');
+          const periodLabel = document.getElementById('current-period-label');
+          
+          if (datasetType === 'monthly') {
+            descriptionEl.textContent = 'Monthly PNG Image Display';
+            periodLabel.textContent = '📅 Current Month';
+          } else {
+            descriptionEl.textContent = 'Seasonal PNG Image Display';
+            periodLabel.textContent = '🌿 Current Season';
+          }
+        }
+
+        function generateImageList() {
+          imageList = [];
+          
+          if (currentDataset === 'monthly') {
+            generateMonthlyImageList();
+          } else {
+            generateSeasonalImageList();
+          }
+          
+          console.log(`📋 Generated ${imageList.length} ${currentDataset} images`);
+        }
+
+        function generateMonthlyImageList() {
+          console.log('📋 Generating monthly image list from PNG files...');
+          
+          // Generate monthly data from 2002 to 2025
+          for (let year = 2002; year <= 2025; year++) {
+            for (let month = 1; month <= 12; month++) {
+              // Skip months before MODIS Aqua launch (August 2002)
+              if (year === 2002 && month < 8) {
+                continue;
+              }
+              
+              // Skip future months for current year
+              const currentDate = new Date();
+              if (year === currentDate.getFullYear() && month > currentDate.getMonth() + 1) {
+                continue;
+              }
+              
+              const monthStr = month.toString().padStart(2, '0');
+              const startDate = `${year}${monthStr}01`;
+              
+              // Calculate end date (last day of month)
+              const lastDay = new Date(year, month, 0).getDate();
+              const endDate = `${year}${monthStr}${lastDay.toString().padStart(2, '0')}`;
+              
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.png`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-monthly-images/${filename}`;
+              
+              imageList.push({
+                path: imagePath,
+                filename: filename,
+                year: year,
+                month: month,
+                displayName: `${getMonthName(month)} ${year}`,
+                period: `${year}-${monthStr}`
+              });
+            }
+          }
+        }
+
+        function generateSeasonalImageList() {
+          console.log('📋 Generating seasonal image list from PNG files...');
+          
+          const seasons = [
+            { name: 'Spring', code: 'SNSP', months: [3, 4, 5] },
+            { name: 'Summer', code: 'SNSU', months: [6, 7, 8] },
+            { name: 'Autumn', code: 'SNAU', months: [9, 10, 11] },
+            { name: 'Winter', code: 'SNWI', months: [12, 1, 2] }
+          ];
+          
+          // Generate seasonal data from 2002 to 2025
+          for (let year = 2002; year <= 2025; year++) {
+            for (const season of seasons) {
+              // Skip seasons before MODIS Aqua launch (Summer 2002 was first)
+              if (year === 2002 && (season.name === 'Spring' || season.name === 'Winter')) {
+                continue;
+              }
+              
+              // Skip future seasons for current year
+              const currentDate = new Date();
+              const currentYear = currentDate.getFullYear();
+              const currentMonth = currentDate.getMonth() + 1;
+              
+              if (year === currentYear) {
+                const seasonStartMonth = season.months[0];
+                if (seasonStartMonth > currentMonth && season.name !== 'Winter') {
+                  continue;
+                }
+                if (season.name === 'Winter' && currentMonth < 3) {
+                  continue;
+                }
+              }
+              
+              // Calculate season date range based on actual file naming
+              let startDate, endDate;
+              if (season.name === 'Spring') {
+                startDate = `${year}0321`;
+                endDate = `${year}0620`;
+              } else if (season.name === 'Summer') {
+                startDate = `${year}0621`;
+                endDate = `${year}0920`;
+              } else if (season.name === 'Autumn') {
+                startDate = `${year}0921`;
+                endDate = `${year}1220`;
+              } else if (season.name === 'Winter') {
+                startDate = `${year}1221`;
+                endDate = `${year + 1}0320`;
+              }
+              
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.png`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-seasonal-images/${filename}`;
+              
+              imageList.push({
+                path: imagePath,
+                filename: filename,
+                year: year,
+                season: season.name,
+                displayName: `${season.name} ${year}`,
+                period: `${year}-${season.name}`
+              });
+            }
+          }
+        }
+
+        function getMonthName(month) {
+          const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          return months[month - 1];
+        }
+
+        function loadImage(index) {
+          if (index < 0 || index >= imageList.length) return;
+          
+          currentImageIndex = index;
+          const imageData = imageList[index];
+          
+          console.log(`🖼️ Loading image ${index + 1}/${imageList.length}: ${imageData.displayName}`);
+          
+          // Update time display
+          document.getElementById('current-time').textContent = imageData.displayName;
+          
+          // Load the image as texture
+          globe.loadImage(imageData.path);
+        }
+
+        function togglePlayback() {
+          if (isPlaying) {
+            clearInterval(playbackInterval);
+            isPlaying = false;
+            document.getElementById('play-pause').innerHTML = '▶️ Play';
+            console.log('⏸️ Playback paused');
+          } else {
+            if (imageList.length === 0) return;
+            
+            isPlaying = true;
+            document.getElementById('play-pause').innerHTML = '⏸️ Pause';
+            
+            playbackInterval = setInterval(() => {
+              nextPeriod();
+            }, playbackSpeed);
+            
+            console.log('▶️ Playback started');
+          }
+        }
+
+        function previousPeriod() {
+          if (imageList.length === 0) return;
+          
+          let newIndex = currentImageIndex - 1;
+          if (newIndex < 0) {
+            newIndex = imageList.length - 1; // Loop to end
+          }
+          loadImage(newIndex);
+        }
+
+        function nextPeriod() {
+          if (imageList.length === 0) return;
+          
+          let newIndex = currentImageIndex + 1;
+          if (newIndex >= imageList.length) {
+            newIndex = 0; // Loop to beginning
+          }
+          loadImage(newIndex);
+        }
+
+        function resetToStart() {
+          if (imageList.length === 0) return;
+          loadImage(0);
+        }
+
+        function updatePlaybackSpeed() {
+          playbackSpeed = parseInt(document.getElementById('playback-speed').value);
+          
+          // Update speed display
+          const speedInSeconds = (playbackSpeed / 1000).toFixed(1);
+          document.getElementById('speed-value').textContent = `${speedInSeconds}s`;
+          
+          // Restart interval if playing
+          if (isPlaying) {
+            clearInterval(playbackInterval);
+            playbackInterval = setInterval(() => {
+              nextPeriod();
+            }, playbackSpeed);
+          }
+          
+          console.log(`⚡ Playback speed updated to ${playbackSpeed}ms (${speedInSeconds}s)`);
+        }
+
+        // Initialize when page loads
+        init();
+      }
+    </script>
+  </body>
+</html>

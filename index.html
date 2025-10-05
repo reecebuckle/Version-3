@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title>NASA Space Apps 2025 - Ocean Chlorophyll Visualization Suite</title>
+    <title>NASA Space Apps 2025 - Ocean Chlorophyll Visualisation Suite</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
     <style type="text/css">
       html {
         height: 100%;
@@ -211,54 +212,33 @@
 
     <div class="container">
       <div class="header">
-        <h1>🌊 Ocean Chlorophyll Visualization Suite</h1>
+        <h1>🌊 Ocean Chlorophyll Visualisation Suite</h1>
         <div class="subtitle">NASA Space Apps Challenge 2025</div>
         <div class="description">
-          Interactive 3D visualizations of ocean chlorophyll-a concentrations using NASA MODIS Aqua satellite data.
-          Explore 23 years of monthly ocean productivity patterns through multiple visualization techniques.
+          Interactive 3D visualisations of ocean chlorophyll-a concentrations using NASA MODIS Aqua satellite data.
+          Explore 23 years of monthly ocean productivity patterns through multiple visualisation techniques.
         </div>
       </div>
 
-      <div class="tech-stack">
-        <div class="tech-item">🛰️ NASA MODIS Aqua</div>
-        <div class="tech-item">🌐 WebGL Globe</div>
-        <div class="tech-item">📊 Three.js</div>
-        <div class="tech-item">🎨 Custom Shaders</div>
-        <div class="tech-item">📈 Time Series</div>
-      </div>
+
 
       <div class="visualizations">
         
         <div class="viz-card">
-          <h3>📅 Monthly Image Globe</h3>
+          <h3>🖼️ Image Globe (Monthly & Seasonal)</h3>
           <div class="description">
-            High-resolution PNG images displayed directly on a 3D globe. Each image represents a monthly average 
-            of chlorophyll-a concentrations with crisp, detailed visualization.
+            High-resolution PNG images displayed directly on a 3D globe with switchable datasets. 
+            Choose between monthly detail or seasonal patterns with a simple dropdown selector.
           </div>
           <ul class="features">
+            <li>Switchable monthly/seasonal datasets</li>
             <li>Direct PNG texture mapping</li>
             <li>4km resolution satellite imagery</li>
-            <li>Monthly progression (2002-2025)</li>
             <li>Interactive 3D rotation and zoom</li>
-            <li>Adjustable image opacity</li>
+            <li>Unified playback controls</li>
+            <li>23+ years of data (2002-2025)</li>
           </ul>
-          <a href="src/globes/chlorophyll-globe/index-images.html" class="viz-button primary">🚀 Launch Monthly Globe</a>
-        </div>
-
-        <div class="viz-card">
-          <h3>🌿 Seasonal Image Globe</h3>
-          <div class="description">
-            Seasonal PNG images showing quarterly patterns of ocean productivity. Perfect for understanding 
-            annual cycles and long-term seasonal trends in chlorophyll concentrations.
-          </div>
-          <ul class="features">
-            <li>Seasonal PNG texture display</li>
-            <li>4 seasons per year (Spring/Summer/Autumn/Winter)</li>
-            <li>Long-term seasonal trend analysis</li>
-            <li>Simplified temporal navigation</li>
-            <li>Educational seasonal focus</li>
-          </ul>
-          <a href="src/globes/chlorophyll-globe/index-seasonal-images.html" class="viz-button">🌿 View Seasonal Globe</a>
+          <a href="src/globes/chlorophyll-globe/index-combined-images.html" class="viz-button primary">🖼️ Launch Image Globe</a>
         </div>
 
         <div class="viz-card">
@@ -272,7 +252,7 @@
             <li>Smooth gradient rendering</li>
             <li>Continental shelf exclusion</li>
             <li>Adjustable transparency</li>
-            <li>Enhanced color schemes</li>
+            <li>Enhanced colour schemes</li>
           </ul>
           <a href="src/globes/chlorophyll-globe/index-heatmap.html" class="viz-button">🌊 View Heatmap</a>
         </div>
@@ -280,7 +260,7 @@
         <div class="viz-card">
           <h3>📊 Time Series Points</h3>
           <div class="description">
-            Classic point-based visualization showing individual data points as 3D spikes. 
+            Classic point-based visualisation showing individual data points as 3D spikes. 
             Perfect for understanding data density and spatial distribution patterns.
           </div>
           <ul class="features">
@@ -296,7 +276,7 @@
         <div class="viz-card">
           <h3>🎯 Simple Globe View</h3>
           <div class="description">
-            Streamlined visualization focusing on core functionality. Great for presentations 
+            Streamlined visualisation focusing on core functionality. Great for presentations 
             and educational purposes with clean, minimal interface.
           </div>
           <ul class="features">
@@ -314,7 +294,7 @@
       <div class="footer">
         <h4>🛰️ About This Project</h4>
         <p>
-          This visualization suite was developed for the <strong>NASA Space Apps Challenge 2025</strong>, 
+          This visualisation suite was developed for the <strong>NASA Space Apps Challenge 2025</strong>, 
           specifically targeting the <strong>Terra's 25th Anniversary Animation Challenge</strong>. 
           The project showcases 23 years of ocean chlorophyll-a data from NASA's MODIS Aqua satellite, 
           demonstrating seasonal patterns, climate trends, and ocean productivity cycles.
@@ -324,13 +304,13 @@
           <strong>Data Source:</strong> NASA Ocean Color Web - MODIS Aqua Level-3 Chlorophyll-a (4km resolution)<br>
           <strong>Time Range:</strong> 2002-2025 (Monthly averages)<br>
           <strong>Technology:</strong> WebGL Globe, Three.js, Custom GLSL Shaders<br>
-          <strong>Purpose:</strong> Educational visualization and scientific communication
+          <strong>Purpose:</strong> Educational visualisation and scientific communication
         </p>
 
         <p>
           <strong>Links:</strong>
           <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
-          <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Color</a> | 
+          <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a> | 
           <a href="https://www.spaceappschallenge.org/" target="_blank">NASA Space Apps</a>
         </p>
       </div>

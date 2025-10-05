@@ -1,14 +1,14 @@
-# Ocean Chlorophyll Visualization Suite
+# Ocean Chlorophyll Visualisation Suite
 
-Interactive 3D visualizations of ocean chlorophyll-a concentrations for NASA Space Apps Challenge 2025. This project extends the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team to visualize marine ecosystem data and support shark habitat modeling.
+Interactive 3D visualisations of ocean chlorophyll-a concentrations for NASA Space Apps Challenge 2025. This project extends the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team to visualise marine ecosystem data and support shark habitat modelling.
 
 ## Project Overview
 
-This visualization suite was developed for NASA's **"Sharks in Space"** challenge, which aims to use satellite data to understand and predict shark foraging habitats. By visualizing ocean chlorophyll concentrations - a key indicator of marine productivity - we can identify areas where sharks are likely to find abundant food sources and track seasonal migration patterns.
+This visualisation suite was developed for NASA's **"Sharks in Space"** challenge, which aims to use satellite data to understand and predict shark foraging habitats. By visualising ocean chlorophyll concentrations - a key indicator of marine productivity - we can identify areas where sharks are likely to find abundant food sources and track seasonal migration patterns.
 
 ## Data Sources
 
-The project uses open ocean color data from NASA's [PACE Ocean Color Data Portal](https://pace.oceansciences.org/access_pace_data.htm). The chlorophyll-a concentration dataset is collected by the **Aqua-MODIS instrument** and provides:
+The project uses open ocean colour data from NASA's [PACE Ocean Colour Data Portal](https://pace.oceansciences.org/access_pace_data.htm). The chlorophyll-a concentration dataset is collected by the **Aqua-MODIS instrument** and provides:
 
 - **4km spatial resolution** global coverage
 - **Monthly and seasonal** temporal resolution  
@@ -50,7 +50,7 @@ Based on chlorophyll patterns and trophic relationships, our model identifies:
 
 These analyses support the hypothesis that satellite-derived chlorophyll data can effectively predict shark habitat preferences by identifying productive marine regions that support robust food webs.
 
-## Interactive Visualizations
+## Interactive Visualisations
 
 - **Monthly Image Globe** - High-resolution PNG textures showing monthly chlorophyll patterns
 - **Seasonal Image Globe** - Quarterly averages highlighting seasonal productivity cycles  
