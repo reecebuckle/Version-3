@@ -1,479 +1,545 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <title>Whale Shark Tracking - NASA Space Apps 2025</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-      html {
-        height: 100%;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #001122 0%, #003366 100%);
-        color: #ffffff;
-        font-size: 14px;
-        line-height: 1.4;
-        height: 100%;
-        overflow: hidden;
+
+<head>
+  <title>Whale Shark Tracking - NASA Space Apps 2025</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #001122 0%, #003366 100%);
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1.4;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .home-link {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #00ccff;
+      backdrop-filter: blur(10px);
+    }
+
+    .home-link a {
+      color: #00ccff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .home-link a:hover {
+      color: #ffffff;
+    }
+
+    #title {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      backdrop-filter: blur(10px);
+      max-width: 420px;
+      width: 420px;
+    }
+
+    #stats-panel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      max-width: 280px;
+      width: 280px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    #time-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      min-width: 350px;
+      backdrop-filter: blur(10px);
+    }
+
+    #shark-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 300px;
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    .control-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00ccff;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .time-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #003366;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 10px 0;
+    }
+
+    .time-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+    }
+
+    .time-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+    }
+
+    .button {
+      background: linear-gradient(135deg, #0066cc, #00ccff);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: linear-gradient(135deg, #0088ff, #00ffff);
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+    }
+
+    .button:disabled {
+      background: #333;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .button.playing {
+      background: linear-gradient(135deg, #ff6600, #ffaa00);
+    }
+
+    .time-display {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ccff;
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(0, 100, 150, 0.2);
+      border-radius: 5px;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      border: 3px solid rgba(0, 204, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid #00ccff;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
       }
 
-      #container {
-        width: 100%;
-        height: 100%;
-        position: relative;
+      100% {
+        transform: rotate(360deg);
       }
+    }
 
-      .home-link {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 10px 20px;
-        border-radius: 20px;
-        border: 1px solid #00ccff;
-        backdrop-filter: blur(10px);
-      }
+    .stats {
+      font-size: 11px;
+      color: #cccccc;
+      margin-top: 10px;
+    }
 
-      .home-link a {
-        color: #00ccff;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 14px;
-      }
+    .highlight {
+      color: #00ccff;
+      font-weight: bold;
+    }
 
-      .home-link a:hover {
-        color: #ffffff;
-      }
+    a {
+      color: #00ccff;
+      text-decoration: none;
+    }
 
+    a:hover {
+      text-decoration: underline;
+      color: #66ddff;
+    }
+
+    .playback-controls {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .shark-item {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 4px;
+      background: rgba(0, 100, 150, 0.1);
+    }
+
+    .shark-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .shark-checkbox {
+      margin-right: 8px;
+    }
+
+    .shark-name {
+      flex: 1;
+      font-size: 11px;
+    }
+
+    .shark-count {
+      font-size: 10px;
+      color: #888;
+    }
+
+    .legend-header {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #00ccff;
+      font-size: 16px;
+    }
+
+    .track-legend {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .track-line {
+      width: 30px;
+      height: 2px;
+      background: #00ccff;
+      margin-right: 10px;
+      border-radius: 1px;
+    }
+
+    .track-marker {
+      width: 8px;
+      height: 8px;
+      background: #ff6600;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .stats-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stats-content {
+      background: rgba(0, 20, 40, 0.95);
+      border: 1px solid rgba(0, 150, 200, 0.5);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      backdrop-filter: blur(15px);
+    }
+
+    .stats-header {
+      color: #00ccff;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .stat-item {
+      background: rgba(0, 100, 150, 0.2);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ccff;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #cccccc;
+      margin-top: 5px;
+    }
+
+    /* Panel minimize functionality */
+    .panel-minimize {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 150, 200, 0.2);
+      border: 1px solid rgba(0, 150, 200, 0.5);
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00ccff;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .panel-minimize:hover {
+      background: rgba(0, 150, 200, 0.4);
+      border-color: #00ccff;
+    }
+
+    .panel-collapsed {
+      width: auto !important;
+      max-width: none !important;
+      min-width: 120px;
+      height: 40px !important;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .panel-collapsed .panel-content {
+      display: none;
+    }
+
+    .panel-collapsed .panel-title {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-size: 12px;
+      font-weight: bold;
+      color: #00ccff;
+      white-space: nowrap;
+    }
+
+    .panel-collapsed .panel-minimize {
+      transform: rotate(180deg);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
       #title {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 15px;
-        backdrop-filter: blur(10px);
-        max-width: 320px;
-        width: 320px;
+        position: relative;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-width: none;
+        margin-bottom: 10px;
       }
 
       #stats-panel {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 20px;
-        backdrop-filter: blur(10px);
-        font-size: 14px;
-        max-width: 280px;
-        width: 280px;
-        max-height: 400px;
-        overflow-y: auto;
+        position: relative;
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: none;
+        margin-bottom: 10px;
       }
 
       #time-controls {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 20px;
-        min-width: 350px;
-        backdrop-filter: blur(10px);
+        position: relative;
+        bottom: auto;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        min-width: auto;
+        margin-bottom: 10px;
       }
 
       #shark-controls {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 15px;
-        max-width: 300px;
-        backdrop-filter: blur(10px);
-        font-size: 12px;
-        max-height: 300px;
-        overflow-y: auto;
+        position: relative;
+        bottom: auto;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: none;
+        margin-bottom: 10px;
       }
 
-      .control-group {
-        margin-bottom: 15px;
-      }
-
-      .control-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #00ccff;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      .time-slider {
-        width: 100%;
-        height: 8px;
-        border-radius: 4px;
-        background: #003366;
-        outline: none;
-        -webkit-appearance: none;
-        margin: 10px 0;
-      }
-
-      .time-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
-      }
-
-      .time-slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        border: none;
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
-      }
-
-      .button {
-        background: linear-gradient(135deg, #0066cc, #00ccff);
-        border: none;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        margin: 2px;
-        transition: all 0.3s ease;
-      }
-
-      .button:hover {
-        background: linear-gradient(135deg, #0088ff, #00ffff);
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
-      }
-
-      .button:disabled {
-        background: #333;
-        cursor: not-allowed;
-        opacity: 0.5;
-      }
-
-      .button.playing {
-        background: linear-gradient(135deg, #ff6600, #ffaa00);
-      }
-
-      .time-display {
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        color: #00ccff;
-        margin: 10px 0;
-        padding: 10px;
-        background: rgba(0, 100, 150, 0.2);
-        border-radius: 5px;
-      }
-
-      .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        z-index: 1000;
-      }
-
-      .spinner {
-        border: 3px solid rgba(0, 204, 255, 0.3);
-        border-radius: 50%;
-        border-top: 3px solid #00ccff;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-      }
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      .stats {
-        font-size: 11px;
-        color: #cccccc;
-        margin-top: 10px;
-      }
-
-      .highlight {
-        color: #00ccff;
-        font-weight: bold;
-      }
-
-      a {
-        color: #00ccff;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-        color: #66ddff;
-      }
-
-      .playback-controls {
-        display: flex;
-        gap: 5px;
-        align-items: center;
-        justify-content: center;
-        margin: 10px 0;
-      }
-
-      .shark-item {
-        display: flex;
-        align-items: center;
-        margin: 5px 0;
-        padding: 5px;
-        border-radius: 4px;
-        background: rgba(0, 100, 150, 0.1);
-      }
-
-      .shark-color {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin-right: 8px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .shark-checkbox {
-        margin-right: 8px;
-      }
-
-      .shark-name {
-        flex: 1;
-        font-size: 11px;
-      }
-
-      .shark-count {
-        font-size: 10px;
-        color: #888;
-      }
-
-      .legend-header {
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: #00ccff;
-        font-size: 16px;
-      }
-
-      .track-legend {
-        display: flex;
-        align-items: center;
-        margin: 10px 0;
-      }
-
-      .track-line {
-        width: 30px;
-        height: 2px;
-        background: #00ccff;
-        margin-right: 10px;
-        border-radius: 1px;
-      }
-
-      .track-marker {
-        width: 8px;
-        height: 8px;
-        background: #ff6600;
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-
-      .stats-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: none;
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
+      #info-panel {
+        position: relative;
+        bottom: auto;
+        left: 10px;
+        right: 10px;
+        transform: none;
+        max-width: none;
+        margin-bottom: 10px;
       }
 
       .stats-content {
-        background: rgba(0, 20, 40, 0.95);
-        border: 1px solid rgba(0, 150, 200, 0.5);
-        border-radius: 12px;
-        padding: 30px;
-        max-width: 600px;
-        max-height: 80vh;
-        overflow-y: auto;
-        backdrop-filter: blur(15px);
-      }
-
-      .stats-header {
-        color: #00ccff;
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        max-width: none;
+        width: auto;
       }
 
       .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 20px;
+        grid-template-columns: 1fr;
+        gap: 10px;
       }
 
-      .stat-item {
-        background: rgba(0, 100, 150, 0.2);
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
+      .playback-controls {
+        flex-wrap: wrap;
+        gap: 3px;
       }
 
-      .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #00ccff;
-        display: block;
+      .button {
+        font-size: 11px;
+        padding: 6px 10px;
       }
 
-      .stat-label {
+      body {
+        overflow-y: auto;
+      }
+
+      #container {
+        height: 50vh;
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      #title,
+      #stats-panel,
+      #time-controls,
+      #shark-controls {
+        margin: 5px;
+        padding: 10px;
+      }
+
+      .control-label {
         font-size: 12px;
-        color: #cccccc;
-        margin-top: 5px;
       }
 
-      /* Mobile responsiveness */
-      @media (max-width: 768px) {
-        #title {
-          position: relative;
-          top: 10px;
-          left: 10px;
-          right: 10px;
-          width: auto;
-          max-width: none;
-          margin-bottom: 10px;
-        }
-
-        #stats-panel {
-          position: relative;
-          top: 10px;
-          right: 10px;
-          left: 10px;
-          width: auto;
-          max-width: none;
-          margin-bottom: 10px;
-        }
-
-        #time-controls {
-          position: relative;
-          bottom: auto;
-          left: 10px;
-          right: 10px;
-          width: auto;
-          min-width: auto;
-          margin-bottom: 10px;
-        }
-
-        #shark-controls {
-          position: relative;
-          bottom: auto;
-          right: 10px;
-          left: 10px;
-          width: auto;
-          max-width: none;
-          margin-bottom: 10px;
-        }
-
-        #info-panel {
-          position: relative;
-          bottom: auto;
-          left: 10px;
-          right: 10px;
-          transform: none;
-          max-width: none;
-          margin-bottom: 10px;
-        }
-
-        .stats-content {
-          margin: 20px;
-          padding: 20px;
-          max-width: none;
-          width: auto;
-        }
-
-        .stats-grid {
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-
-        .playback-controls {
-          flex-wrap: wrap;
-          gap: 3px;
-        }
-
-        .button {
-          font-size: 11px;
-          padding: 6px 10px;
-        }
-
-        body {
-          overflow-y: auto;
-        }
-
-        #container {
-          height: 50vh;
-          min-height: 300px;
-        }
+      .time-display {
+        font-size: 14px;
+        padding: 8px;
       }
 
-      @media (max-width: 480px) {
-        #title, #stats-panel, #time-controls, #shark-controls {
-          margin: 5px;
-          padding: 10px;
-        }
-
-        .control-label {
-          font-size: 12px;
-        }
-
-        .time-display {
-          font-size: 14px;
-          padding: 8px;
-        }
-
-        .shark-item {
-          margin: 3px 0;
-          padding: 3px;
-        }
-
-        .shark-name {
-          font-size: 10px;
-        }
-
-        .stats-content {
-          margin: 10px;
-          padding: 15px;
-        }
+      .shark-item {
+        margin: 3px 0;
+        padding: 3px;
       }
-    </style>
-  </head>
-  <body>
+
+      .shark-name {
+        font-size: 10px;
+      }
+
+      .stats-content {
+        margin: 10px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
 
   <div id="container"></div>
 
@@ -487,63 +553,71 @@
   </div>
 
   <div id="title">
-    <h2 style="margin: 0; color: #00ccff;">🦈 Whale Shark Tracking</h2>
-    <div style="font-size: 14px; color: #cccccc; margin-top: 5px; line-height: 1.4;">
-      Gulf of Mexico Movement Patterns (2009-2015)<br>
-      <span style="color: #00ccff; font-weight: bold;">41 Individual Whale Sharks</span><br><br>
-      
-      This visualisation shows GPS tracking data for whale sharks in the Gulf of Mexico. 
-      Each coloured line represents an individual shark's movement path over time.<br><br>
-      
-      <strong>🦈 About Whale Sharks:</strong><br>
-      World's largest fish species, reaching up to 12m in length. These gentle giants migrate vast distances 
-      following plankton blooms and seasonal feeding opportunities.<br><br>
-      
-      <strong>💡 How to Use:</strong><br>
-      • Click <strong>"🌊 Show All Data"</strong> to see complete tracking paths<br>
-      • Use <strong>"▶️ Play Years"</strong> to animate through yearly periods<br>
-      • Toggle individual sharks on/off in the right panel<br><br>
-      
-      <div style="font-size: 12px; color: #888; border-top: 1px solid #333; padding-top: 10px; margin-top: 10px;">
-        <strong>🌊 Gulf of Mexico Focus:</strong> 22°N - 30°N, 98°W - 82°W<br>
-        <strong>📊 Data Source:</strong> Movebank GPS Tracking
+    <div class="panel-minimize" onclick="togglePanel('title')" title="Minimize panel">▼</div>
+    <div class="panel-title" style="display: none;">🦈 Whale Shark Info</div>
+    <div class="panel-content">
+      <h2 style="margin: 0; color: #00ccff;">🦈 Whale Shark Tracking</h2>
+      <div style="font-size: 14px; color: #cccccc; margin-top: 5px; line-height: 1.4;">
+        This visualisation shows GPS tracking data for <span style="color: #00ccff; font-weight: bold;">41 whale sharks</span> in the Gulf of Mexico (2009-2015). Each coloured line represents an individual shark's movement path over time.<br><br>
+
+        <strong>🦈 About Whale Sharks:</strong><br>
+        World's largest fish species, reaching up to 12m in length. These gentle giants migrate vast distances
+        following plankton blooms and seasonal feeding opportunities.<br><br>
+
+        <strong>💡 How to Use:</strong><br>
+        • Click <strong>"🦈 Show All Sharks"</strong> to see complete tracking paths<br>
+        • Use <strong>"▶️ Play"</strong> to animate through yearly periods<br>
+        • Toggle individual sharks on/off in the right panel<br><br>
       </div>
     </div>
   </div>
 
   <div id="stats-panel">
-    <div class="legend-header">🗺️ Legend</div>
-    
-    <div style="margin: 15px 0; padding: 15px; background: rgba(0, 100, 150, 0.1); border-radius: 8px;">
-      <div style="font-size: 12px; color: #cccccc; margin-bottom: 15px;">
-        <strong style="color: #00ccff;">🎨 Colour Coding</strong><br>
-        Each whale shark has a unique colour for its tracking path. Lines show movement over time, with markers indicating current positions.
-      </div>
-      
-      <div style="font-size: 12px; color: #cccccc; margin-bottom: 15px;">
-        <strong style="color: #00ccff;">🦈 Symbols</strong><br>
-        <div style="display: flex; align-items: center; margin: 8px 0;">
-          <img src="../../assets/globe/whale-shark-icon.webp" style="width: 20px; height: 20px; margin-right: 8px;" alt="Whale Shark">
-          Current shark position
+    <div class="panel-minimize" onclick="togglePanel('stats-panel')" title="Minimize panel">▼</div>
+    <div class="panel-title" style="display: none;">🗺️ Legend & Controls</div>
+    <div class="panel-content">
+      <div class="legend-header">🗺️ Legend</div>
+
+      <div style="margin: 15px 0; padding: 15px; background: rgba(0, 100, 150, 0.1); border-radius: 8px;">
+        <div style="font-size: 12px; color: #cccccc; margin-bottom: 15px;">
+          <strong style="color: #00ccff;">🎨 Colour Coding</strong><br>
+          Each whale shark has a unique colour for its tracking path. Lines show movement over time, with markers
+          indicating current positions.
         </div>
-        <div style="display: flex; align-items: center; margin: 8px 0;">
-          <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 8px;"></div>
-          Movement path
+
+        <div style="font-size: 14px; color: #cccccc; margin-bottom: 15px;">
+          <strong style="color: #00ccff;">🦈 Symbols</strong><br>
+          <div style="display: flex; align-items: center; margin: 10px 0;">
+            <div style="width: 12px; height: 12px; background: #00ccff; border-radius: 50%; margin-right: 10px;"></div>
+            Start tracking position
+          </div>
+          <div style="display: flex; align-items: center; margin: 10px 0;">
+            <div style="width: 24px; height: 2px; background: #00ccff; margin-right: 10px;"></div>
+            Movement path
+          </div>
+          <div style="display: flex; align-items: center; margin: 10px 0;">
+            <img src="../../assets/whale-shark-icon-transparent-v3.png"
+              style="width: 20px; height: 20px; margin-right: 10px;" alt="Whale Shark">
+            End tracking position
+          </div>
         </div>
-      </div>
-      
-      <div style="font-size: 12px; color: #cccccc;">
-        <strong style="color: #00ccff;">🎮 Controls</strong><br>
-        • Drag to rotate the globe<br>
-        • Scroll to zoom in/out<br>
-        • Use time controls to filter data<br>
-        • Toggle individual sharks on/off
+
+        <div style="font-size: 12px; color: #cccccc;">
+          <strong style="color: #00ccff;">🎮 Controls</strong><br>
+          • Drag to rotate the globe<br>
+          • Scroll to zoom in/out<br>
+          • Use time controls to filter data<br>
+          • Toggle individual sharks on/off
+        </div>
       </div>
     </div>
   </div>
 
   <div id="time-controls">
-    <div class="control-group">
+    <div class="panel-minimize" onclick="togglePanel('time-controls')" title="Minimize panel">▼</div>
+    <div class="panel-title" style="display: none;">⏰ Time Controls</div>
+    <div class="panel-content">
+      <div class="control-group">
       <label class="control-label">📅 Time Period</label>
       <div class="time-display" id="current-time">
         Loading...
@@ -552,9 +626,8 @@
 
     <div class="control-group">
       <label class="control-label">🎯 Time Navigation</label>
-      <input type="range" id="time-slider" class="time-slider" 
-             min="0" max="100" value="0" 
-             oninput="scrubToTime(this.value)">
+      <input type="range" id="time-slider" class="time-slider" min="0" max="100" value="0"
+        oninput="scrubToTime(this.value)">
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 5px;">
         <span>2009</span>
         <span>2015</span>
@@ -564,19 +637,19 @@
     <div class="control-group">
       <label class="control-label">🎬 Playback Controls</label>
       <div class="playback-controls">
-        <button id="show-all-time" class="button" onclick="showAllTimeData()" style="background: linear-gradient(135deg, #ff6600, #ffaa00);">🌊 Show All Data</button>
-        <button id="refresh-sharks" class="button" onclick="refreshSharks()" style="background: linear-gradient(135deg, #66cc66, #99ff99);">🔄 Refresh Sharks</button>
-        <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play Years</button>
+        <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play</button>
         <button id="prev-year" class="button" onclick="previousYear()">⏮️ Prev</button>
         <button id="next-year" class="button" onclick="nextYear()">⏭️ Next</button>
+        <button id="show-all-time" class="button active" onclick="showAllTimeData()"
+          style="background: linear-gradient(135deg, #ff6600, #ffaa00);">🦈 Show All Sharks</button>
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label">⚡ Animation Speed</label>
       <div style="margin-bottom: 5px;">Speed: <span id="speed-value">0.8s</span></div>
-      <input type="range" id="playback-speed" min="200" max="2000" value="800" step="100" 
-             oninput="updatePlaybackSpeed()" style="width: 100%;">
+      <input type="range" id="playback-speed" min="200" max="2000" value="800" step="100"
+        oninput="updatePlaybackSpeed()" style="width: 100%;">
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 2px;">
         <span>Fast</span>
         <span>Slow</span>
@@ -587,16 +660,23 @@
       <label class="control-label">🌍 Globe Background</label>
       <div style="margin-bottom: 10px;">
         <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; cursor: pointer;">
-          <input type="radio" name="globe-background" value="earth" checked onchange="switchGlobeBackground(this.value)" style="margin-right: 8px;">
-          <span>🌍 Standard Earth (High Resolution)</span>
+          <input type="radio" name="globe-background" value="earth" checked onchange="switchGlobeBackground(this.value)"
+            style="margin-right: 8px;">
+          <span>🌍 Standard Earth (Day)</span>
+        </label>
+        <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; cursor: pointer;">
+          <input type="radio" name="globe-background" value="earth-night" onchange="switchGlobeBackground(this.value)"
+            style="margin-right: 8px;">
+          <span>🌙 Standard Earth (Night)</span>
         </label>
         <label style="display: flex; align-items: center; font-size: 12px; cursor: pointer;">
-          <input type="radio" name="globe-background" value="chlorophyll" onchange="switchGlobeBackground(this.value)" style="margin-right: 8px;">
+          <input type="radio" name="globe-background" value="chlorophyll" onchange="switchGlobeBackground(this.value)"
+            style="margin-right: 8px;">
           <span>🌊 Chlorophyll Concentrations (Aqua-MODIS)</span>
         </label>
       </div>
       <div style="font-size: 10px; color: #888;">
-        Switch between standard Earth view and ocean productivity data
+        Switch between day/night Earth views and ocean productivity data
       </div>
     </div>
 
@@ -605,8 +685,9 @@
 
 
     <div class="control-group">
-      <label class="control-label">📊 Movement Statistics</label>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; background: rgba(0, 100, 150, 0.1); padding: 12px; border-radius: 6px;">
+      <label class="control-label">📊 Whale Shark Tracking Statistics</label>
+      <div
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; background: rgba(0, 100, 150, 0.1); padding: 12px; border-radius: 6px;">
         <div>Total Sharks: <span class="highlight" id="shark-count">41</span></div>
         <div>Total Distance: <span class="highlight">98,447 km</span></div>
         <div>Tracking Points: <span class="highlight" id="point-count">3,333</span></div>
@@ -614,25 +695,40 @@
         <div>Time Range: <span class="highlight">6 years</span></div>
         <div>Average Speed: <span class="highlight">23.7 km/day</span></div>
         <div>Active Period: <span class="highlight" id="active-period">All Time</span></div>
-        <div>🏆 Longest Journey: <span class="highlight">11,057 km</span></div>
+        <div>Longest Journey: <span class="highlight">11,057 km</span></div>
       </div>
     </div>
 
-
+    <div class="control-group">
+      <div style="font-size: 12px; color: #888; border-top: 1px solid #333; padding-top: 10px; margin-top: 10px;">
+        <strong>🌊 Gulf of Mexico Focus:</strong> 22°N - 30°N, 98°W - 82°W<br>
+        <strong>🦈 Whale Shark Data Source:</strong> <a
+          href="https://www.movebank.org/cms/webapp?gwt_fragment=page%3Dstudies%2Cpath%3Dstudy1153270750"
+          target="_blank" style="color: #00ccff; text-decoration: none;">Movebank GPS Tracking</a><br>
+        <strong>🌊 Chlorophyll PACE Data Source:</strong> <a
+          href="https://pace.oceansciences.org/access_pace_data.htm#!"
+          target="_blank" style="color: #00ccff; text-decoration: none;">NASA PACE Ocean Color Data Portal</a>
+      </div>
+    </div>
+    </div>
   </div>
 
   <div id="shark-controls">
-    <div style="font-weight: bold; margin-bottom: 10px; color: #00ccff;">
-      🦈 Shark Selection
-    </div>
-    
-    <div style="margin-bottom: 10px;">
-      <button class="button" onclick="selectAllSharks()" style="font-size: 10px; padding: 4px 8px;">Select All</button>
-      <button class="button" onclick="deselectAllSharks()" style="font-size: 10px; padding: 4px 8px;">Clear All</button>
-    </div>
-    
-    <div id="shark-list">
-      <!-- Shark checkboxes will be populated here -->
+    <div class="panel-minimize" onclick="togglePanel('shark-controls')" title="Minimize panel">▼</div>
+    <div class="panel-title" style="display: none;">🦈 Shark Selection</div>
+    <div class="panel-content">
+      <div style="font-weight: bold; margin-bottom: 10px; color: #00ccff;">
+        🦈 Shark Selection
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <button class="button" onclick="selectAllSharks()" style="font-size: 10px; padding: 4px 8px;">Select All</button>
+        <button class="button" onclick="deselectAllSharks()" style="font-size: 10px; padding: 4px 8px;">Clear All</button>
+      </div>
+
+      <div id="shark-list">
+        <!-- Shark checkboxes will be populated here -->
+      </div>
     </div>
   </div>
 
@@ -642,11 +738,11 @@
   <div id="stats-modal" class="stats-modal">
     <div class="stats-content">
       <div class="stats-header">📊 Whale Shark Movement Statistics</div>
-      
+
       <div class="stats-grid" id="stats-grid">
         <!-- Statistics will be populated here -->
       </div>
-      
+
       <div style="text-align: center; margin-top: 20px;">
         <button class="button" onclick="closeStatsModal()">Close</button>
       </div>
@@ -670,7 +766,7 @@
     let totalTimeRange = { start: null, end: null };
 
     // Initialize the application with error handling
-    if(!Detector.webgl){
+    if (!Detector.webgl) {
       Detector.addGetWebGLMessage();
     } else {
       try {
@@ -682,22 +778,22 @@
     }
 
     // Global error handler
-    window.addEventListener('error', function(event) {
+    window.addEventListener('error', function (event) {
       console.error('❌ Global error:', event.error);
       showError('An unexpected error occurred. Some features may not work properly.');
     });
 
     // Handle unhandled promise rejections
-    window.addEventListener('unhandledrejection', function(event) {
+    window.addEventListener('unhandledrejection', function (event) {
       console.error('❌ Unhandled promise rejection:', event.reason);
       showError('A network or data loading error occurred.');
     });
 
     function initializeWhaleSharkGlobe() {
       const container = document.getElementById('container');
-      
+
       console.log('🦈 Initializing Whale Shark Globe...');
-      
+
       try {
         // Create whale shark globe
         globe = new DAT.WhaleSharkGlobe(container, {
@@ -705,13 +801,13 @@
         });
 
         console.log('✅ Globe initialized successfully');
-        
+
         // Load whale shark data
         loadWhaleSharkData();
-        
+
         // Start animation loop
         globe.animate();
-        
+
       } catch (error) {
         console.error('❌ Error initializing globe:', error);
         showError('Failed to initialize 3D globe');
@@ -720,25 +816,25 @@
 
     function loadWhaleSharkData() {
       console.log('📡 Loading whale shark data...');
-      
+
       // Load complete shark data first
       const xhr = new XMLHttpRequest();
       xhr.open('GET', '../../../whale-shark-json-files/whale-shark-json/whale_sharks_complete.json?v=' + Date.now(), true);
-      
-      xhr.onreadystatechange = function(e) {
+
+      xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             try {
               sharkData = JSON.parse(xhr.responseText);
-              
+
               console.log(`✅ Loaded data for ${sharkData.sharks.length} sharks`);
-              
+
               // Load shark data into globe
               globe.loadSharkData(sharkData);
-              
+
               // Load time series index for time controls
               loadTimeSeriesIndex();
-              
+
             } catch (error) {
               console.error('❌ Error parsing whale shark data:', error);
               showError('Failed to parse whale shark data');
@@ -755,16 +851,16 @@
     function loadTimeSeriesIndex() {
       // Create simplified yearly time periods instead of complex monthly data
       createSimpleTimeControls();
-      
+
       // Populate shark controls
       populateSharkControls();
-      
+
       // Update stats
       updateStats();
-      
+
       // Hide loading screen
       document.getElementById('loading').style.display = 'none';
-      
+
       // Load shared view if URL parameters exist
       loadSharedView();
     }
@@ -780,15 +876,15 @@
         { period: '2014', display_name: '2014', start_date: '2014-01-01T00:00:00', end_date: '2014-12-31T23:59:59' },
         { period: '2015', display_name: '2015', start_date: '2015-01-01T00:00:00', end_date: '2015-12-31T23:59:59' }
       ];
-      
+
       // Calculate shark counts for each year
       timeSeriesData.forEach(period => {
         const startTime = new Date(period.start_date).getTime() / 1000;
         const endTime = new Date(period.end_date).getTime() / 1000;
-        
+
         let sharkCount = 0;
         let totalPoints = 0;
-        
+
         sharkData.sharks.forEach(shark => {
           let hasDataInPeriod = false;
           shark.tracks.forEach(track => {
@@ -801,48 +897,48 @@
             }
           });
         });
-        
+
         period.shark_count = sharkCount;
         period.total_points = totalPoints;
       });
-      
+
       console.log('✅ Created yearly time controls:', timeSeriesData);
       setupTimeControls();
     }
 
     function setupTimeControls() {
       if (timeSeriesData.length === 0) return;
-      
+
       // Setup time slider
       const timeSlider = document.getElementById('time-slider');
       timeSlider.max = timeSeriesData.length - 1;
       timeSlider.value = 0;
-      
+
       // Calculate overall time range
       const firstPeriod = timeSeriesData[0];
       const lastPeriod = timeSeriesData[timeSeriesData.length - 1];
-      
+
       totalTimeRange = {
         start: new Date(firstPeriod.start_date).getTime() / 1000,
         end: new Date(lastPeriod.end_date).getTime() / 1000
       };
-      
+
       // Update time display with first period
       updateTimeDisplay(firstPeriod);
-      
+
       console.log('⏰ Time controls setup:', timeSeriesData.length, 'periods');
     }
 
     function populateSharkControls() {
       const sharkList = document.getElementById('shark-list');
       sharkList.innerHTML = '';
-      
+
       sharkData.sharks.forEach(shark => {
         const sharkItem = document.createElement('div');
         sharkItem.className = 'shark-item';
-        
+
         const colorStyle = `rgb(${shark.color[0]}, ${shark.color[1]}, ${shark.color[2]})`;
-        
+
         sharkItem.innerHTML = `
           <input type="checkbox" class="shark-checkbox" id="shark-${shark.id}" 
                  checked onchange="toggleSharkVisibility('${shark.id}', this.checked)">
@@ -850,14 +946,14 @@
           <div class="shark-name">${shark.name}</div>
           <div class="shark-count">${shark.tracks.length} pts</div>
         `;
-        
+
         sharkList.appendChild(sharkItem);
       });
     }
 
     function updateTimeDisplay(period) {
       if (!period) return;
-      
+
       document.getElementById('current-time').innerHTML = `
         <div style="font-size: 20px;">${period.display_name}</div>
         <div style="font-size: 12px; color: #888; margin-top: 5px;">
@@ -868,21 +964,20 @@
 
     function updateStats() {
       if (!sharkData) return;
-      
+
       document.getElementById('shark-count').textContent = sharkData.sharks.length;
       document.getElementById('point-count').textContent = sharkData.totalPoints.toLocaleString();
-      
-      // Update live statistics panel
-      updateLiveStats();
+
+      // Don't call updateLiveStats here as it overrides with visible shark counts
     }
 
     function updateLiveStats() {
       // This function is now simplified since we moved detailed stats to bottom left
       // Only update dynamic values that change based on current selection
       if (!sharkData) return;
-      
+
       const stats = globe.getSharkStats();
-      
+
       // Update only the dynamic shark count in the bottom left statistics
       document.getElementById('shark-count').textContent = stats.totalSharks;
       document.getElementById('point-count').textContent = stats.totalTracks.toLocaleString();
@@ -918,7 +1013,7 @@
     function togglePlayback() {
       isPlaying = !isPlaying;
       const button = document.getElementById('play-pause');
-      
+
       if (isPlaying) {
         button.textContent = '⏸️ Pause';
         button.classList.add('playing');
@@ -933,7 +1028,7 @@
     function startPlayback() {
       playbackInterval = setInterval(() => {
         let nextIndex = currentTimeIndex + 1;
-        
+
         if (nextIndex < timeSeriesData.length) {
           loadTimePeriod(nextIndex);
         } else {
@@ -973,16 +1068,32 @@
     function showAllTimeData() {
       stopPlayback();
       isPlaying = false;
-      document.getElementById('play-pause').textContent = '▶️ Play Years';
+      document.getElementById('play-pause').textContent = '▶️ Play';
       document.getElementById('play-pause').classList.remove('playing');
-      
+
       // Clear time filter to show all data
       globe.setTimeFilter(null, null);
-      
-      // Switch back to Earth background when showing all data
-      globe.switchBackground('earth');
-      document.querySelector('input[name="globe-background"][value="earth"]').checked = true;
-      
+
+      // Show all sharks
+      if (sharkData) {
+        sharkData.sharks.forEach(shark => {
+          globe.toggleShark(shark.id, true);
+          // Update checkbox
+          const checkbox = document.getElementById(`shark-${shark.id}`);
+          if (checkbox) checkbox.checked = true;
+        });
+      }
+
+      // Switch back to Earth background when showing all data (preserve current Earth mode)
+      const currentEarthMode = document.querySelector('input[name="globe-background"]:checked').value;
+      if (currentEarthMode === 'earth' || currentEarthMode === 'earth-night') {
+        globe.switchBackground(currentEarthMode);
+      } else {
+        // Default to day mode if in chlorophyll mode
+        globe.switchBackground('earth');
+        document.querySelector('input[name="globe-background"][value="earth"]').checked = true;
+      }
+
       // Update display
       document.getElementById('current-time').innerHTML = `
         <div style="font-size: 20px;">All Time Periods</div>
@@ -990,10 +1101,10 @@
           Showing complete tracking data (2009-2015)
         </div>
       `;
-      
+
       document.getElementById('active-period').textContent = 'All Time';
       document.getElementById('time-slider').value = 0;
-      
+
       console.log('🌊 Showing all time data');
     }
 
@@ -1006,27 +1117,27 @@
 
     function loadTimePeriod(index) {
       if (index < 0 || index >= timeSeriesData.length) return;
-      
+
       currentTimeIndex = index;
       const period = timeSeriesData[index];
-      
+
       console.log(`📅 Loading ${period.display_name} (${period.shark_count} sharks, ${period.total_points} points)...`);
-      
+
       // Update time display
       updateTimeDisplay(period);
-      
+
       // Update slider position
       document.getElementById('time-slider').value = index;
-      
+
       // Apply time filter to globe
       const startTime = new Date(period.start_date).getTime() / 1000;
       const endTime = new Date(period.end_date).getTime() / 1000;
-      
+
       globe.setTimeFilter(startTime, endTime);
-      
+
       // Update active period display
       document.getElementById('active-period').textContent = period.display_name;
-      
+
       // Update chlorophyll background if in chlorophyll mode
       updateChlorophyllBackground(period.period);
     }
@@ -1034,9 +1145,11 @@
     function switchGlobeBackground(mode) {
       console.log('🌍 Switching globe background to:', mode);
       console.log('🦈 Current visible sharks:', document.querySelectorAll('.shark-checkbox:checked').length);
-      
+
       if (mode === 'earth') {
         globe.switchBackground('earth');
+      } else if (mode === 'earth-night') {
+        globe.switchBackground('earth-night');
       } else if (mode === 'chlorophyll') {
         // Get current year from time period
         const currentPeriod = timeSeriesData[currentTimeIndex];
@@ -1060,21 +1173,15 @@
       }
     }
 
-    // Force refresh of shark visualization
-    function refreshSharks() {
-      console.log('🔄 Refreshing shark visualization');
-      if (globe && globe.refreshSharkVisualization) {
-        globe.refreshSharkVisualization();
-      }
-    }
+
 
     function updatePlaybackSpeed() {
       playbackSpeed = parseInt(document.getElementById('playback-speed').value);
-      
+
       // Update speed display
       const speedInSeconds = (playbackSpeed / 1000).toFixed(1);
       document.getElementById('speed-value').textContent = `${speedInSeconds}s`;
-      
+
       // Restart playback with new speed if currently playing
       if (isPlaying) {
         stopPlayback();
@@ -1087,14 +1194,14 @@
     // Load shared view from URL parameters
     function loadSharedView() {
       const params = new URLSearchParams(window.location.search);
-      
+
       if (params.has('time')) {
         const timeIndex = parseInt(params.get('time'));
         if (timeIndex >= 0 && timeIndex < timeSeriesData.length) {
           currentTimeIndex = timeIndex;
         }
       }
-      
+
       if (params.has('sharks')) {
         const sharkIds = params.get('sharks').split(',');
         // Apply shark visibility after data is loaded
@@ -1112,7 +1219,7 @@
     // Movement statistics functions
     function showMovementStats() {
       if (!sharkData) return;
-      
+
       const stats = calculateMovementStats();
       displayStatsModal(stats);
     }
@@ -1123,42 +1230,42 @@
       let activeSharks = 0;
       let longestTrack = 0;
       let longestTrackShark = '';
-      
+
       const visibleSharkIds = Array.from(document.querySelectorAll('.shark-checkbox:checked'))
         .map(cb => cb.id.replace('shark-', ''));
-      
+
       sharkData.sharks.forEach(shark => {
         if (!visibleSharkIds.includes(shark.id)) return;
-        
+
         activeSharks++;
         let sharkDistance = 0;
         let sharkDays = 0;
-        
+
         for (let i = 1; i < shark.tracks.length; i++) {
           const prev = shark.tracks[i - 1];
           const curr = shark.tracks[i];
-          
+
           // Calculate distance using Haversine formula (approximate)
           const distance = calculateDistance(prev[1], prev[0], curr[1], curr[0]);
           sharkDistance += distance;
-          
+
           // Calculate time difference
           const timeDiff = (curr[3] - prev[3]) / (24 * 60 * 60); // days
           sharkDays += timeDiff;
         }
-        
+
         totalDistance += sharkDistance;
         totalDays += sharkDays;
-        
+
         if (sharkDistance > longestTrack) {
           longestTrack = sharkDistance;
           longestTrackShark = shark.name;
         }
       });
-      
+
       const avgSpeed = totalDays > 0 ? (totalDistance / totalDays) : 0;
       const avgDistance = activeSharks > 0 ? (totalDistance / activeSharks) : 0;
-      
+
       return {
         totalDistance: Math.round(totalDistance),
         avgDistance: Math.round(avgDistance),
@@ -1175,10 +1282,10 @@
       const R = 6371; // Earth's radius in km
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       return R * c;
     }
 
@@ -1210,7 +1317,7 @@
           <div class="stat-label">Total Tracking Days</div>
         </div>
       `;
-      
+
       if (stats.longestTrackShark) {
         statsGrid.innerHTML += `
           <div class="stat-item" style="grid-column: 1 / -1;">
@@ -1219,7 +1326,7 @@
           </div>
         `;
       }
-      
+
       document.getElementById('stats-modal').style.display = 'flex';
     }
 
@@ -1228,7 +1335,7 @@
     }
 
     // Close modal when clicking outside
-    document.getElementById('stats-modal').addEventListener('click', function(e) {
+    document.getElementById('stats-modal').addEventListener('click', function (e) {
       if (e.target === this) {
         closeStatsModal();
       }
@@ -1263,24 +1370,49 @@
 
     // Wrap critical functions with error handling
     const originalToggleSharkVisibility = toggleSharkVisibility;
-    toggleSharkVisibility = function(sharkId, visible) {
-      safeExecute(() => originalToggleSharkVisibility(sharkId, visible), 
-                  'Error updating shark visibility');
+    toggleSharkVisibility = function (sharkId, visible) {
+      safeExecute(() => originalToggleSharkVisibility(sharkId, visible),
+        'Error updating shark visibility');
     };
 
     const originalLoadTimePeriod = loadTimePeriod;
-    loadTimePeriod = function(index) {
-      safeExecute(() => originalLoadTimePeriod(index), 
-                  'Error loading time period data');
+    loadTimePeriod = function (index) {
+      safeExecute(() => originalLoadTimePeriod(index),
+        'Error loading time period data');
     };
 
     const originalShowMovementStats = showMovementStats;
-    showMovementStats = function() {
-      safeExecute(() => originalShowMovementStats(), 
-                  'Error calculating movement statistics');
+    showMovementStats = function () {
+      safeExecute(() => originalShowMovementStats(),
+        'Error calculating movement statistics');
     };
+
+    // Panel minimize/expand functionality
+    function togglePanel(panelId) {
+      const panel = document.getElementById(panelId);
+      const minimizeBtn = panel.querySelector('.panel-minimize');
+      const panelTitle = panel.querySelector('.panel-title');
+      const panelContent = panel.querySelector('.panel-content');
+      
+      if (panel.classList.contains('panel-collapsed')) {
+        // Expand panel
+        panel.classList.remove('panel-collapsed');
+        minimizeBtn.innerHTML = '▼';
+        minimizeBtn.title = 'Minimize panel';
+        panelTitle.style.display = 'none';
+        panelContent.style.display = 'block';
+      } else {
+        // Collapse panel
+        panel.classList.add('panel-collapsed');
+        minimizeBtn.innerHTML = '▲';
+        minimizeBtn.title = 'Expand panel';
+        panelTitle.style.display = 'flex';
+        panelContent.style.display = 'none';
+      }
+    }
 
   </script>
 
-  </body>
+</body>
+
 </html>

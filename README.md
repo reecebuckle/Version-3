@@ -71,6 +71,8 @@ These analyses support the hypothesis that satellite-derived chlorophyll data ca
 
 Built upon the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team. Original examples available at [Chrome Experiments](https://experiments.withgoogle.com/chrome/globe).
 
+High-quality Earth globe textures provided by [Solar System Scope](https://www.solarsystemscope.com/textures/) - an excellent resource for planetary texture maps.
+
 ## Setup
 
 ```bash

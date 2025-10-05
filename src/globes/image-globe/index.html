@@ -238,6 +238,59 @@
         text-decoration: underline;
         color: #66ddff;
       }
+
+      /* Panel minimize functionality */
+      .panel-minimize {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(0, 150, 200, 0.2);
+        border: 1px solid rgba(0, 150, 200, 0.5);
+        border-radius: 4px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ccff;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        z-index: 10;
+      }
+
+      .panel-minimize:hover {
+        background: rgba(0, 150, 200, 0.4);
+        border-color: #00ccff;
+      }
+
+      .panel-collapsed {
+        width: auto !important;
+        max-width: none !important;
+        min-width: 120px;
+        height: 40px !important;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .panel-collapsed .panel-content {
+        display: none;
+      }
+
+      .panel-collapsed .panel-title {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        font-size: 12px;
+        font-weight: bold;
+        color: #00ccff;
+        white-space: nowrap;
+      }
+
+      .panel-collapsed .panel-minimize {
+        transform: rotate(180deg);
+      }
     </style>
   </head>
 
@@ -249,18 +302,25 @@
     </div>
 
     <div id="title">
-      <h2 style="margin: 0; color: #00ccff;">🖼️ Chlorophyll Image Analysis</h2>
-      <div style="font-size: 14px; color: #cccccc; margin-top: 5px; line-height: 1.4;">
-        NASA MODIS Aqua Satellite Data (2002-2025)<br>
-        <span style="color: #00ccff; font-weight: bold;" id="dataset-description">PNG Image Display</span><br><br>
-        High-resolution satellite imagery displayed as textures on the globe surface. 
-        Switch between monthly detail and seasonal patterns to explore ocean productivity 
-        cycles and marine ecosystem changes over 23+ years of data.
+      <div class="panel-minimize" onclick="togglePanel('title')" title="Minimize panel">▼</div>
+      <div class="panel-title" style="display: none;">🖼️ Image Info</div>
+      <div class="panel-content">
+        <h2 style="margin: 0; color: #00ccff;">🖼️ Chlorophyll Image Analysis</h2>
+        <div style="font-size: 14px; color: #cccccc; margin-top: 5px; line-height: 1.4;">
+          NASA MODIS Aqua Satellite Data (2002-2025)<br>
+          <span style="color: #00ccff; font-weight: bold;" id="dataset-description">PNG Image Display</span><br><br>
+          High-resolution satellite imagery displayed as textures on the globe surface. 
+          Switch between monthly detail and seasonal patterns to explore ocean productivity 
+          cycles and marine ecosystem changes over 23+ years of data.
+        </div>
       </div>
     </div>
 
     <div id="time-controls">
-      <div class="control-group">
+      <div class="panel-minimize" onclick="togglePanel('time-controls')" title="Minimize panel">▼</div>
+      <div class="panel-title" style="display: none;">⏰ Time Controls</div>
+      <div class="panel-content">
+        <div class="control-group">
         <label class="control-label">📊 Dataset Type</label>
         <div class="dataset-selector">
           <select id="dataset-type" onchange="switchDataset()">
@@ -297,6 +357,7 @@
           <span>3.0s</span>
         </div>
       </div>
+      </div>
     </div>
 
 
@@ -307,14 +368,18 @@
     </div>
 
     <div id="info">
-      <strong>🛰️ NASA Space Apps Challenge 2025</strong><br><br>
-      
-      <strong>🎮 Controls:</strong><br>
-      • <strong>Mouse:</strong> Rotate globe<br>
-      • <strong>Wheel:</strong> Zoom in/out<br><br>
-      
-      <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
-      <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a>
+      <div class="panel-minimize" onclick="togglePanel('info')" title="Minimize panel">▼</div>
+      <div class="panel-title" style="display: none;">ℹ️ Info & Controls</div>
+      <div class="panel-content">
+        <strong>🛰️ NASA Space Apps Challenge 2025</strong><br><br>
+        
+        <strong>🎮 Controls:</strong><br>
+        • <strong>Mouse:</strong> Rotate globe<br>
+        • <strong>Wheel:</strong> Zoom in/out<br><br>
+        
+        <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+        <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a>
+      </div>
     </div>
 
     <script src="../../assets/globe/third-party/Detector.js"></script>
@@ -611,6 +676,30 @@
 
         // Initialize when page loads
         init();
+      }
+
+      // Panel minimize/expand functionality
+      function togglePanel(panelId) {
+        const panel = document.getElementById(panelId);
+        const minimizeBtn = panel.querySelector('.panel-minimize');
+        const panelTitle = panel.querySelector('.panel-title');
+        const panelContent = panel.querySelector('.panel-content');
+        
+        if (panel.classList.contains('panel-collapsed')) {
+          // Expand panel
+          panel.classList.remove('panel-collapsed');
+          minimizeBtn.innerHTML = '▼';
+          minimizeBtn.title = 'Minimize panel';
+          panelTitle.style.display = 'none';
+          panelContent.style.display = 'block';
+        } else {
+          // Collapse panel
+          panel.classList.add('panel-collapsed');
+          minimizeBtn.innerHTML = '▲';
+          minimizeBtn.title = 'Expand panel';
+          panelTitle.style.display = 'flex';
+          panelContent.style.display = 'none';
+        }
       }
     </script>
   </body>

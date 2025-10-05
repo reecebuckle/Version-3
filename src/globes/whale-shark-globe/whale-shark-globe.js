@@ -29,6 +29,11 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   
   var imgDir = opts.imgDir || './';
 
+  // Helper function to create consistent colors for trails and markers
+  function getSharkColor(shark) {
+    return new THREE.Color(shark.color[0] / 255, shark.color[1] / 255, shark.color[2] / 255);
+  }
+
   // Enhanced shaders for marine visualization
   var Shaders = {
     'earth' : {
@@ -106,6 +111,7 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   var earthMaterial = null;
   var chlorophyllTexture = null;
   var earthTexture = null; // Cache Earth texture
+  var nightTexture = null; // Cache Night Earth texture
   var textureCache = {}; // Cache for chlorophyll textures
 
   function init() {
@@ -130,6 +136,9 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     // Load high-resolution ocean-focused Earth texture and cache it
     earthTexture = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
     uniforms['texture'].value = earthTexture;
+
+    // Load night Earth texture and cache it
+    nightTexture = THREE.ImageUtils.loadTexture('../../assets/globe/globe-night-8k.jpg');
 
     earthMaterial = new THREE.ShaderMaterial({
       uniforms: uniforms,
@@ -211,7 +220,7 @@ DAT.WhaleSharkGlobe = function(container, opts) {
         name: shark.name,
         color: shark.color,
         tracks: shark.tracks,
-        visible: true
+        visible: true // Show sharks by default
       };
       visibleSharks.add(shark.id);
     });
@@ -272,7 +281,7 @@ DAT.WhaleSharkGlobe = function(container, opts) {
         geometry.vertices = points;
 
         var material = new THREE.LineBasicMaterial({
-          color: new THREE.Color(shark.color[0] / 255, shark.color[1] / 255, shark.color[2] / 255),
+          color: getSharkColor(shark),
           linewidth: 2,
           transparent: true,
           opacity: 0.8
@@ -288,7 +297,7 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     console.log('🛤️ Created', trackLines.length, 'track lines (optimized)');
   }
 
-  // Create shark position markers using whale shark icons
+  // Create shark position markers using whale shark icons and start circles
   function createSharkMarkers() {
     // Clear existing markers
     sharkMarkers.forEach(marker => scene.remove(marker));
@@ -296,49 +305,83 @@ DAT.WhaleSharkGlobe = function(container, opts) {
 
     // Load whale shark icon texture if not already loaded
     if (!window.whaleSharkTexture) {
-      window.whaleSharkTexture = THREE.ImageUtils.loadTexture('../../assets/globe/whale-shark-icon.webp');
+      window.whaleSharkTexture = THREE.ImageUtils.loadTexture('../../assets/whale-shark-icon-transparent-v3.png');
     }
 
-    // Create shared geometry for sprite-based markers
+    // Create shared geometry for sprite-based markers and circles
     var materials = {}; // Cache materials by color
+    var circleMaterials = {}; // Cache circle materials by color
 
     Object.values(sharkTracks).forEach(shark => {
       if (!shark.visible || !visibleSharks.has(shark.id)) return;
 
-      // Get current position (latest track point within time filter)
-      var currentTrack = getCurrentSharkPosition(shark);
-      if (!currentTrack) return;
+      // Get tracks within time filter
+      var validTracks = shark.tracks.filter(track => 
+        !currentTimeFilter || isWithinTimeFilter(track[3])
+      );
+      
+      if (validTracks.length === 0) return;
 
-      var lat = currentTrack[1];
-      var lng = currentTrack[0];
-      var phi = (90 - lat) * Math.PI / 180;
-      var theta = (180 - lng) * Math.PI / 180;
+      // Get start position (earliest track point within time filter)
+      var startTrack = validTracks[0];
+      var startLat = startTrack[1];
+      var startLng = startTrack[0];
+      var startPhi = (90 - startLat) * Math.PI / 180;
+      var startTheta = (180 - startLng) * Math.PI / 180;
 
-      var x = 205 * Math.sin(phi) * Math.cos(theta); // Above track line
-      var y = 205 * Math.cos(phi);
-      var z = 205 * Math.sin(phi) * Math.sin(theta);
+      var startX = 203 * Math.sin(startPhi) * Math.cos(startTheta);
+      var startY = 203 * Math.cos(startPhi);
+      var startZ = 203 * Math.sin(startPhi) * Math.sin(startTheta);
 
-      // Create sprite material with whale shark icon and shark color tint
+      // Create small circle for start position
       var colorKey = shark.color.join(',');
-      if (!materials[colorKey]) {
-        materials[colorKey] = new THREE.SpriteMaterial({
-          map: window.whaleSharkTexture,
-          color: new THREE.Color(shark.color[0] / 255, shark.color[1] / 255, shark.color[2] / 255),
+      if (!circleMaterials[colorKey]) {
+        circleMaterials[colorKey] = new THREE.MeshBasicMaterial({
+          color: getSharkColor(shark),
           transparent: true,
           opacity: 0.9
         });
       }
 
-      var marker = new THREE.Sprite(materials[colorKey]);
-      marker.position.set(x, y, z);
-      marker.scale.set(8, 8, 1); // Size of the whale shark icon
-      marker.userData = { sharkId: shark.id, sharkName: shark.name };
+      var circleGeometry = new THREE.SphereGeometry(1.5, 8, 6);
+      var startMarker = new THREE.Mesh(circleGeometry, circleMaterials[colorKey]);
+      startMarker.position.set(startX, startY, startZ);
+      startMarker.userData = { sharkId: shark.id, sharkName: shark.name, type: 'start' };
 
-      scene.add(marker);
-      sharkMarkers.push(marker);
+      scene.add(startMarker);
+      sharkMarkers.push(startMarker);
+
+      // Get end position (latest track point within time filter)
+      var endTrack = validTracks[validTracks.length - 1];
+      var endLat = endTrack[1];
+      var endLng = endTrack[0];
+      var endPhi = (90 - endLat) * Math.PI / 180;
+      var endTheta = (180 - endLng) * Math.PI / 180;
+
+      var endX = 205 * Math.sin(endPhi) * Math.cos(endTheta); // Slightly higher than start
+      var endY = 205 * Math.cos(endPhi);
+      var endZ = 205 * Math.sin(endPhi) * Math.sin(endTheta);
+
+      // Create sprite material with whale shark icon for end position
+      if (!materials[colorKey]) {
+        materials[colorKey] = new THREE.SpriteMaterial({
+          map: window.whaleSharkTexture,
+          color: getSharkColor(shark), // Color the white background, leave shark black
+          transparent: true,
+          opacity: 0.8 // Slightly more transparent for better visibility
+        });
+      }
+
+      var endMarker = new THREE.Sprite(materials[colorKey]);
+      endMarker.position.set(endX, endY, endZ);
+      endMarker.scale.set(7, 7, 1); // Smaller whale shark icons for better clarity (30% reduction)
+      endMarker.userData = { sharkId: shark.id, sharkName: shark.name, type: 'end' };
+
+      scene.add(endMarker);
+      sharkMarkers.push(endMarker);
     });
 
-    console.log('📍 Created', sharkMarkers.length, 'whale shark icon markers');
+    console.log('📍 Created', sharkMarkers.length, 'shark markers (start circles + end icons)');
   }
 
   // Get current shark position based on time filter
@@ -500,6 +543,17 @@ DAT.WhaleSharkGlobe = function(container, opts) {
         earthMaterial.needsUpdate = true;
       }
       console.log('🌍 Switched to Earth background (cached texture)');
+      
+      // Immediate refresh without delay to prevent reset
+      refreshSharkVisualization();
+      
+    } else if (mode === 'earth-night') {
+      // Switch to cached Night Earth texture
+      if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture && nightTexture) {
+        earthMaterial.uniforms.texture.value = nightTexture;
+        earthMaterial.needsUpdate = true;
+      }
+      console.log('🌙 Switched to Night Earth background (cached texture)');
       
       // Immediate refresh without delay to prevent reset
       refreshSharkVisualization();

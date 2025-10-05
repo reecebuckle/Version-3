@@ -59,8 +59,8 @@
         border-radius: 8px;
         padding: 20px;
         backdrop-filter: blur(10px);
-        max-width: 350px;
-        width: 350px;
+        max-width: 420px;
+        width: 420px;
       }
 
       #simple-controls {
@@ -204,14 +204,12 @@
   <div id="title">
     <h2 style="margin: 0; color: #00ccff;">🦈 Whale Shark Migration</h2>
     <div style="font-size: 14px; color: #cccccc; margin-top: 10px; line-height: 1.5;">
-      <strong>Gulf of Mexico (2009-2015)</strong><br><br>
-      
-      Watch how whale sharks move through the Gulf of Mexico over 6 years. 
+      This visualisation shows GPS tracking data for <strong>41 whale sharks</strong> in the Gulf of Mexico (2009-2015). 
       Each coloured line shows one shark's journey. These gentle giants can travel thousands of kilometres 
       following food sources and seasonal patterns.
       
       <div class="fact-box">
-        <div class="fact-title">📊 Movement Statistics</div>
+        <div class="fact-title">📊 Whale Shark Tracking Statistics</div>
         <div id="movement-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px;">
           <div>Total Sharks: <span class="highlight" id="total-sharks">41</span></div>
           <div>Total Distance: <span class="highlight">98,447 km</span></div>
@@ -220,8 +218,15 @@
           <div>Study Period: <span class="highlight">2009-2015</span></div>
           <div>Average Speed: <span class="highlight">23.7 km/day</span></div>
           <div>Region: <span class="highlight">Gulf of Mexico</span></div>
-          <div>🏆 Longest Journey: <span class="highlight">11,057 km</span></div>
+          <div>Longest Journey: <span class="highlight">11,057 km</span></div>
         </div>
+      </div>
+      
+      <div class="fact-box">
+        <div class="fact-title">🌊 Study Region & Data</div>
+        <strong>Gulf of Mexico Focus:</strong> 22°N - 30°N, 98°W - 82°W<br>
+        <strong>🦈 Whale Shark Data Source:</strong> <a href="https://www.movebank.org/cms/webapp?gwt_fragment=page%3Dstudies%2Cpath%3Dstudy1153270750" target="_blank" style="color: #00ccff; text-decoration: none;">Movebank GPS Tracking</a><br>
+        <strong>🌊 Chlorophyll PACE Data Source:</strong> <a href="https://pace.oceansciences.org/access_pace_data.htm#!" target="_blank" style="color: #00ccff; text-decoration: none;">NASA PACE Ocean Color Data Portal</a>
       </div>
       
       <div class="fact-box">
@@ -244,13 +249,17 @@
     
     <div class="fact-box">
       <div class="fact-title">🦈 Symbols</div>
-      <div style="display: flex; align-items: center; margin: 8px 0;">
-        <img src="../../assets/globe/whale-shark-icon.webp" style="width: 20px; height: 20px; margin-right: 8px;" alt="Whale Shark">
-        Current shark position
+      <div style="display: flex; align-items: center; margin: 10px 0; font-size: 14px;">
+        <div style="width: 12px; height: 12px; background: #00ccff; border-radius: 50%; margin-right: 10px;"></div>
+        Start tracking position
       </div>
-      <div style="display: flex; align-items: center; margin: 8px 0;">
-        <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 8px;"></div>
+      <div style="display: flex; align-items: center; margin: 10px 0; font-size: 14px;">
+        <div style="width: 24px; height: 2px; background: #00ccff; margin-right: 10px;"></div>
         Movement path
+      </div>
+      <div style="display: flex; align-items: center; margin: 10px 0; font-size: 14px;">
+        <img src="../../assets/whale-shark-icon-transparent-v3.png" style="width: 20px; height: 20px; margin-right: 10px;" alt="Whale Shark">
+        End tracking position
       </div>
     </div>
     
