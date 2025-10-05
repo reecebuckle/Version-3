@@ -27,3 +27,6 @@ __pycache__/
 
 # Kiro IDE settings
 .kiro/
+
+# Vercel deployment settings
+.vercel/
