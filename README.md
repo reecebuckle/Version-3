@@ -4,6 +4,20 @@
 
 Interactive 3D visualisations of ocean chlorophyll-a concentrations for NASA Space Apps Challenge 2025. This project extends the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team to visualise marine ecosystem data and support shark habitat modelling.
 
+## Visual Preview
+
+<div align="center">
+
+### 🏠 Main Navigation Interface
+![Home Page](sample-images/home-page.png)
+
+### 🦈 Whale Shark Tracking Visualisation
+![Whale Tracker](sample-images/whale-tracker.png)
+
+*Interactive 3D globe showing ocean chlorophyll patterns and whale shark migration data*
+
+</div>
+
 ### Quick Access Links:
 - **🏠 [Main Navigation Page](https://reecebuckle.github.io/Version-3/)** - Start here
 - **🖼️ [Image Globe](https://reecebuckle.github.io/Version-3/src/globes/image-globe/index.html)** - Monthly & seasonal PNG display
@@ -28,7 +42,7 @@ Chlorophyll-a is a critical indicator of phytoplankton abundance, which forms th
 
 ## Data Analysis
 
-Our analysis of NASA's chlorophyll-a concentration data reveals key insights into marine ecosystem patterns and potential shark feeding habitats:
+Analysis of NASA's chlorophyll-a concentration data reveals key insights into marine ecosystem patterns and potential shark feeding habitats:
 
 ### Spatial Distribution Patterns
 ![Chlorophyll Concentration Heatmap](graphs/Chlorophyll%20Concentration%20Heatmap.png)
@@ -51,7 +65,7 @@ The chlorophyll concentration distribution analysis reveals:
 ### Shark Feeding Habitat Predictions
 ![Predicted Feeding Areas](graphs/Predicted%20Feeding.png)
 
-Based on chlorophyll patterns and trophic relationships, our model identifies:
+Based on chlorophyll patterns and trophic relationships, the model identifies:
 - **Primary feeding zones** correlating with moderate chlorophyll levels (0.3-1.0 mg/m³) where prey fish concentrate
 - **Migration corridors** following seasonal productivity gradients
 - **Hotspot regions** where multiple environmental factors converge to create optimal foraging conditions
@@ -69,9 +83,14 @@ These analyses support the hypothesis that satellite-derived chlorophyll data ca
 
 ## Credits
 
-Built upon the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team. Original examples available at [Chrome Experiments](https://experiments.withgoogle.com/chrome/globe).
+### Data Sources
+- **Ocean Chlorophyll Data**: NASA Ocean Colour Web - MODIS Aqua satellite mission providing global chlorophyll-a concentration measurements
+- **Whale Shark Tracking Data**: Global Shark Tracker database and published research on whale shark migration patterns
 
-High-quality Earth globe textures provided by [Solar System Scope](https://www.solarsystemscope.com/textures/) - an excellent resource for planetary texture maps.
+### Technical Framework
+- Built upon the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team
+- Original WebGL Globe examples available at [Chrome Experiments](https://experiments.withgoogle.com/chrome/globe)
+- High-quality Earth globe textures provided by [Solar System Scope](https://www.solarsystemscope.com/textures/)
 
 ## Setup
 
@@ -81,5 +100,3 @@ python -m http.server 8000
 
 # Visit http://localhost:8000
 ```
-
-**Note:** Large dataset files are excluded from this repository. Download chlorophyll data from NASA's PACE portal to populate the `chlorophyll-datasets/` folder.
