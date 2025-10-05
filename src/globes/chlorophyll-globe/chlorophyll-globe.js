@@ -153,7 +153,7 @@ DAT.Globe = function(container, opts) {
     scene.add(mesh);
 
     // Create variable-height cubes for data points
-    geometry = new THREE.CubeGeometry(1.0, 1.0, 1); // Base cube size
+    geometry = new THREE.CubeGeometry(1.0, 1.0, 1.0); // Base cube size
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 0.5)); // Offset so base sits on surface
 
     point = new THREE.Mesh(geometry);
@@ -215,7 +215,8 @@ DAT.Globe = function(container, opts) {
           lng = data[i + 1];
           color = colorFnWrapper(data,i);
           size = data[i + 2];
-          size = 0.1;  // Flat heatmap - no height
+          // For animated mode, keep original scaling for now
+          size = Math.max(0.1, size * (window.heightMultiplier || 45));  // Dynamic height scaling
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
       }
@@ -236,7 +237,13 @@ DAT.Globe = function(container, opts) {
       
       // Variable height based on chlorophyll concentration
       // Scale the height based on the data value (0-1 range)
-      size = Math.max(0.1, size * 15);  // Min height 0.1, max height ~15
+      var originalSize = size;
+      size = Math.max(0.1, size * (window.heightMultiplier || 45));  // Dynamic height scaling
+      
+      // Debug logging for first few points
+      if (i < 15) {
+        console.log(`Point ${i/3}: Original=${originalSize.toFixed(4)}, Scaled=${size.toFixed(2)}`);
+      }
       
       // Store data point for analysis
       dataPoints.push({
@@ -292,8 +299,11 @@ DAT.Globe = function(container, opts) {
     var phi = (90 - lat) * Math.PI / 180;
     var theta = (180 - lng) * Math.PI / 180;
 
-    // Elevate points slightly above Earth's surface (radius 200 + 2)
-    var radius = 202;
+    // Ensure minimum height and calculate proper surface positioning
+    var scaledHeight = Math.max(size, 0.1);
+    
+    // Position at Earth's surface (radius 200) plus half the scaled height to ensure base is on surface
+    var radius = 200 + (scaledHeight * 0.5);
     point.position.x = radius * Math.sin(phi) * Math.cos(theta);
     point.position.y = radius * Math.cos(phi);
     point.position.z = radius * Math.sin(phi) * Math.sin(theta);
@@ -301,8 +311,8 @@ DAT.Globe = function(container, opts) {
     point.lookAt(mesh.position);
 
     point.scale.x = 1.0; // Width
-    point.scale.y = 1.0; // Height  
-    point.scale.z = Math.max(size, 0.1); // Height varies with concentration
+    point.scale.y = 1.0; // Depth  
+    point.scale.z = scaledHeight; // Height varies with concentration - Z is the height!
     point.updateMatrix();
 
     for (var i = 0; i < point.geometry.faces.length; i++) {
