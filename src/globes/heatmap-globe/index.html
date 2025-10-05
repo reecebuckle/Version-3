@@ -1,310 +1,339 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <title>Ocean Chlorophyll Heatmap - NASA Space Apps 2025</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-      html {
-        height: 100%;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #001122 0%, #003366 100%);
-        color: #ffffff;
-        font-size: 14px;
-        line-height: 1.4;
-        height: 100%;
-        overflow: hidden;
+
+<head>
+  <title>Ocean Chlorophyll Heatmap - NASA Space Apps 2025</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #001122 0%, #003366 100%);
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1.4;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    #info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 300px;
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+    }
+
+    #title {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      backdrop-filter: blur(10px);
+      max-width: 320px;
+      width: 320px;
+    }
+
+    .home-link {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #00ccff;
+      backdrop-filter: blur(10px);
+    }
+
+    .home-link a {
+      color: #00ccff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .home-link a:hover {
+      color: #ffffff;
+    }
+
+    #time-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      min-width: 350px;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    .control-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00ccff;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .time-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #003366;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 10px 0;
+    }
+
+    .time-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+    }
+
+    .time-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+    }
+
+    .button {
+      background: linear-gradient(135deg, #0066cc, #00ccff);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: linear-gradient(135deg, #0088ff, #00ffff);
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+    }
+
+    .button:disabled {
+      background: #333;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .button.playing {
+      background: linear-gradient(135deg, #ff6600, #ffaa00);
+    }
+
+    .time-display {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ccff;
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(0, 100, 150, 0.2);
+      border-radius: 5px;
+    }
+
+    .season-indicator {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      margin-left: 10px;
+    }
+
+    .season-spring {
+      background: #66cc66;
+      color: #003300;
+    }
+
+    .season-summer {
+      background: #ffcc00;
+      color: #663300;
+    }
+
+    .season-autumn {
+      background: #ff9966;
+      color: #330000;
+    }
+
+    .season-winter {
+      background: #66ccff;
+      color: #003366;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      border: 3px solid rgba(0, 204, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid #00ccff;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
       }
 
-      #container {
-        width: 100%;
-        height: 100%;
-        position: relative;
+      100% {
+        transform: rotate(360deg);
       }
+    }
 
-      #info {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 15px;
-        max-width: 300px;
-        backdrop-filter: blur(10px);
-        font-size: 13px;
-      }
+    .stats {
+      font-size: 11px;
+      color: #cccccc;
+      margin-top: 10px;
+    }
 
-      #title {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 15px;
-        backdrop-filter: blur(10px);
-        max-width: 320px;
-        width: 320px;
-      }
+    .highlight {
+      color: #00ccff;
+      font-weight: bold;
+    }
 
-      .home-link {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 10px 20px;
-        border-radius: 20px;
-        border: 1px solid #00ccff;
-        backdrop-filter: blur(10px);
-      }
+    a {
+      color: #00ccff;
+      text-decoration: none;
+    }
 
-      .home-link a {
-        color: #00ccff;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 14px;
-      }
+    a:hover {
+      text-decoration: underline;
+      color: #66ddff;
+    }
 
-      .home-link a:hover {
-        color: #ffffff;
-      }
+    .playback-controls {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+    }
 
-      #time-controls {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 20px;
-        min-width: 350px;
-        backdrop-filter: blur(10px);
-      }
+    .speed-control {
+      font-size: 12px;
+      color: #cccccc;
+    }
 
-      .control-group {
-        margin-bottom: 15px;
-      }
+    input[type="range"] {
+      background: rgba(0, 204, 255, 0.1);
+      border: 1px solid #00ccff;
+      border-radius: 4px;
+      height: 6px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
 
-      .control-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #00ccff;
-        font-weight: bold;
-        font-size: 14px;
-      }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+    }
 
-      .time-slider {
-        width: 100%;
-        height: 8px;
-        border-radius: 4px;
-        background: #003366;
-        outline: none;
-        -webkit-appearance: none;
-        margin: 10px 0;
-      }
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+    }
 
-      .time-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
-      }
+    #legend {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 20, 40, 0.9);
+      border: 1px solid rgba(0, 150, 200, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+    }
 
-      .time-slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        border: none;
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
-      }
-
-      .button {
-        background: linear-gradient(135deg, #0066cc, #00ccff);
-        border: none;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        margin: 2px;
-        transition: all 0.3s ease;
-      }
-
-      .button:hover {
-        background: linear-gradient(135deg, #0088ff, #00ffff);
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
-      }
-
-      .button:disabled {
-        background: #333;
-        cursor: not-allowed;
-        opacity: 0.5;
-      }
-
-      .button.playing {
-        background: linear-gradient(135deg, #ff6600, #ffaa00);
-      }
-
-      .time-display {
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        color: #00ccff;
-        margin: 10px 0;
-        padding: 10px;
-        background: rgba(0, 100, 150, 0.2);
-        border-radius: 5px;
-      }
-
-      .season-indicator {
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 3px;
-        font-size: 11px;
-        margin-left: 10px;
-      }
-
-      .season-spring { background: #66cc66; color: #003300; }
-      .season-summer { background: #ffcc00; color: #663300; }
-      .season-autumn { background: #ff9966; color: #330000; }
-      .season-winter { background: #66ccff; color: #003366; }
-
-      .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        z-index: 1000;
-      }
-
-      .spinner {
-        border: 3px solid rgba(0, 204, 255, 0.3);
-        border-radius: 50%;
-        border-top: 3px solid #00ccff;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-      }
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      .stats {
-        font-size: 11px;
-        color: #cccccc;
-        margin-top: 10px;
-      }
-
-      .highlight {
-        color: #00ccff;
-        font-weight: bold;
-      }
-
-      a {
-        color: #00ccff;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-        color: #66ddff;
-      }
-
-      .playback-controls {
-        display: flex;
-        gap: 5px;
-        align-items: center;
-        justify-content: center;
-        margin: 10px 0;
-      }
-
-      .speed-control {
-        font-size: 12px;
-        color: #cccccc;
-      }
-
-      input[type="range"] {
-        background: rgba(0, 204, 255, 0.1);
-        border: 1px solid #00ccff;
-        border-radius: 4px;
-        height: 6px;
-        outline: none;
-        -webkit-appearance: none;
-        appearance: none;
-      }
-
-      input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        border: 2px solid #ffffff;
-      }
-
-      input[type="range"]::-moz-range-thumb {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: #00ccff;
-        cursor: pointer;
-        border: 2px solid #ffffff;
-      }
-
-      #legend {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(0, 20, 40, 0.9);
-        border: 1px solid rgba(0, 150, 200, 0.3);
-        border-radius: 8px;
-        padding: 20px;
-        backdrop-filter: blur(10px);
-        font-size: 14px;
-      }
-
-      .legend-gradient {
-        width: 200px;
-        height: 20px;
-        background: linear-gradient(to right, 
-          #003296 0%,    /* Deep ocean blue - very low */
-          #0082ff 25%,   /* Light blue - low */
-          #00ff9b 50%,   /* Cyan-green - medium */
-          #32cd32 75%,   /* Green - high */
-          #ffff00 100%   /* Yellow - very high blooms */
+    .legend-gradient {
+      width: 200px;
+      height: 20px;
+      background: linear-gradient(to right,
+          #003296 0%,
+          /* Deep ocean blue - very low */
+          #0082ff 25%,
+          /* Light blue - low */
+          #00ff9b 50%,
+          /* Cyan-green - medium */
+          #32cd32 75%,
+          /* Green - high */
+          #ffff00 100%
+          /* Yellow - very high blooms */
         );
-        border-radius: 3px;
-        margin: 8px 0;
-        border: 1px solid rgba(0, 150, 200, 0.3);
-      }
+      border-radius: 3px;
+      margin: 8px 0;
+      border: 1px solid rgba(0, 150, 200, 0.3);
+    }
 
-      .legend-labels {
-        display: flex;
-        justify-content: space-between;
-        font-size: 10px;
-        color: #cccccc;
-      }
-    </style>
-  </head>
-  <body>
+    .legend-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #cccccc;
+    }
+  </style>
+</head>
+
+<body>
 
   <div id="container"></div>
 
@@ -336,9 +365,8 @@
 
     <div class="control-group">
       <label class="control-label">🎯 Time Navigation</label>
-      <input type="range" id="time-slider" class="time-slider" 
-             min="0" max="83" value="0" 
-             oninput="scrubToTime(this.value)">
+      <input type="range" id="time-slider" class="time-slider" min="0" max="83" value="0"
+        oninput="scrubToTime(this.value)">
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 5px;">
         <span>Spring 2003</span>
         <span>Winter 2023</span>
@@ -358,8 +386,8 @@
     <div class="control-group">
       <label class="control-label">⚡ Playback Speed</label>
       <div style="margin-bottom: 5px;">Speed: <span id="speed-value">1.0s</span></div>
-      <input type="range" id="playback-speed" min="100" max="3000" value="1000" step="100" 
-             oninput="updatePlaybackSpeed()" style="width: 100%;">
+      <input type="range" id="playback-speed" min="100" max="3000" value="1000" step="100"
+        oninput="updatePlaybackSpeed()" style="width: 100%;">
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 2px;">
         <span>0.1s</span>
         <span>3.0s</span>
@@ -391,12 +419,12 @@
 
   <div id="info">
     <strong>🛰️ NASA Space Apps Challenge 2025</strong><br><br>
-    
+
     <strong>🎮 Controls:</strong><br>
     • <strong>Mouse:</strong> Rotate globe<br>
     • <strong>Wheel:</strong> Zoom in/out<br><br>
-    
-    <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> | 
+
+    <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a> |
     <a href="https://oceancolor.gsfc.nasa.gov/" target="_blank">NASA Ocean Colour</a>
   </div>
 
@@ -415,7 +443,7 @@
     let playbackSpeed = 1000; // milliseconds
 
     // Initialize the application
-    if(!Detector.webgl){
+    if (!Detector.webgl) {
       Detector.addGetWebGLMessage();
     } else {
       initializeHeatmapGlobe();
@@ -423,24 +451,24 @@
 
     function initializeHeatmapGlobe() {
       const container = document.getElementById('container');
-      
+
       console.log('🌊 Initializing Heatmap Globe...');
-      
+
       try {
         // Create globe with heatmap capabilities
         globe = new DAT.HeatmapGlobe(container, {
-          imgDir: './'
+          imgDir: '../../assets/globe/'
         });
 
         console.log('✅ Heatmap Globe initialized successfully');
-        
+
         // Load time series index
         loadTimeSeriesIndex();
-        
+
         // Start animation loop
         TWEEN.start();
         globe.animate();
-        
+
       } catch (error) {
         console.error('❌ Error initializing globe:', error);
         showError('Failed to initialize 3D globe');
@@ -449,22 +477,22 @@
 
     function loadTimeSeriesIndex() {
       console.log('📋 Loading time series index...');
-      
+
       const xhr = new XMLHttpRequest();
       xhr.open('GET', '../../../chlorophyll-json-files/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
-      
-      xhr.onreadystatechange = function(e) {
+
+      xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             try {
               const index = JSON.parse(xhr.responseText);
               timeSeriesData = index.time_series;
-              
+
               console.log(`✅ Loaded ${timeSeriesData.length} time periods`);
-              
+
               // Load first time period
               loadTimePeriod(0);
-              
+
             } catch (error) {
               console.error('❌ Error parsing time series index:', error);
               showError('Failed to parse time series index');
@@ -480,28 +508,28 @@
 
     function loadTimePeriod(index) {
       if (index < 0 || index >= timeSeriesData.length) return;
-      
+
       currentTimeIndex = index;
       const period = timeSeriesData[index];
-      
+
       console.log(`📡 Loading ${period.display_name}...`);
       updateTimeDisplay(period);
-      
+
       const xhr = new XMLHttpRequest();
       xhr.open('GET', `../../../chlorophyll-json-files/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
-      
-      xhr.onreadystatechange = function(e) {
+
+      xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             try {
               const data = JSON.parse(xhr.responseText);
               displayHeatmapData(data, period);
-              
+
               // Hide loading screen on first load
               if (index === 0) {
                 document.getElementById('loading').style.display = 'none';
               }
-              
+
             } catch (error) {
               console.error('❌ Error parsing time period data:', error);
             }
@@ -521,11 +549,11 @@
 
       const rawData = data[0][1];
       console.log(`🎯 Displaying ${period.display_name} heatmap`);
-      
+
       try {
         // Update heatmap texture
         globe.updateHeatmap(rawData, period);
-        
+
       } catch (error) {
         console.error('❌ Error displaying heatmap data:', error);
       }
@@ -536,7 +564,7 @@
       document.getElementById('current-time').innerHTML = `
         ${period.year} <span class="season-indicator ${seasonClass}">${period.season.toUpperCase()}</span>
       `;
-      
+
       // Update slider position
       document.getElementById('time-slider').value = currentTimeIndex;
     }
@@ -545,7 +573,7 @@
     function togglePlayback() {
       isPlaying = !isPlaying;
       const button = document.getElementById('play-pause');
-      
+
       if (isPlaying) {
         button.textContent = '⏸️ Pause';
         button.classList.add('playing');
@@ -602,7 +630,7 @@
     function updatePlaybackSpeed() {
       const select = document.getElementById('playback-speed');
       playbackSpeed = parseInt(select.value);
-      
+
       if (isPlaying) {
         stopPlayback();
         startPlayback();
@@ -611,11 +639,11 @@
 
     function updatePlaybackSpeed() {
       playbackSpeed = parseInt(document.getElementById('playback-speed').value);
-      
+
       // Update speed display
       const speedInSeconds = (playbackSpeed / 1000).toFixed(1);
       document.getElementById('speed-value').textContent = `${speedInSeconds}s`;
-      
+
       // Restart playback with new speed if currently playing
       if (isPlaying) {
         stopPlayback();
@@ -635,5 +663,6 @@
 
   </script>
 
-  </body>
+</body>
+
 </html>
