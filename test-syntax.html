@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syntax Test</title>
+</head>
+<body>
+    <div id="test">Testing JavaScript syntax...</div>
+    
+    <script>
+        console.log('Testing basic syntax...');
+        
+        function testFunction() {
+            console.log('Function works');
+        }
+        
+        testFunction();
+        
+        // Test the problematic function structure
+        function getColorFunction(scheme) {
+            switch(scheme) {
+                case 'ocean':
+                    return function(x) {
+                        return x;
+                    };
+                default:
+                    return function(x) {
+                        return x;
+                    };
+            }
+        }
+        
+        console.log('Syntax test passed!');
+        document.getElementById('test').innerHTML = 'Syntax OK!';
+    </script>
+</body>
+</html>
