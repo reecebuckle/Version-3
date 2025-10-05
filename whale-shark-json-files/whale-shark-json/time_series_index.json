@@ -1,0 +1,402 @@
+{
+  "timeRange": {
+    "start": "2009-06-11T00:00:00",
+    "end": "2015-07-11T00:00:00"
+  },
+  "monthly": [
+    {
+      "period": "2009-06",
+      "display_name": "June 2009",
+      "filename": "monthly/whale_sharks_2009-06.json",
+      "total_points": 40,
+      "shark_count": 2
+    },
+    {
+      "period": "2009-07",
+      "display_name": "July 2009",
+      "filename": "monthly/whale_sharks_2009-07.json",
+      "total_points": 62,
+      "shark_count": 2
+    },
+    {
+      "period": "2009-08",
+      "display_name": "August 2009",
+      "filename": "monthly/whale_sharks_2009-08.json",
+      "total_points": 32,
+      "shark_count": 2
+    },
+    {
+      "period": "2009-09",
+      "display_name": "September 2009",
+      "filename": "monthly/whale_sharks_2009-09.json",
+      "total_points": 30,
+      "shark_count": 1
+    },
+    {
+      "period": "2009-10",
+      "display_name": "October 2009",
+      "filename": "monthly/whale_sharks_2009-10.json",
+      "total_points": 18,
+      "shark_count": 1
+    },
+    {
+      "period": "2010-06",
+      "display_name": "June 2010",
+      "filename": "monthly/whale_sharks_2010-06.json",
+      "total_points": 16,
+      "shark_count": 3
+    },
+    {
+      "period": "2010-07",
+      "display_name": "July 2010",
+      "filename": "monthly/whale_sharks_2010-07.json",
+      "total_points": 6,
+      "shark_count": 1
+    },
+    {
+      "period": "2010-08",
+      "display_name": "August 2010",
+      "filename": "monthly/whale_sharks_2010-08.json",
+      "total_points": 31,
+      "shark_count": 2
+    },
+    {
+      "period": "2010-09",
+      "display_name": "September 2010",
+      "filename": "monthly/whale_sharks_2010-09.json",
+      "total_points": 39,
+      "shark_count": 2
+    },
+    {
+      "period": "2010-10",
+      "display_name": "October 2010",
+      "filename": "monthly/whale_sharks_2010-10.json",
+      "total_points": 40,
+      "shark_count": 2
+    },
+    {
+      "period": "2010-11",
+      "display_name": "November 2010",
+      "filename": "monthly/whale_sharks_2010-11.json",
+      "total_points": 30,
+      "shark_count": 1
+    },
+    {
+      "period": "2010-12",
+      "display_name": "December 2010",
+      "filename": "monthly/whale_sharks_2010-12.json",
+      "total_points": 31,
+      "shark_count": 1
+    },
+    {
+      "period": "2011-01",
+      "display_name": "January 2011",
+      "filename": "monthly/whale_sharks_2011-01.json",
+      "total_points": 31,
+      "shark_count": 1
+    },
+    {
+      "period": "2011-02",
+      "display_name": "February 2011",
+      "filename": "monthly/whale_sharks_2011-02.json",
+      "total_points": 8,
+      "shark_count": 1
+    },
+    {
+      "period": "2011-06",
+      "display_name": "June 2011",
+      "filename": "monthly/whale_sharks_2011-06.json",
+      "total_points": 9,
+      "shark_count": 1
+    },
+    {
+      "period": "2011-07",
+      "display_name": "July 2011",
+      "filename": "monthly/whale_sharks_2011-07.json",
+      "total_points": 12,
+      "shark_count": 1
+    },
+    {
+      "period": "2011-09",
+      "display_name": "September 2011",
+      "filename": "monthly/whale_sharks_2011-09.json",
+      "total_points": 54,
+      "shark_count": 6
+    },
+    {
+      "period": "2011-10",
+      "display_name": "October 2011",
+      "filename": "monthly/whale_sharks_2011-10.json",
+      "total_points": 99,
+      "shark_count": 5
+    },
+    {
+      "period": "2011-11",
+      "display_name": "November 2011",
+      "filename": "monthly/whale_sharks_2011-11.json",
+      "total_points": 91,
+      "shark_count": 4
+    },
+    {
+      "period": "2011-12",
+      "display_name": "December 2011",
+      "filename": "monthly/whale_sharks_2011-12.json",
+      "total_points": 56,
+      "shark_count": 3
+    },
+    {
+      "period": "2012-01",
+      "display_name": "January 2012",
+      "filename": "monthly/whale_sharks_2012-01.json",
+      "total_points": 32,
+      "shark_count": 2
+    },
+    {
+      "period": "2012-02",
+      "display_name": "February 2012",
+      "filename": "monthly/whale_sharks_2012-02.json",
+      "total_points": 12,
+      "shark_count": 1
+    },
+    {
+      "period": "2012-05",
+      "display_name": "May 2012",
+      "filename": "monthly/whale_sharks_2012-05.json",
+      "total_points": 1,
+      "shark_count": 1
+    },
+    {
+      "period": "2012-10",
+      "display_name": "October 2012",
+      "filename": "monthly/whale_sharks_2012-10.json",
+      "total_points": 5,
+      "shark_count": 2
+    },
+    {
+      "period": "2012-11",
+      "display_name": "November 2012",
+      "filename": "monthly/whale_sharks_2012-11.json",
+      "total_points": 6,
+      "shark_count": 2
+    },
+    {
+      "period": "2012-12",
+      "display_name": "December 2012",
+      "filename": "monthly/whale_sharks_2012-12.json",
+      "total_points": 11,
+      "shark_count": 2
+    },
+    {
+      "period": "2013-01",
+      "display_name": "January 2013",
+      "filename": "monthly/whale_sharks_2013-01.json",
+      "total_points": 2,
+      "shark_count": 1
+    },
+    {
+      "period": "2013-02",
+      "display_name": "February 2013",
+      "filename": "monthly/whale_sharks_2013-02.json",
+      "total_points": 8,
+      "shark_count": 1
+    },
+    {
+      "period": "2013-03",
+      "display_name": "March 2013",
+      "filename": "monthly/whale_sharks_2013-03.json",
+      "total_points": 1,
+      "shark_count": 1
+    },
+    {
+      "period": "2013-06",
+      "display_name": "June 2013",
+      "filename": "monthly/whale_sharks_2013-06.json",
+      "total_points": 73,
+      "shark_count": 9
+    },
+    {
+      "period": "2013-07",
+      "display_name": "July 2013",
+      "filename": "monthly/whale_sharks_2013-07.json",
+      "total_points": 153,
+      "shark_count": 8
+    },
+    {
+      "period": "2013-08",
+      "display_name": "August 2013",
+      "filename": "monthly/whale_sharks_2013-08.json",
+      "total_points": 64,
+      "shark_count": 4
+    },
+    {
+      "period": "2013-09",
+      "display_name": "September 2013",
+      "filename": "monthly/whale_sharks_2013-09.json",
+      "total_points": 57,
+      "shark_count": 3
+    },
+    {
+      "period": "2013-10",
+      "display_name": "October 2013",
+      "filename": "monthly/whale_sharks_2013-10.json",
+      "total_points": 31,
+      "shark_count": 1
+    },
+    {
+      "period": "2013-11",
+      "display_name": "November 2013",
+      "filename": "monthly/whale_sharks_2013-11.json",
+      "total_points": 30,
+      "shark_count": 1
+    },
+    {
+      "period": "2013-12",
+      "display_name": "December 2013",
+      "filename": "monthly/whale_sharks_2013-12.json",
+      "total_points": 20,
+      "shark_count": 1
+    },
+    {
+      "period": "2014-07",
+      "display_name": "July 2014",
+      "filename": "monthly/whale_sharks_2014-07.json",
+      "total_points": 262,
+      "shark_count": 14
+    },
+    {
+      "period": "2014-08",
+      "display_name": "August 2014",
+      "filename": "monthly/whale_sharks_2014-08.json",
+      "total_points": 301,
+      "shark_count": 11
+    },
+    {
+      "period": "2014-09",
+      "display_name": "September 2014",
+      "filename": "monthly/whale_sharks_2014-09.json",
+      "total_points": 227,
+      "shark_count": 8
+    },
+    {
+      "period": "2014-10",
+      "display_name": "October 2014",
+      "filename": "monthly/whale_sharks_2014-10.json",
+      "total_points": 203,
+      "shark_count": 7
+    },
+    {
+      "period": "2014-11",
+      "display_name": "November 2014",
+      "filename": "monthly/whale_sharks_2014-11.json",
+      "total_points": 180,
+      "shark_count": 6
+    },
+    {
+      "period": "2014-12",
+      "display_name": "December 2014",
+      "filename": "monthly/whale_sharks_2014-12.json",
+      "total_points": 186,
+      "shark_count": 6
+    },
+    {
+      "period": "2015-01",
+      "display_name": "January 2015",
+      "filename": "monthly/whale_sharks_2015-01.json",
+      "total_points": 186,
+      "shark_count": 6
+    },
+    {
+      "period": "2015-02",
+      "display_name": "February 2015",
+      "filename": "monthly/whale_sharks_2015-02.json",
+      "total_points": 143,
+      "shark_count": 6
+    },
+    {
+      "period": "2015-03",
+      "display_name": "March 2015",
+      "filename": "monthly/whale_sharks_2015-03.json",
+      "total_points": 117,
+      "shark_count": 5
+    },
+    {
+      "period": "2015-04",
+      "display_name": "April 2015",
+      "filename": "monthly/whale_sharks_2015-04.json",
+      "total_points": 90,
+      "shark_count": 3
+    },
+    {
+      "period": "2015-05",
+      "display_name": "May 2015",
+      "filename": "monthly/whale_sharks_2015-05.json",
+      "total_points": 93,
+      "shark_count": 3
+    },
+    {
+      "period": "2015-06",
+      "display_name": "June 2015",
+      "filename": "monthly/whale_sharks_2015-06.json",
+      "total_points": 83,
+      "shark_count": 3
+    },
+    {
+      "period": "2015-07",
+      "display_name": "July 2015",
+      "filename": "monthly/whale_sharks_2015-07.json",
+      "total_points": 21,
+      "shark_count": 2
+    }
+  ],
+  "yearly": [
+    {
+      "period": "2009",
+      "display_name": "2009",
+      "filename": "yearly/whale_sharks_2009.json",
+      "total_points": 182,
+      "shark_count": 2
+    },
+    {
+      "period": "2010",
+      "display_name": "2010",
+      "filename": "yearly/whale_sharks_2010.json",
+      "total_points": 193,
+      "shark_count": 7
+    },
+    {
+      "period": "2011",
+      "display_name": "2011",
+      "filename": "yearly/whale_sharks_2011.json",
+      "total_points": 360,
+      "shark_count": 8
+    },
+    {
+      "period": "2012",
+      "display_name": "2012",
+      "filename": "yearly/whale_sharks_2012.json",
+      "total_points": 67,
+      "shark_count": 5
+    },
+    {
+      "period": "2013",
+      "display_name": "2013",
+      "filename": "yearly/whale_sharks_2013.json",
+      "total_points": 439,
+      "shark_count": 11
+    },
+    {
+      "period": "2014",
+      "display_name": "2014",
+      "filename": "yearly/whale_sharks_2014.json",
+      "total_points": 1359,
+      "shark_count": 14
+    },
+    {
+      "period": "2015",
+      "display_name": "2015",
+      "filename": "yearly/whale_sharks_2015.json",
+      "total_points": 733,
+      "shark_count": 6
+    }
+  ]
+}
