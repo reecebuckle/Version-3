@@ -29,7 +29,7 @@ Interactive 3D visualisation of whale shark movement patterns in the Gulf of Mex
 
 - **Whale Shark Data**: `../../../whale-shark-json-files/whale-shark-json/whale_sharks_complete.json`
 - **Earth Texture**: `../../assets/globe/globe-sea-8k.jpg`
-- **Whale Shark Icon**: `../../assets/globe/whale-shark-icon.webp`
+- **Whale Shark Icon**: `../../assets/whale-shark-icon-transparent-v3.png`
 - **Chlorophyll Data**: `../../../chlorophyll-datasets/chlorophyll-annual-compressed/`
 
 ## Dependencies

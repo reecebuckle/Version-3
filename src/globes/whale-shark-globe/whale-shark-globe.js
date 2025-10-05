@@ -127,6 +127,9 @@ DAT.WhaleSharkGlobe = function(container, opts) {
 
     scene = new THREE.Scene();
 
+    // Pre-load whale shark icon texture during initialization
+    loadWhaleSharkTexture();
+
     // Enhanced geometry for better marine representation
     var geometry = new THREE.SphereGeometry(200, 64, 32);
 
@@ -297,16 +300,48 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     console.log('🛤️ Created', trackLines.length, 'track lines (optimized)');
   }
 
+  // Load whale shark texture with multiple fallback paths
+  function loadWhaleSharkTexture() {
+    if (window.whaleSharkTexture) return; // Already loaded
+    
+    // Try multiple paths for better compatibility with different hosting environments
+    var iconPaths = [
+      '../../assets/whale-shark-icon-transparent-v3.png',
+      '../../../src/assets/whale-shark-icon-transparent-v3.png',
+      './assets/whale-shark-icon-transparent-v3.png'
+    ];
+    
+    function tryLoadIcon(pathIndex) {
+      if (pathIndex >= iconPaths.length) {
+        console.error('❌ Failed to load whale shark icon from all attempted paths');
+        window.whaleSharkTexture = null; // Mark as failed
+        return;
+      }
+      
+      var path = iconPaths[pathIndex];
+      console.log('🦈 Attempting to load whale shark icon from:', path);
+      
+      window.whaleSharkTexture = THREE.ImageUtils.loadTexture(path, undefined,
+        function() {
+          console.log('✅ Successfully loaded whale shark icon from:', path);
+        },
+        function(error) {
+          console.warn('⚠️ Failed to load whale shark icon from:', path);
+          tryLoadIcon(pathIndex + 1);
+        }
+      );
+    }
+    
+    tryLoadIcon(0);
+  }
+
   // Create shark position markers using whale shark icons and start circles
   function createSharkMarkers() {
     // Clear existing markers
     sharkMarkers.forEach(marker => scene.remove(marker));
     sharkMarkers = [];
 
-    // Load whale shark icon texture if not already loaded
-    if (!window.whaleSharkTexture) {
-      window.whaleSharkTexture = THREE.ImageUtils.loadTexture('../../assets/whale-shark-icon-transparent-v3.png');
-    }
+    // Whale shark texture should be loaded during initialization
 
     // Create shared geometry for sprite-based markers and circles
     var materials = {}; // Cache materials by color
@@ -364,12 +399,37 @@ DAT.WhaleSharkGlobe = function(container, opts) {
 
       // Create sprite material with whale shark icon for end position
       if (!materials[colorKey]) {
-        materials[colorKey] = new THREE.SpriteMaterial({
-          map: window.whaleSharkTexture,
-          color: getSharkColor(shark), // Color the white background, leave shark black
-          transparent: true,
-          opacity: 0.8 // Slightly more transparent for better visibility
-        });
+        if (window.whaleSharkTexture && window.whaleSharkTexture.image) {
+          // Use whale shark icon if loaded successfully
+          materials[colorKey] = new THREE.SpriteMaterial({
+            map: window.whaleSharkTexture,
+            color: getSharkColor(shark), // Color the white background, leave shark black
+            transparent: true,
+            opacity: 0.8 // Slightly more transparent for better visibility
+          });
+        } else {
+          // Fallback to colored square if icon fails to load
+          console.warn('⚠️ Using fallback colored square for shark', shark.id);
+          var canvas = document.createElement('canvas');
+          canvas.width = 32;
+          canvas.height = 32;
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = `rgb(${shark.color[0]}, ${shark.color[1]}, ${shark.color[2]})`;
+          ctx.fillRect(0, 0, 32, 32);
+          ctx.fillStyle = 'white';
+          ctx.font = '20px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText('🦈', 16, 22);
+          
+          var texture = new THREE.Texture(canvas);
+          texture.needsUpdate = true;
+          
+          materials[colorKey] = new THREE.SpriteMaterial({
+            map: texture,
+            transparent: true,
+            opacity: 0.9
+          });
+        }
       }
 
       var endMarker = new THREE.Sprite(materials[colorKey]);
@@ -379,6 +439,8 @@ DAT.WhaleSharkGlobe = function(container, opts) {
 
       scene.add(endMarker);
       sharkMarkers.push(endMarker);
+      
+      console.log('🦈 Created end marker for shark', shark.id, 'at position:', endX.toFixed(2), endY.toFixed(2), endZ.toFixed(2));
     });
 
     console.log('📍 Created', sharkMarkers.length, 'shark markers (start circles + end icons)');
