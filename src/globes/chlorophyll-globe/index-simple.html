@@ -163,7 +163,7 @@
       console.log('📡 Loading chlorophyll data...');
       
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'chlorophyll_data.json?v=' + Date.now(), true);
+      xhr.open('GET', '../../../chlorophyll-json-files/chlorophyll-basic-data/chlorophyll_data.json?v=' + Date.now(), true);
       
       xhr.onreadystatechange = function(e) {
         console.log(`📡 XHR State: ${xhr.readyState}, Status: ${xhr.status}`);

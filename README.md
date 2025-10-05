@@ -17,7 +17,40 @@ The project uses open ocean color data from NASA's [PACE Ocean Color Data Portal
 
 Chlorophyll-a is a critical indicator of phytoplankton abundance, which forms the base of the marine food web. Higher concentrations indicate productive waters that support larger fish populations and, consequently, shark feeding areas.
 
-## Visualizations
+## Data Analysis
+
+Our analysis of NASA's chlorophyll-a concentration data reveals key insights into marine ecosystem patterns and potential shark feeding habitats:
+
+### Spatial Distribution Patterns
+![Chlorophyll Concentration Heatmap](graphs/Chlorophyll%20Concentration%20Heatmap.png)
+
+The global chlorophyll concentration heatmap shows distinct productivity zones:
+- **High productivity regions** (>1.0 mg/m³) concentrated in coastal upwelling areas, polar regions, and major river deltas
+- **Oligotrophic zones** (<0.1 mg/m³) dominating tropical and subtropical ocean gyres
+- **Seasonal productivity bands** following temperature and nutrient gradients
+- **Continental shelf areas** showing elevated chlorophyll due to nutrient runoff and shallow water mixing
+
+### Statistical Distribution Analysis
+![Chlorophyll Distributions](graphs/Chlorphyll%20Distributions.png)
+
+The chlorophyll concentration distribution analysis reveals:
+- **Log-normal distribution** typical of biological oceanographic data
+- **Bimodal patterns** distinguishing productive coastal waters from oligotrophic open ocean
+- **Seasonal variability** with higher concentrations during spring blooms and upwelling periods
+- **Geographic clustering** of similar productivity levels indicating distinct marine ecosystems
+
+### Shark Feeding Habitat Predictions
+![Predicted Feeding Areas](graphs/Predicted%20Feeding.png)
+
+Based on chlorophyll patterns and trophic relationships, our model identifies:
+- **Primary feeding zones** correlating with moderate chlorophyll levels (0.3-1.0 mg/m³) where prey fish concentrate
+- **Migration corridors** following seasonal productivity gradients
+- **Hotspot regions** where multiple environmental factors converge to create optimal foraging conditions
+- **Temporal patterns** showing seasonal shifts in predicted feeding activity
+
+These analyses support the hypothesis that satellite-derived chlorophyll data can effectively predict shark habitat preferences by identifying productive marine regions that support robust food webs.
+
+## Interactive Visualizations
 
 - **Monthly Image Globe** - High-resolution PNG textures showing monthly chlorophyll patterns
 - **Seasonal Image Globe** - Quarterly averages highlighting seasonal productivity cycles  

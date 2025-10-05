@@ -22,13 +22,15 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 │           ├── globe.js         # Core globe functionality
 │           ├── world.jpg        # Earth texture
 │           └── third-party/     # Three.js, Detector.js, Tween.js
-├── helper-functions/             # Python utilities and data processing
-│   └── convert-seasonal-data.py # NetCDF to JSON converter
+
 ├── chlorophyll-datasets/         # Large data files (gitignored)
 │   ├── chlorophyll-monthly-images/    # Monthly PNG files
 │   ├── chlorophyll-seasonal-images/   # Seasonal PNG files
-│   ├── chlorophyll-seasonal-json/     # JSON data for heatmap/timeseries
 │   └── chloropyhll-seasonal-binned/   # Source NetCDF files
+├── chlorophyll-json-files/       # Processed JSON data (tracked in git)
+│   ├── chlorophyll-seasonal-json/     # JSON data for heatmap/timeseries
+│   ├── chlorophyll-basic-data/        # Basic globe visualization data
+│   └── convert-seasonal-data.py       # NetCDF to JSON converter script
 ├── graphs/                       # Analysis notebooks and outputs
 │   ├── Chlorophyll_Visualiser.ipynb  # Development notebook
 │   └── *.png                    # Sample visualization outputs
@@ -46,16 +48,18 @@ This repository contains an **Ocean Chlorophyll Visualization Suite** built for 
 - JavaScript engines: `[type]-globe.js` (e.g., `heatmap-globe.js`)
 - Always include home navigation link: `../../../index.html`
 
-**Data Files** (`chlorophyll-datasets/[data-type]/`):
-- **PNG Images**: `chlorophyll-[temporal]-images/` (monthly, seasonal, etc.)
-- **JSON Data**: `chlorophyll-[temporal]-json/` for WebGL Globe format
-- **Source Data**: `chlorophyll-[type]-binned/` for NetCDF/raw files
+**Data Files**:
+- **Large Data** (`chlorophyll-datasets/[data-type]/`): PNG images and NetCDF source files (gitignored)
+  - `chlorophyll-[temporal]-images/` (monthly, seasonal, etc.)
+  - `chlorophyll-[type]-binned/` for NetCDF/raw files
+- **JSON Data** (`chlorophyll-json-files/[data-type]/`): Processed JSON for WebGL Globe (tracked in git)
+  - `chlorophyll-seasonal-json/` for time series and heatmap data
+  - `chlorophyll-basic-data/` for basic globe visualization data
 - **Naming Convention**: `AQUA_MODIS.YYYYMMDD_YYYYMMDD.L3m.[PERIOD].CHL.chlor_a.4km.nc.png`
 
-**Helper Scripts** (`helper-functions/`):
-- Data conversion utilities
-- Processing scripts
-- Use relative paths: `../chlorophyll-datasets/`
+**Data Processing Scripts** (`chlorophyll-json-files/`):
+- `convert-seasonal-data.py` - NetCDF to JSON converter
+- Use relative paths: `../chlorophyll-datasets/` for source data, `./` for output
 - Include clear documentation and error handling
 
 **Assets** (`src/assets/`):

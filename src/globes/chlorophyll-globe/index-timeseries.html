@@ -363,7 +363,7 @@
       console.log('📋 Loading time series index...');
       
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', '../../../chlorophyll-datasets/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
+      xhr.open('GET', '../../../chlorophyll-json-files/chlorophyll-seasonal-json/time_series_index.json?v=' + Date.now(), true);
       
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
@@ -400,7 +400,7 @@
       updateTimeDisplay(period);
       
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `../../../chlorophyll-datasets/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
+      xhr.open('GET', `../../../chlorophyll-json-files/chlorophyll-seasonal-json/${period.filename}?v=${Date.now()}`, true);
       
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
