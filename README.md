@@ -1,6 +1,15 @@
 # Ocean Chlorophyll Visualisation Suite
 
+## 🚀 **[LIVE DEMO - Click Here to Start →](https://reecebuckle.github.io/Version-3/)**
+
 Interactive 3D visualisations of ocean chlorophyll-a concentrations for NASA Space Apps Challenge 2025. This project extends the [WebGL Globe](https://github.com/dataarts/webgl-globe) by Google Data Arts Team to visualise marine ecosystem data and support shark habitat modelling.
+
+### Quick Access Links:
+- **🏠 [Main Navigation Page](https://reecebuckle.github.io/Version-3/)** - Start here
+- **🖼️ [Image Globe](https://reecebuckle.github.io/Version-3/src/globes/chlorophyll-globe/index-combined-images.html)** - Monthly & seasonal PNG display
+- **🌊 [Ocean Heatmap](https://reecebuckle.github.io/Version-3/src/globes/chlorophyll-globe/index-heatmap.html)** - Smooth gradient overlay
+- **📊 [Time Series](https://reecebuckle.github.io/Version-3/src/globes/chlorophyll-globe/index-timeseries.html)** - 3D data points
+- **🦈 [Whale Shark Tracking](https://reecebuckle.github.io/Version-3/src/globes/whale-shark-globe/index-whale-shark-tracks.html)** - Migration patterns
 
 ## Project Overview
 
