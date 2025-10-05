@@ -105,6 +105,8 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   var currentYear = null;
   var earthMaterial = null;
   var chlorophyllTexture = null;
+  var earthTexture = null; // Cache Earth texture
+  var textureCache = {}; // Cache for chlorophyll textures
 
   function init() {
     container.style.color = '#fff';
@@ -125,8 +127,9 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     shader = Shaders['earth'];
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 
-    // Load high-resolution ocean-focused Earth texture
-    uniforms['texture'].value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+    // Load high-resolution ocean-focused Earth texture and cache it
+    earthTexture = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+    uniforms['texture'].value = earthTexture;
 
     earthMaterial = new THREE.ShaderMaterial({
       uniforms: uniforms,
@@ -285,14 +288,18 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     console.log('🛤️ Created', trackLines.length, 'track lines (optimized)');
   }
 
-  // Create shark position markers with instanced rendering for performance
+  // Create shark position markers using whale shark icons
   function createSharkMarkers() {
     // Clear existing markers
     sharkMarkers.forEach(marker => scene.remove(marker));
     sharkMarkers = [];
 
-    // Performance optimization: use shared geometry and materials
-    var sharedGeometry = new THREE.SphereGeometry(3, 8, 6);
+    // Load whale shark icon texture if not already loaded
+    if (!window.whaleSharkTexture) {
+      window.whaleSharkTexture = THREE.ImageUtils.loadTexture('../../assets/globe/whale-shark-icon.webp');
+    }
+
+    // Create shared geometry for sprite-based markers
     var materials = {}; // Cache materials by color
 
     Object.values(sharkTracks).forEach(shark => {
@@ -311,25 +318,27 @@ DAT.WhaleSharkGlobe = function(container, opts) {
       var y = 205 * Math.cos(phi);
       var z = 205 * Math.sin(phi) * Math.sin(theta);
 
-      // Reuse materials for same colors
+      // Create sprite material with whale shark icon and shark color tint
       var colorKey = shark.color.join(',');
       if (!materials[colorKey]) {
-        materials[colorKey] = new THREE.MeshBasicMaterial({
+        materials[colorKey] = new THREE.SpriteMaterial({
+          map: window.whaleSharkTexture,
           color: new THREE.Color(shark.color[0] / 255, shark.color[1] / 255, shark.color[2] / 255),
           transparent: true,
           opacity: 0.9
         });
       }
 
-      var marker = new THREE.Mesh(sharedGeometry, materials[colorKey]);
+      var marker = new THREE.Sprite(materials[colorKey]);
       marker.position.set(x, y, z);
+      marker.scale.set(8, 8, 1); // Size of the whale shark icon
       marker.userData = { sharkId: shark.id, sharkName: shark.name };
 
       scene.add(marker);
       sharkMarkers.push(marker);
     });
 
-    console.log('📍 Created', sharkMarkers.length, 'shark markers (optimized)');
+    console.log('📍 Created', sharkMarkers.length, 'whale shark icon markers');
   }
 
   // Get current shark position based on time filter
@@ -361,21 +370,19 @@ DAT.WhaleSharkGlobe = function(container, opts) {
       };
       console.log('⏰ Time filter updated:', new Date(startTimestamp * 1000), 'to', new Date(endTimestamp * 1000));
       
-      // Debug: Check how many points are in this time range
+      // Count points in time range for statistics
       let totalPointsInRange = 0;
       Object.values(sharkTracks).forEach(shark => {
-        let pointsInRange = 0;
         shark.tracks.forEach(track => {
           if (isWithinTimeFilter(track[3])) {
-            pointsInRange++;
+            totalPointsInRange++;
           }
         });
-        if (pointsInRange > 0) {
-          console.log(`🦈 ${shark.name}: ${pointsInRange} points in time range`);
-        }
-        totalPointsInRange += pointsInRange;
       });
-      console.log(`📊 Total points in time range: ${totalPointsInRange}`);
+      
+      if (totalPointsInRange > 0) {
+        console.log(`📊 Filtered to ${totalPointsInRange} tracking points in time range`);
+      }
     }
     
     // Recreate visualization with new time filter
@@ -404,24 +411,27 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   // Get shark statistics
   function getSharkStats() {
     var stats = {
-      totalSharks: Object.keys(sharkTracks).length,
+      totalSharks: visibleSharks.size, // Only count visible sharks
       visibleSharks: visibleSharks.size,
       totalTracks: 0,
       dateRange: { start: null, end: null }
     };
 
     Object.values(sharkTracks).forEach(shark => {
-      stats.totalTracks += shark.tracks.length;
-      
-      shark.tracks.forEach(track => {
-        var date = new Date(track[3] * 1000);
-        if (!stats.dateRange.start || date < stats.dateRange.start) {
-          stats.dateRange.start = date;
-        }
-        if (!stats.dateRange.end || date > stats.dateRange.end) {
-          stats.dateRange.end = date;
-        }
-      });
+      // Only count tracks from visible sharks
+      if (shark.visible && visibleSharks.has(shark.id)) {
+        stats.totalTracks += shark.tracks.length;
+        
+        shark.tracks.forEach(track => {
+          var date = new Date(track[3] * 1000);
+          if (!stats.dateRange.start || date < stats.dateRange.start) {
+            stats.dateRange.start = date;
+          }
+          if (!stats.dateRange.end || date > stats.dateRange.end) {
+            stats.dateRange.end = date;
+          }
+        });
+      }
     });
 
     return stats;
@@ -484,23 +494,20 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     console.log('🔄 Switching background - Current tracks:', trackLines.length, 'markers:', sharkMarkers.length);
     
     if (mode === 'earth') {
-      // Switch to standard Earth texture by updating the uniform
-      if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
-        earthMaterial.uniforms.texture.value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+      // Switch to cached Earth texture to prevent reloading
+      if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture && earthTexture) {
+        earthMaterial.uniforms.texture.value = earthTexture;
         earthMaterial.needsUpdate = true;
       }
-      mesh.material = earthMaterial;
-      console.log('🌍 Switched to Earth background');
+      console.log('🌍 Switched to Earth background (cached texture)');
+      
+      // Immediate refresh without delay to prevent reset
+      refreshSharkVisualization();
       
     } else if (mode === 'chlorophyll' && year) {
       // Load chlorophyll texture for the specified year
       loadChlorophyllTexture(year);
     }
-    
-    // Always refresh shark visualization after background change
-    setTimeout(() => {
-      refreshSharkVisualization();
-    }, 100);
   }
 
   // Refresh shark visualization to ensure they remain visible
@@ -514,6 +521,17 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     const filename = `AQUA_MODIS.${year}0101_${year}1231.L3m.YR.CHL.chlor_a.4km.nc.webp`;
     const texturePath = `../../../chlorophyll-datasets/chlorophyll-annual-compressed/${filename}`;
     
+    // Check if texture is already cached
+    if (textureCache[year]) {
+      console.log('🌊 Using cached chlorophyll texture for', year);
+      if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
+        earthMaterial.uniforms.texture.value = textureCache[year];
+        earthMaterial.needsUpdate = true;
+      }
+      refreshSharkVisualization();
+      return;
+    }
+    
     console.log('🌊 Loading chlorophyll texture for', year, ':', texturePath);
     
     // Use THREE.ImageUtils.loadTexture for compatibility with older Three.js
@@ -523,23 +541,24 @@ DAT.WhaleSharkGlobe = function(container, opts) {
           // Success callback
           console.log('✅ Chlorophyll texture loaded for', year);
           
+          // Cache the texture
+          textureCache[year] = texture;
+          
           // Update the earth material's texture uniform
           if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
             earthMaterial.uniforms.texture.value = texture;
             earthMaterial.needsUpdate = true;
           }
           
-          // Ensure shark tracks and markers remain visible after texture change
-          setTimeout(() => {
-            refreshSharkVisualization();
-          }, 100);
+          // Immediate refresh without delay to prevent reset
+          refreshSharkVisualization();
         },
         function(error) {
           // Error callback
           console.error('❌ Error loading chlorophyll texture for', year, ':', error);
           // Fall back to Earth texture
-          if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
-            earthMaterial.uniforms.texture.value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+          if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture && earthTexture) {
+            earthMaterial.uniforms.texture.value = earthTexture;
             earthMaterial.needsUpdate = true;
           }
           refreshSharkVisualization();

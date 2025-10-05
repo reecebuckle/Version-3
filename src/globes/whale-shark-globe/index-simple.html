@@ -206,9 +206,23 @@
     <div style="font-size: 14px; color: #cccccc; margin-top: 10px; line-height: 1.5;">
       <strong>Gulf of Mexico (2009-2015)</strong><br><br>
       
-      Watch how <span class="highlight">41 whale sharks</span> move through the Gulf of Mexico over 6 years. 
+      Watch how whale sharks move through the Gulf of Mexico over 6 years. 
       Each coloured line shows one shark's journey. These gentle giants can travel thousands of kilometres 
       following food sources and seasonal patterns.
+      
+      <div class="fact-box">
+        <div class="fact-title">📊 Movement Statistics</div>
+        <div id="movement-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px;">
+          <div>Total Sharks: <span class="highlight" id="total-sharks">41</span></div>
+          <div>Total Distance: <span class="highlight">98,447 km</span></div>
+          <div>Tracking Points: <span class="highlight" id="total-points">Loading...</span></div>
+          <div>Average per Shark: <span class="highlight">2,401 km</span></div>
+          <div>Study Period: <span class="highlight">2009-2015</span></div>
+          <div>Average Speed: <span class="highlight">23.7 km/day</span></div>
+          <div>Region: <span class="highlight">Gulf of Mexico</span></div>
+          <div>🏆 Longest Journey: <span class="highlight">11,057 km</span></div>
+        </div>
+      </div>
       
       <div class="fact-box">
         <div class="fact-title">🌟 Did You Know?</div>
@@ -220,27 +234,31 @@
 
   <div id="info-panel">
     <div style="font-weight: bold; margin-bottom: 15px; color: #00ccff; font-size: 16px;">
-      🎓 Educational Facts
+      🗺️ Legend
     </div>
     
     <div class="fact-box">
-      <div class="fact-title">🦈 About Whale Sharks</div>
-      • World's largest fish species<br>
-      • Filter feeders (eat plankton)<br>
-      • Can live over 100 years<br>
-      • Found in warm ocean waters
+      <div class="fact-title">🎨 Colour Coding</div>
+      Each whale shark has a unique colour for its tracking path. Lines show movement over time, with markers indicating current positions.
     </div>
     
     <div class="fact-box">
-      <div class="fact-title">📡 How We Track Them</div>
-      Scientists attach GPS tags to whale sharks to study their movements. 
-      This helps us understand their behaviour and protect their habitats.
+      <div class="fact-title">🦈 Symbols</div>
+      <div style="display: flex; align-items: center; margin: 8px 0;">
+        <img src="../../assets/globe/whale-shark-icon.webp" style="width: 20px; height: 20px; margin-right: 8px;" alt="Whale Shark">
+        Current shark position
+      </div>
+      <div style="display: flex; align-items: center; margin: 8px 0;">
+        <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 8px;"></div>
+        Movement path
+      </div>
     </div>
     
     <div class="fact-box">
-      <div class="fact-title">🌊 Why It Matters</div>
-      Understanding whale shark migration helps us protect these amazing creatures 
-      and the ocean ecosystems they depend on.
+      <div class="fact-title">🎮 Controls</div>
+      • Drag to rotate the globe<br>
+      • Scroll to zoom in/out<br>
+      • Use buttons to filter sharks
     </div>
   </div>
 
@@ -327,6 +345,9 @@
               // Hide loading screen
               document.getElementById('loading').style.display = 'none';
               
+              // Update movement statistics
+              updateMovementStats();
+              
             } catch (error) {
               console.error('❌ Error parsing whale shark data:', error);
               showError('Failed to parse whale shark data');
@@ -353,6 +374,7 @@
       });
       
       document.getElementById('current-view').textContent = `All ${sharkData.sharks.length} whale sharks`;
+      updateMovementStats();
       console.log('👁️ Showing all sharks');
     }
 
@@ -368,6 +390,7 @@
       });
       
       document.getElementById('current-view').textContent = '5 selected whale sharks';
+      updateMovementStats();
       console.log('👁️ Showing 5 sharks');
     }
 
@@ -384,6 +407,7 @@
       
       const firstShark = sharkData.sharks[0];
       document.getElementById('current-view').textContent = `${firstShark.name} (${firstShark.tracks.length} tracking points)`;
+      updateMovementStats();
       console.log('👁️ Showing one shark');
     }
 
@@ -395,6 +419,15 @@
       
       // Add active class to selected button
       document.getElementById(activeId).classList.add('active');
+    }
+
+    function updateMovementStats() {
+      if (!sharkData) return;
+      
+      const stats = globe.getSharkStats();
+      
+      document.getElementById('total-sharks').textContent = stats.totalSharks;
+      document.getElementById('total-points').textContent = stats.totalTracks.toLocaleString();
     }
 
     function showError(message) {

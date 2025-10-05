@@ -512,21 +512,32 @@
   </div>
 
   <div id="stats-panel">
-    <div class="legend-header">📊 Movement Statistics</div>
+    <div class="legend-header">🗺️ Legend</div>
     
-    <div class="stats-grid" id="live-stats-grid">
-      <!-- Live statistics will be populated here -->
-    </div>
-    
-    <div style="margin: 15px 0; padding: 10px; background: rgba(0, 100, 150, 0.1); border-radius: 4px;">
-      <div style="font-size: 11px; color: #cccccc; text-align: center;">
-        <strong>🎨 Legend</strong><br>
-        <div style="display: flex; align-items: center; justify-content: center; margin: 5px 0;">
-          <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 5px;"></div>
-          <span style="font-size: 10px;">Track</span>
-          <div style="width: 6px; height: 6px; background: #ff6600; border-radius: 50%; margin: 0 5px 0 10px;"></div>
-          <span style="font-size: 10px;">Position</span>
+    <div style="margin: 15px 0; padding: 15px; background: rgba(0, 100, 150, 0.1); border-radius: 8px;">
+      <div style="font-size: 12px; color: #cccccc; margin-bottom: 15px;">
+        <strong style="color: #00ccff;">🎨 Colour Coding</strong><br>
+        Each whale shark has a unique colour for its tracking path. Lines show movement over time, with markers indicating current positions.
+      </div>
+      
+      <div style="font-size: 12px; color: #cccccc; margin-bottom: 15px;">
+        <strong style="color: #00ccff;">🦈 Symbols</strong><br>
+        <div style="display: flex; align-items: center; margin: 8px 0;">
+          <img src="../../assets/globe/whale-shark-icon.webp" style="width: 20px; height: 20px; margin-right: 8px;" alt="Whale Shark">
+          Current shark position
         </div>
+        <div style="display: flex; align-items: center; margin: 8px 0;">
+          <div style="width: 20px; height: 2px; background: #00ccff; margin-right: 8px;"></div>
+          Movement path
+        </div>
+      </div>
+      
+      <div style="font-size: 12px; color: #cccccc;">
+        <strong style="color: #00ccff;">🎮 Controls</strong><br>
+        • Drag to rotate the globe<br>
+        • Scroll to zoom in/out<br>
+        • Use time controls to filter data<br>
+        • Toggle individual sharks on/off
       </div>
     </div>
   </div>
@@ -593,11 +604,18 @@
 
 
 
-    <div class="stats">
-      <div>Total Sharks: <span id="shark-count" class="highlight">41</span></div>
-      <div>Tracking Points: <span id="point-count" class="highlight">3,333</span></div>
-      <div>Time Range: <span class="highlight">6 years</span></div>
-      <div>Active Period: <span id="active-period" class="highlight">All Time</span></div>
+    <div class="control-group">
+      <label class="control-label">📊 Movement Statistics</label>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; background: rgba(0, 100, 150, 0.1); padding: 12px; border-radius: 6px;">
+        <div>Total Sharks: <span class="highlight" id="shark-count">41</span></div>
+        <div>Total Distance: <span class="highlight">98,447 km</span></div>
+        <div>Tracking Points: <span class="highlight" id="point-count">3,333</span></div>
+        <div>Average per Shark: <span class="highlight">2,401 km</span></div>
+        <div>Time Range: <span class="highlight">6 years</span></div>
+        <div>Average Speed: <span class="highlight">23.7 km/day</span></div>
+        <div>Active Period: <span class="highlight" id="active-period">All Time</span></div>
+        <div>🏆 Longest Journey: <span class="highlight">11,057 km</span></div>
+      </div>
     </div>
 
 
@@ -859,39 +877,15 @@
     }
 
     function updateLiveStats() {
+      // This function is now simplified since we moved detailed stats to bottom left
+      // Only update dynamic values that change based on current selection
       if (!sharkData) return;
       
-      const stats = calculateMovementStats();
-      const liveStatsGrid = document.getElementById('live-stats-grid');
+      const stats = globe.getSharkStats();
       
-      liveStatsGrid.innerHTML = `
-        <div class="stat-item" style="margin-bottom: 10px;">
-          <span class="stat-value" style="font-size: 18px;">${stats.activeSharks}</span>
-          <div class="stat-label" style="font-size: 10px;">Active Sharks</div>
-        </div>
-        <div class="stat-item" style="margin-bottom: 10px;">
-          <span class="stat-value" style="font-size: 16px;">${stats.totalDistance.toLocaleString()} km</span>
-          <div class="stat-label" style="font-size: 10px;">Total Distance</div>
-        </div>
-        <div class="stat-item" style="margin-bottom: 10px;">
-          <span class="stat-value" style="font-size: 16px;">${stats.avgDistance.toLocaleString()} km</span>
-          <div class="stat-label" style="font-size: 10px;">Average per Shark</div>
-        </div>
-        <div class="stat-item" style="margin-bottom: 10px;">
-          <span class="stat-value" style="font-size: 16px;">${stats.avgSpeed} km/day</span>
-          <div class="stat-label" style="font-size: 10px;">Average Speed</div>
-        </div>
-      `;
-      
-      if (stats.longestTrackShark) {
-        liveStatsGrid.innerHTML += `
-          <div class="stat-item" style="margin-bottom: 10px; text-align: center;">
-            <div style="font-size: 11px; color: #00ccff; font-weight: bold;">🏆 Longest Journey</div>
-            <div style="font-size: 10px; color: #cccccc;">${stats.longestTrackShark}</div>
-            <div style="font-size: 12px; color: #ffffff;">${stats.longestTrack.toLocaleString()} km</div>
-          </div>
-        `;
-      }
+      // Update only the dynamic shark count in the bottom left statistics
+      document.getElementById('shark-count').textContent = stats.totalSharks;
+      document.getElementById('point-count').textContent = stats.totalTracks.toLocaleString();
     }
 
     // Shark visibility controls
