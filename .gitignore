@@ -1,2 +1,17 @@
 .idea
 .DS_Store
+
+# Large dataset files - exclude from repository
+chlorophyll-datasets/
+chlorophyll_data/
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
