@@ -266,6 +266,7 @@
           <select id="dataset-type" onchange="switchDataset()">
             <option value="monthly">📅 Monthly Images</option>
             <option value="seasonal">🌿 Seasonal Images</option>
+            <option value="annual">📊 Annual Images</option>
           </select>
         </div>
       </div>
@@ -400,11 +401,14 @@
           const periodLabel = document.getElementById('current-period-label');
           
           if (datasetType === 'monthly') {
-            descriptionEl.textContent = 'Monthly PNG Image Display';
+            descriptionEl.textContent = 'Monthly WebP Image Display';
             periodLabel.textContent = '📅 Current Month';
-          } else {
-            descriptionEl.textContent = 'Seasonal PNG Image Display';
+          } else if (datasetType === 'seasonal') {
+            descriptionEl.textContent = 'Seasonal WebP Image Display';
             periodLabel.textContent = '🌿 Current Season';
+          } else {
+            descriptionEl.textContent = 'Annual WebP Image Display';
+            periodLabel.textContent = '📊 Current Year';
           }
         }
 
@@ -413,15 +417,17 @@
           
           if (currentDataset === 'monthly') {
             generateMonthlyImageList();
-          } else {
+          } else if (currentDataset === 'seasonal') {
             generateSeasonalImageList();
+          } else {
+            generateAnnualImageList();
           }
           
           console.log(`📋 Generated ${imageList.length} ${currentDataset} images`);
         }
 
         function generateMonthlyImageList() {
-          console.log('📋 Generating monthly image list from PNG files...');
+          console.log('📋 Generating monthly image list from WebP files...');
           
           // Generate monthly data from 2002 to 2025
           for (let year = 2002; year <= 2025; year++) {
@@ -444,8 +450,8 @@
               const lastDay = new Date(year, month, 0).getDate();
               const endDate = `${year}${monthStr}${lastDay.toString().padStart(2, '0')}`;
               
-              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.png`;
-              const imagePath = `https://github.com/reecebuckle/Version-3/raw/master/chlorophyll-datasets/chlorophyll-monthly-images/${filename}`;
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.webp`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-monthly-compressed/${filename}`;
               
               imageList.push({
                 path: imagePath,
@@ -460,7 +466,7 @@
         }
 
         function generateSeasonalImageList() {
-          console.log('📋 Generating seasonal image list from PNG files...');
+          console.log('📋 Generating seasonal image list from WebP files...');
           
           const seasons = [
             { name: 'Spring', code: 'SNSP', months: [3, 4, 5] },
@@ -508,8 +514,8 @@
                 endDate = `${year + 1}0320`;
               }
               
-              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.png`;
-              const imagePath = `https://github.com/reecebuckle/Version-3/raw/master/chlorophyll-datasets/chlorophyll-seasonal-images/${filename}`;
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.webp`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-seasonal-compressed/${filename}`;
               
               imageList.push({
                 path: imagePath,
@@ -520,6 +526,27 @@
                 period: `${year}-${season.name}`
               });
             }
+          }
+        }
+
+        function generateAnnualImageList() {
+          console.log('📋 Generating annual image list from WebP files...');
+          
+          // Generate annual data from 2003 to 2024 (full years only)
+          for (let year = 2003; year <= 2024; year++) {
+            const startDate = `${year}0101`;
+            const endDate = `${year}1231`;
+            
+            const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.YR.CHL.chlor_a.4km.nc.webp`;
+            const imagePath = `../../../chlorophyll-datasets/chlorophyll-annual-compressed/${filename}`;
+            
+            imageList.push({
+              path: imagePath,
+              filename: filename,
+              year: year,
+              displayName: `Year ${year}`,
+              period: `${year}`
+            });
           }
         }
 

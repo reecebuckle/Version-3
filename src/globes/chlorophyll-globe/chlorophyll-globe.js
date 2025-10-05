@@ -122,8 +122,8 @@ DAT.Globe = function(container, opts) {
     shader = Shaders['earth'];
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 
-    // Load ocean-focused Earth texture
-    uniforms['texture'].value = THREE.ImageUtils.loadTexture('globe-sea.jpg');
+    // Load high-resolution ocean-focused Earth texture
+    uniforms['texture'].value = THREE.ImageUtils.loadTexture(imgDir + 'globe-sea-8k.jpg');
 
     material = new THREE.ShaderMaterial({
       uniforms: uniforms,

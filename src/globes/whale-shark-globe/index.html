@@ -554,6 +554,7 @@
       <label class="control-label">🎬 Playback Controls</label>
       <div class="playback-controls">
         <button id="show-all-time" class="button" onclick="showAllTimeData()" style="background: linear-gradient(135deg, #ff6600, #ffaa00);">🌊 Show All Data</button>
+        <button id="refresh-sharks" class="button" onclick="refreshSharks()" style="background: linear-gradient(135deg, #66cc66, #99ff99);">🔄 Refresh Sharks</button>
         <button id="play-pause" class="button" onclick="togglePlayback()">▶️ Play Years</button>
         <button id="prev-year" class="button" onclick="previousYear()">⏮️ Prev</button>
         <button id="next-year" class="button" onclick="nextYear()">⏭️ Next</button>
@@ -568,6 +569,23 @@
       <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 2px;">
         <span>Fast</span>
         <span>Slow</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">🌍 Globe Background</label>
+      <div style="margin-bottom: 10px;">
+        <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; cursor: pointer;">
+          <input type="radio" name="globe-background" value="earth" checked onchange="switchGlobeBackground(this.value)" style="margin-right: 8px;">
+          <span>🌍 Standard Earth (High Resolution)</span>
+        </label>
+        <label style="display: flex; align-items: center; font-size: 12px; cursor: pointer;">
+          <input type="radio" name="globe-background" value="chlorophyll" onchange="switchGlobeBackground(this.value)" style="margin-right: 8px;">
+          <span>🌊 Chlorophyll Concentrations (Aqua-MODIS)</span>
+        </label>
+      </div>
+      <div style="font-size: 10px; color: #888;">
+        Switch between standard Earth view and ocean productivity data
       </div>
     </div>
 
@@ -961,11 +979,15 @@
     function showAllTimeData() {
       stopPlayback();
       isPlaying = false;
-      document.getElementById('play-pause').textContent = '▶️ Play';
+      document.getElementById('play-pause').textContent = '▶️ Play Years';
       document.getElementById('play-pause').classList.remove('playing');
       
       // Clear time filter to show all data
       globe.setTimeFilter(null, null);
+      
+      // Switch back to Earth background when showing all data
+      globe.switchBackground('earth');
+      document.querySelector('input[name="globe-background"][value="earth"]').checked = true;
       
       // Update display
       document.getElementById('current-time').innerHTML = `
@@ -1010,6 +1032,46 @@
       
       // Update active period display
       document.getElementById('active-period').textContent = period.display_name;
+      
+      // Update chlorophyll background if in chlorophyll mode
+      updateChlorophyllBackground(period.period);
+    }
+
+    function switchGlobeBackground(mode) {
+      console.log('🌍 Switching globe background to:', mode);
+      console.log('🦈 Current visible sharks:', document.querySelectorAll('.shark-checkbox:checked').length);
+      
+      if (mode === 'earth') {
+        globe.switchBackground('earth');
+      } else if (mode === 'chlorophyll') {
+        // Get current year from time period
+        const currentPeriod = timeSeriesData[currentTimeIndex];
+        if (currentPeriod) {
+          console.log('📅 Switching to chlorophyll for year:', currentPeriod.period);
+          updateChlorophyllBackground(currentPeriod.period);
+        } else {
+          // If no current period, use 2014 as default (middle of whale shark data range)
+          console.log('📅 No current period, using 2014 as default');
+          globe.switchBackground('chlorophyll', '2014');
+        }
+      }
+    }
+
+    function updateChlorophyllBackground(year) {
+      // Only update if we're in chlorophyll mode
+      const chlorophyllRadio = document.querySelector('input[name="globe-background"][value="chlorophyll"]');
+      if (chlorophyllRadio && chlorophyllRadio.checked) {
+        console.log('🌊 Updating chlorophyll background for year:', year);
+        globe.switchBackground('chlorophyll', year);
+      }
+    }
+
+    // Force refresh of shark visualization
+    function refreshSharks() {
+      console.log('🔄 Refreshing shark visualization');
+      if (globe && globe.refreshSharkVisualization) {
+        globe.refreshSharkVisualization();
+      }
     }
 
     function updatePlaybackSpeed() {

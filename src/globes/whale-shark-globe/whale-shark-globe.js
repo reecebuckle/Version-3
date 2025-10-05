@@ -101,6 +101,10 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   var sharkMarkers = [];
   var visibleSharks = new Set();
   var tooltip = null;
+  var currentBackgroundMode = 'earth';
+  var currentYear = null;
+  var earthMaterial = null;
+  var chlorophyllTexture = null;
 
   function init() {
     container.style.color = '#fff';
@@ -124,13 +128,13 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     // Load high-resolution ocean-focused Earth texture
     uniforms['texture'].value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
 
-    material = new THREE.ShaderMaterial({
+    earthMaterial = new THREE.ShaderMaterial({
       uniforms: uniforms,
       vertexShader: shader.vertexShader,
       fragmentShader: shader.fragmentShader
     });
 
-    mesh = new THREE.Mesh(geometry, material);
+    mesh = new THREE.Mesh(geometry, earthMaterial);
     mesh.rotation.y = Math.PI;
     scene.add(mesh);
 
@@ -472,6 +476,81 @@ DAT.WhaleSharkGlobe = function(container, opts) {
     tooltip.style.display = 'none';
   }
 
+  // Switch between Earth and chlorophyll backgrounds
+  function switchBackground(mode, year) {
+    currentBackgroundMode = mode;
+    currentYear = year;
+    
+    console.log('🔄 Switching background - Current tracks:', trackLines.length, 'markers:', sharkMarkers.length);
+    
+    if (mode === 'earth') {
+      // Switch to standard Earth texture by updating the uniform
+      if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
+        earthMaterial.uniforms.texture.value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+        earthMaterial.needsUpdate = true;
+      }
+      mesh.material = earthMaterial;
+      console.log('🌍 Switched to Earth background');
+      
+    } else if (mode === 'chlorophyll' && year) {
+      // Load chlorophyll texture for the specified year
+      loadChlorophyllTexture(year);
+    }
+    
+    // Always refresh shark visualization after background change
+    setTimeout(() => {
+      refreshSharkVisualization();
+    }, 100);
+  }
+
+  // Refresh shark visualization to ensure they remain visible
+  function refreshSharkVisualization() {
+    // Recreate track lines and markers to ensure they're visible
+    createTrackLines();
+    createSharkMarkers();
+  }
+
+  function loadChlorophyllTexture(year) {
+    const filename = `AQUA_MODIS.${year}0101_${year}1231.L3m.YR.CHL.chlor_a.4km.nc.webp`;
+    const texturePath = `../../../chlorophyll-datasets/chlorophyll-annual-compressed/${filename}`;
+    
+    console.log('🌊 Loading chlorophyll texture for', year, ':', texturePath);
+    
+    // Use THREE.ImageUtils.loadTexture for compatibility with older Three.js
+    try {
+      const texture = THREE.ImageUtils.loadTexture(texturePath, undefined, 
+        function() {
+          // Success callback
+          console.log('✅ Chlorophyll texture loaded for', year);
+          
+          // Update the earth material's texture uniform
+          if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
+            earthMaterial.uniforms.texture.value = texture;
+            earthMaterial.needsUpdate = true;
+          }
+          
+          // Ensure shark tracks and markers remain visible after texture change
+          setTimeout(() => {
+            refreshSharkVisualization();
+          }, 100);
+        },
+        function(error) {
+          // Error callback
+          console.error('❌ Error loading chlorophyll texture for', year, ':', error);
+          // Fall back to Earth texture
+          if (earthMaterial && earthMaterial.uniforms && earthMaterial.uniforms.texture) {
+            earthMaterial.uniforms.texture.value = THREE.ImageUtils.loadTexture('../../assets/globe/globe-sea-8k.jpg');
+            earthMaterial.needsUpdate = true;
+          }
+          refreshSharkVisualization();
+        }
+      );
+    } catch (error) {
+      console.error('❌ Error setting up chlorophyll texture loader:', error);
+      refreshSharkVisualization();
+    }
+  }
+
   function animate() {
     requestAnimationFrame(animate);
     render();
@@ -640,6 +719,8 @@ DAT.WhaleSharkGlobe = function(container, opts) {
   this.setTimeFilter = setTimeFilter;
   this.toggleShark = toggleShark;
   this.getSharkStats = getSharkStats;
+  this.switchBackground = switchBackground;
+  this.refreshSharkVisualization = refreshSharkVisualization;
   this.renderer = renderer;
   this.scene = scene;
   this.rotation = rotation;

@@ -444,8 +444,8 @@
               const lastDay = new Date(year, month, 0).getDate();
               const endDate = `${year}${monthStr}${lastDay.toString().padStart(2, '0')}`;
               
-              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.png`;
-              const imagePath = `../../../chlorophyll-datasets/chlorophyll-monthly-images/${filename}`;
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.MO.CHL.chlor_a.4km.nc.webp`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-monthly-compressed/${filename}`;
               
               imageList.push({
                 path: imagePath,
@@ -508,8 +508,8 @@
                 endDate = `${year + 1}0320`;
               }
               
-              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.png`;
-              const imagePath = `../../../chlorophyll-datasets/chlorophyll-seasonal-images/${filename}`;
+              const filename = `AQUA_MODIS.${startDate}_${endDate}.L3m.${season.code}.CHL.chlor_a.4km.nc.webp`;
+              const imagePath = `../../../chlorophyll-datasets/chlorophyll-seasonal-compressed/${filename}`;
               
               imageList.push({
                 path: imagePath,
